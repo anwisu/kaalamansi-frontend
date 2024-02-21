@@ -172,6 +172,7 @@ import Header from './Components/Layout/Header';
 import Home from './Components/Home';
 import PredictQuality from './Components/Predict/PredictQuality';
 import QualityResult from './Components/Predict/QualityResult';
+import QualityList from './Components/Predict/QualityList';
 
 function App() {
   return (
@@ -181,6 +182,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} exact="true" />
           <Route path="/predict/quality" element={<PredictQuality />} />
+          <Route path="/quality/all" element={<QualityList />} />
           <Route path="/result" element={<QualityResult />} />
         </Routes>
       </Router>

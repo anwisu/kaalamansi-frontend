@@ -73,7 +73,7 @@ const PredictQuality = () => {
                                         </label>
                                         <label className="form-control w-full max-w-m" for="shape">
                                             <div className="label">
-                                                <span className="label-text">Firmness: </span>
+                                                <span className="label-text">Shape: </span>
                                             </div>
                                             <select className="select select-bordered" id="shape" name="shape">
                                                 <option disabled selected>Select size</option>
