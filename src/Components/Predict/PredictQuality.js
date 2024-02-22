@@ -23,7 +23,7 @@ const PredictQuality = () => {
             });
 
             if (response.data && response.data.inserted_data) {
-                navigate('/result', { state: { qualityData: response.data.inserted_data } });
+                navigate('/quality/result', { state: { qualityData: response.data.inserted_data } });
             } else {
                 setError('Prediction failed. Please try again.');
             }

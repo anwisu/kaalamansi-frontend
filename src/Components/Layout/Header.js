@@ -60,7 +60,7 @@ const Header = () => {
                                             style={{ textDecoration: "none", color: "#58B741" }}
                                             className="flex items-center"
                                         >
-                                            Quality
+                                            Predict Quality
                                         </Link>
                                     </li>
                                     <li>
@@ -78,7 +78,7 @@ const Header = () => {
                                             style={{ textDecoration: "none", color: "#58B741" }}
                                             className="flex items-center"
                                         >
-                                            Disease
+                                            Predict Disease
                                         </Link>
                                     </li>
                                 </ul>
