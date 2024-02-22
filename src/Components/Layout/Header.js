@@ -81,6 +81,15 @@ const Header = () => {
                                             Predict Disease
                                         </Link>
                                     </li>
+                                    <li>
+                                        <Link
+                                            to="/disease/all"
+                                            style={{ textDecoration: "none", color: "#58B741" }}
+                                            className="flex items-center"
+                                        >
+                                            Disease Predictions
+                                        </Link>
+                                    </li>
                                 </ul>
                             </li>
                         </div>

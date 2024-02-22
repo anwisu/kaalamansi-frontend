@@ -175,6 +175,7 @@ import QualityResult from './Components/Predict/QualityResult';
 import QualityList from './Components/Predict/QualityList';
 import PredictDisease from './Components/Predict/PredictDisease';
 import DiseaseResult from './Components/Predict/DiseaseResult';
+import DiseaseList from './Components/Predict/DiseaseList';
 
 function App() {
   return (
@@ -186,8 +187,10 @@ function App() {
           <Route path="/predict/quality" element={<PredictQuality />} />
           <Route path="/predict/disease" element={<PredictDisease />} />
           <Route path="/quality/all" element={<QualityList />} />
+          <Route path="/disease/all" element={<DiseaseList />} />
           <Route path="/quality/result" element={<QualityResult />} />
           <Route path="/disease/result" element={<DiseaseResult />} />
+          
         </Routes>
       </Router>
     </div>
