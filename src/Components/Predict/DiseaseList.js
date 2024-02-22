@@ -42,15 +42,16 @@ const DiseaseList = () => {
     };
 
     return (
-        <div>
+        <div className='container-fluid'>
             <h1 className="my-5">All Disease Predictions</h1>
             <MDBDataTable
-                responsive
-                bordered
-                hover
                 data={data}
                 paging={true}
                 searching={true}
+                className="px-3"
+                bordered
+                striped
+                hover
             />
         </div>
     );
