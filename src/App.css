@@ -13,6 +13,7 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
+  background-color: #f5f5f5;
 }
 
 /* Scroll Bar */
@@ -163,3 +164,87 @@ body {
   border-radius: 30px;
 }
 
+
+@media only screen and (min-width: 768px){
+  .parent:hover .child {
+      opacity:1;
+      height:auto;
+      overflow:none;
+      transform: translateY(0);
+  }
+  .child {
+      opacity:0;
+      height:0;
+      overflow:hidden;
+      transform: translateY(-10%);
+  }
+}
+
+.cards {
+  /* position: inherit; */
+  width: 290px;
+  height: 370px;
+  border-radius: 30px;
+  background: #eae9e9;
+  /* -webkit-box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff;
+          box-shadow: 15px 15px 30px #bebebe,
+             -15px -15px 30px #ffffff; */
+             
+}
+
+.button {
+  font-family: inherit;
+  font-size: 20px;
+  background: #4AA032;
+  color: white;
+  padding: .8% 1.5%;
+  padding-left: 0.9em;
+  margin-top: 3%;
+  display: flex;
+  align-items: center;
+  border: none;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.button span {
+  display: block;
+  margin-left: 0.3em;
+  transition: all 0.3s ease-in-out;
+}
+
+.button svg {
+  display: block;
+  transform-origin: center center;
+  transition: transform 0.3s ease-in-out;
+}
+
+.button:hover .svg-wrapper {
+  animation: fly-1 0.6s ease-in-out infinite alternate;
+  padding-left: 30%;
+}
+
+.button:hover svg {
+  transform: translateX(1.2em) rotate(5deg) scale(1.1);
+}
+
+.button:hover span {
+  transform: translateX(5em);
+}
+
+.button:active {
+  transform: scale(0.95);
+}
+
+@keyframes fly-1 {
+  from {
+    transform: translateY(0.1em);
+  }
+
+  to {
+    transform: translateY(-0.1em);
+  }
+}
