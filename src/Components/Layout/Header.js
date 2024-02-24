@@ -1,11 +1,25 @@
 import React, { Fragment /*, useState, useEffect }  */ } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import axios from 'axios'
+import { logout } from '../../utils/helpers'
 // import { toast, ToastContainer } from "react-toastify";
 // import "react-toastify/dist/ReactToastify.css";
 // import { getUser, logout } from '../../Utilitys/helpers';
 // import axios from 'axios';
 
 const Header = () => {
+    const navigate = useNavigate();
+
+    const handleLogout = async () => {
+        try {
+            await axios.get(`${process.env.REACT_APP_API}/logout`);
+            logout(); // Remove token and user data from session storage
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
     return (
         <Fragment>
             <div className="navbar bg-100">
@@ -139,7 +153,7 @@ const Header = () => {
                         >
                             <li>
                                 <Link
-                                    to="/profile"
+                                    to="/me"
                                     style={{ textDecoration: "none", color: "#58B741" }}
                                     className="flex items-center"
                                 >
@@ -150,7 +164,7 @@ const Header = () => {
                                 <Link
                                     style={{ textDecoration: "none", color: "#58B741" }}
                                     className="flex items-center"
-                                //   onClick={logoutHandler}
+                                    onClick={handleLogout}
                                 >
                                     Logout
                                 </Link>

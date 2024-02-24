@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useState} from 'react'
 import './Register.css'
 import '../../../App.scss'
-import { Link } from 'react-router-dom'
+import axios from 'axios';
+import { Link, useNavigate } from 'react-router-dom';
 import { FaUserShield } from "react-icons/fa";
 import { MdMarkEmailRead } from "react-icons/md";
 import { BsFillShieldLockFill } from "react-icons/bs";
@@ -11,6 +12,30 @@ import { AiOutlineSwapRight } from "react-icons/ai";
 
 
 const Register = () => {
+  const [formData, setFormData] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  const navigate = useNavigate();
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API}/register`, formData);
+      console.log(response.data);
+      navigate('/login'); // Redirect to login page after successful registration
+    } catch (error) {
+      console.error('Registration Error:', error.message);
+    }
+  };
+
+
   return (
     <div className='registerPage registerFlex'>
       <div className='registerContainer registerFlex'>
@@ -34,12 +59,19 @@ const Register = () => {
           <img src='./images/citrus.png' alt='Logo Image' className='registerImg' />
           <h3 className='title'>Let Us Know You!</h3>
         </div>
-        <form action='' className='inputForm registerGrid'>
+        <form onSubmit={handleSubmit} className='inputForm registerGrid'>
           <div className='inputDiv'>
             <label htmlFor='username'>Username</label>
             <div className='input registerFlex'>
               <FaUserShield className='icon'/>
-              <input type='text' id='username' placeholder='Enter Username'/>
+              <input 
+                type='text'
+                id='username'
+                name='name'
+                placeholder='Enter Username'
+                value={formData.name}
+                onChange={handleChange}
+              />
             </div>
           </div>
 
@@ -47,7 +79,14 @@ const Register = () => {
             <label htmlFor='email'>Email</label>
             <div className='input registerFlex'>
               <MdMarkEmailRead className='icon'/>
-              <input type='text' id='email' placeholder='Enter Email'/>
+              <input
+                  type='email'
+                  id='email'
+                  name='email'
+                  placeholder='Enter Email'
+                  value={formData.email}
+                  onChange={handleChange}
+              />
             </div>
           </div>
 
@@ -55,7 +94,14 @@ const Register = () => {
             <label htmlFor='password'>Password</label>
             <div className='input registerFlex'>
               <BsFillShieldLockFill className='icon'/>
-              <input type='password' id='password' placeholder='Enter Password'/>
+              <input
+                  type='password'
+                  id='password'
+                  name='password'
+                  placeholder='Enter Password'
+                  value={formData.password}
+                  onChange={handleChange}
+              />
             </div>
           </div>
           <button type='submit' className='btnRegister registerFlex'>
