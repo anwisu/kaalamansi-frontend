@@ -168,6 +168,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "./App.css";
+// import './App.scss';
 import Header from './Components/Layout/Header';
 import Home from './Components/Home';
 import PredictQuality from './Components/Predict/PredictQuality';
@@ -176,6 +177,8 @@ import QualityList from './Components/Predict/QualityList';
 import PredictDisease from './Components/Predict/PredictDisease';
 import DiseaseResult from './Components/Predict/DiseaseResult';
 import DiseaseList from './Components/Predict/DiseaseList';
+import Login from './Components/User/Login/Login';
+import Register from './Components/User/Register/Register';
 
 function App() {
   return (
@@ -191,6 +194,9 @@ function App() {
           <Route path="/quality/result" element={<QualityResult />} />
           <Route path="/disease/result" element={<DiseaseResult />} />
           
+          {/* User Routes */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
         </Routes>
       </Router>
     </div>

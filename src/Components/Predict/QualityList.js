@@ -45,7 +45,7 @@ const QualityList = () => {
     };
 
     return (
-        <div>
+        <div class="container mx-auto">
             <h1 className="my-5">All Quality Predictions</h1>
             <MDBDataTable
                 responsive

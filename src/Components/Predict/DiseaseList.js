@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { MDBDataTable } from 'mdbreact';
+import { MDBDataTable, MDBBtn } from 'mdbreact';
+import { Link } from 'react-router-dom'; // Import Link for navigation
 import axios from 'axios';
 
 const DiseaseList = () => {
@@ -33,7 +34,21 @@ const DiseaseList = () => {
         { label: 'Pruning', field: 'pruning', sort: 'asc' },
         { label: 'Pesticide', field: 'pesticide_use', sort: 'asc' },
         { label: 'Pest Presence', field: 'pest_presence', sort: 'asc' },
-        { label: 'Prediction', field: 'predicted_disease', sort: 'asc' }
+        { label: 'Prediction', field: 'predicted_disease', sort: 'asc' },
+        {
+            label: 'Actions',
+            field: 'actions',
+            render: (rowData) => (
+                <div>
+                    <Link to={`/admin/pet/update/${rowData._id}`} className="btn btn-primary py-1 px-2 me-2">
+                        <i className="fa fa-pencil"></i>
+                    </Link>
+                    {/* <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => handleDelete(rowData._id)}>
+                        <i className="fa fa-trash"></i>
+                    </button> */}
+                </div>
+            )
+        }
     ];
 
     const data = {
@@ -41,14 +56,17 @@ const DiseaseList = () => {
         rows: allDiseasePredicts
     };
 
+    // handle delete action
+    // const handleDelete = (id) => {
+    //     // Implement your delete logic here, using the provided id
+    //     console.log('Delete clicked for id:', id);
+    // };
+
     return (
-        <div className='container-fluid'>
+        <div className="container mx-auto">
             <h1 className="my-5">All Disease Predictions</h1>
             <MDBDataTable
                 data={data}
-                paging={true}
-                searching={true}
-                className="px-3"
                 bordered
                 striped
                 hover
