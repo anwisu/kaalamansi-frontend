@@ -7,9 +7,9 @@ const Home = () => {
             <div className="container">
                 <div className="row">
                     <div className="hero flex justify-between items-center w-screen p-3">
-                        <div className="column">
+                        <div className="column" style={{ paddingLeft: "1cm" }}>
                             <img
-                                src="./images/kalamansi fruits.png"
+                                src="./images/hero.png"
                                 className="max-w-sm rounded-lg"
                             />
                         </div>
@@ -44,7 +44,7 @@ const Home = () => {
                     </div>
                     <div className="hero w-screen px-20 pb-6">
                         <div className="hero-content flex-col lg:flex-row-reverse items-left">
-                            <img src="./images/predict.png" className="max-w-xs rounded-lg" />
+                            <img src="./images/predict2.png" className="max-w-xs rounded-lg" />
                             <div className="text-left pt-6">
                                 <h1
                                     className="text-5xl font-bold pr-12"

@@ -63,7 +63,7 @@ const Login = () => {
           <h3 className='title'>Welcome Back!</h3>
         </div>
         <form onSubmit={handleSubmit} className='inputForm loginGrid'>
-          <span className='showMessage'>Login Status will go here</span>
+          {/* <span className='showMessage'>Login Status will go here</span> */}
           <div className='inputDiv'>
             <label htmlFor='email'>Email</label>
             <div className='input loginFlex'>

@@ -13,6 +13,8 @@ import DiseaseList from './Components/Predict/DiseaseList';
 import Login from './Components/User/Login/Login';
 import Register from './Components/User/Register/Register';
 import Profile from './Components/User/Profile';
+import About from './Components/About';
+import QualityCM from './Components/ConfusionMatrix/QualityCM';
 
 function App() {
   return (
@@ -20,7 +22,8 @@ function App() {
       <Router>
       <Header />
         <Routes>
-          <Route path="/" element={<Home />} exact="true" />
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
           <Route path="/predict/quality" element={<PredictQuality />} />
           <Route path="/predict/disease" element={<PredictDisease />} />
           <Route path="/quality/all" element={<QualityList />} />
@@ -32,6 +35,9 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/me" element={<Profile />} />
+
+          {/* Confusion Matrix */}
+          <Route path="/quality/confusion-matrix" element={<QualityCM />} />
         </Routes>
       </Router>
     </div>
