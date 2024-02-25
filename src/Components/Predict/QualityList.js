@@ -52,6 +52,7 @@ const QualityList = () => {
       <h1 className="my-5 text-gray-900">All Quality Predictions</h1>
       <MDBDataTable
         responsive
+        striped
         bordered
         hover
         data={data}

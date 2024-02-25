@@ -252,3 +252,20 @@ body {
 .table th, .table td {
   color: gray;
 }
+
+.card1{
+  /* width: 290px;
+  height: 370px; */
+  position: relative;
+  border-radius: 30px;
+  background: #eae9e9;
+}
+.btns{
+  background-color: #75CD60 ;
+  border-color: #75CD60;
+}
+.btns:hover{
+  background-color: #4AA032;
+  border-color: #4AA032;
+  
+}
