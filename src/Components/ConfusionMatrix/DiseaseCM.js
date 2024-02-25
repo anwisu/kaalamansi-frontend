@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
 
-const QualityCM = () => {
+const DiseaseCM = () => {
     const [confMatrix, setConfMatrix] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     const fetchData = async () => {
         try {
             
-            const response = await axios.get(`${process.env.REACT_APP_API}/quality/confusion-matrix`);
+            const response = await axios.get(`${process.env.REACT_APP_API}/disease/confusion-matrix`);
             setConfMatrix(Object.values(response.data)); // Convert the dictionary to an array of arrays
             console.log("Confusion Matrix after setting state:", confMatrix); // Convert the dictionary to an array of arrays
             setIsLoading(false);
@@ -51,7 +51,7 @@ const QualityCM = () => {
             },
         },
         title: {
-            text: 'Kalamansi Quality Confusion Matrix Heatmap'
+            text: 'Kalamansi Disease Confusion Matrix Heatmap'
         },
         xaxis: {
             type: 'category',
@@ -65,4 +65,4 @@ const QualityCM = () => {
     );
 };
 
-export default QualityCM;
+export default DiseaseCM;

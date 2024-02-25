@@ -14,7 +14,8 @@ import Login from './Components/User/Login/Login';
 import Register from './Components/User/Register/Register';
 import Profile from './Components/User/Profile';
 import About from './Components/About';
-import QualityCM from './Components/ConfusionMatrix/QualityCM';
+import QualityROC from './Components/ROC/QualityROC';
+
 
 function App() {
   return (
@@ -36,8 +37,8 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/me" element={<Profile />} />
 
-          {/* Confusion Matrix */}
-          <Route path="/quality/confusion-matrix" element={<QualityCM />} />
+          <Route path="/quality/roc-curve" element={<QualityROC />} />
+
         </Routes>
       </Router>
     </div>
