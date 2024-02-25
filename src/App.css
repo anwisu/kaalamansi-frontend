@@ -13,7 +13,7 @@ body {
   margin: 0px;
   padding: 0px;
   overflow-x: hidden;
-  background-color: #f5f5f5;
+  background-color: white;
 }
 
 /* Scroll Bar */
@@ -37,7 +37,7 @@ body {
 
 .App {
   text-align: center;
-  background-color: #ffffff;
+  background-color: white;
   font-family: 'open-sans', sans-serif;
   width: 100%;
   max-width: 100%;
@@ -247,4 +247,8 @@ body {
   to {
     transform: translateY(-0.1em);
   }
+}
+
+.table th, .table td {
+  color: gray;
 }
