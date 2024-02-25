@@ -1,47 +1,68 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import ReactApexChart from 'react-apexcharts';
 
-function ConfusionMatrix() {
-    const [confusionMatrix, setConfusionMatrix] = useState(null);
+const MyComponent = () => {
+    const [confMatrix, setConfMatrix] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
+
+    const fetchData = async () => {
+        try {
+            
+            const response = await axios.get(`${process.env.REACT_APP_API}/quality/confusion-matrix`);
+            setConfMatrix(Object.values(response.data)); // Convert the dictionary to an array of arrays
+            console.log("Confusion Matrix after setting state:", confMatrix); // Convert the dictionary to an array of arrays
+            setIsLoading(false);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+            setIsLoading(false);
+        }
+    };
 
     useEffect(() => {
-        axios.get(`${process.env.REACT_APP_API}/quality/confusion-matrix`)
-            .then(response => {
-                setConfusionMatrix(response.data);
-            })
-            .catch(error => {
-                console.error('Error fetching confusion matrix:', error);
-            });
+        fetchData();
     }, []);
+
+    if (isLoading) {
+        return <div>Loading...</div>;
+    }
+
+    const series = confMatrix.map((row, i) => ({
+        name: `Actual:${i}`,
+        data: row.map((value, j) => ({ x: `Predicted:${j}`, y: value }))
+    }));
+
+    const options = {
+        chart: {
+            type: 'heatmap',
+        },
+        dataLabels: {
+            enabled: true,
+            style: {
+                fontSize: '20px', // Change the font size
+                colors: ['#033200'] // Change the font color
+            },
+        },
+        theme: {
+            monochrome: {
+                enabled: true,
+                color: '#67FF53',
+                shadeIntensity: 0.1
+            },
+        },
+        title: {
+            text: 'Kalamansi Quality Confusion Matrix Heatmap'
+        },
+        xaxis: {
+            type: 'category',
+        },
+    };
 
     return (
         <div>
-            <h2>Confusion Matrix</h2>
-            {confusionMatrix && (
-                <table>
-                    <thead>
-                        <tr>
-                            <th></th>
-                            <th>Predicted Positive</th>
-                            <th>Predicted Negative</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Actual Positive</td>
-                            <td>{confusionMatrix.true_positives}</td>
-                            <td>{confusionMatrix.false_negatives}</td>
-                        </tr>
-                        <tr>
-                            <td>Actual Negative</td>
-                            <td>{confusionMatrix.false_positives}</td>
-                            <td>{confusionMatrix.true_negatives}</td>
-                        </tr>
-                    </tbody>
-                </table>
-            )}
+            <ReactApexChart options={options} series={series} type="heatmap" />
         </div>
     );
-}
+};
 
-export default ConfusionMatrix;
+export default MyComponent;
