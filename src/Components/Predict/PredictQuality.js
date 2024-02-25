@@ -435,7 +435,11 @@ const PredictQuality = () => {
                       </svg>
                     </div>
                   </div>
-                  <span>Predict</span>
+                  <span
+
+                  >
+                    Predict
+                  </span>
                 </button>
               </form>
               {error && <p>{error}</p>}
