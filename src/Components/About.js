@@ -4,6 +4,9 @@ import QualityCM from './ConfusionMatrix/QualityCM'
 import DiseaseCM from './ConfusionMatrix/DiseaseCM'
 import QualityROC from './ROC/QualityROC.js'
 import DiseaseROC from './ROC/DiseaseROC.js';
+import ReactApexChart from 'react-apexcharts';
+
+
 
 const About = () => {
     const [quality_metrics, setQualityMetrics] = useState(null);
@@ -25,26 +28,57 @@ const About = () => {
         return <div>Loading...</div>;
     }
 
+    const qualityAccuracySeries = [quality_metrics.accuracy * 100];
+    const diseaseAccuracySeries = [disease_metrics.accuracy * 100];
+
+    const accuracyOptions = {
+        chart: {
+            type: 'radialBar',
+            height: 350,
+        },
+        plotOptions: {
+            radialBar: {
+                size: 150,
+                dataLabels: {
+                    name: {
+                        show: true,
+                    },
+                    value: {
+                        show: true,
+                        formatter: function (val) {
+                            return val.toFixed(2) + "%";
+                        }
+                    }
+                }
+            }
+        },
+    };
+
     return (
         <div className="container mx-auto">
             <h1 className="my-5">About Logistic Regression Model</h1>
+            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h2>Quality Classification Report</h2>
             <div>Precision: {quality_metrics.report['weighted avg']['precision']}</div>
             <div>Recall: {quality_metrics.report['weighted avg']['recall']}</div>
             <div>F1-score: {quality_metrics.report['weighted avg']['f1-score']}</div>
-            <div>Accuracy: {quality_metrics.accuracy} / {(quality_metrics.accuracy * 100).toFixed(0)}%</div>
+            {/* <div>Accuracy: {quality_metrics.accuracy} / {(quality_metrics.accuracy * 100).toFixed(0)}%</div> */}
+            <ReactApexChart options={{...accuracyOptions, labels: ['Quality Accuracy']}} series={qualityAccuracySeries} type="radialBar" />
             <QualityCM />  
             <QualityROC />
+            </div>
             <hr />
             <br />
+            <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
             <h2>Disease Classification Report</h2>
             <div>Precision: {disease_metrics.report['weighted avg']['precision']}</div>
             <div>Recall: {disease_metrics.report['weighted avg']['recall']}</div>
             <div>F1-score: {disease_metrics.report['weighted avg']['f1-score']}</div>
-            <div>Accuracy: {disease_metrics.accuracy} / {(disease_metrics.accuracy * 100)}%</div>
+            {/* <div>Accuracy: {disease_metrics.accuracy} / {(disease_metrics.accuracy * 100)}%</div> */}
+            <ReactApexChart options={{...accuracyOptions, labels: ['Disease Accuracy']}} series={diseaseAccuracySeries} type="radialBar" />
             <DiseaseCM />
             <DiseaseROC />
-            
+            </div>
         </div>
     )
 }
