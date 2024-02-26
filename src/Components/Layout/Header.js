@@ -1,14 +1,12 @@
-import React, { Fragment /*, useState, useEffect }  */ } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from 'axios'
-import { logout } from '../../utils/helpers'
-// import { toast, ToastContainer } from "react-toastify";
-// import "react-toastify/dist/ReactToastify.css";
-// import { getUser, logout } from '../../Utilitys/helpers';
-// import axios from 'axios';
+import { logout, getUser } from '../../utils/helpers'
+
 
 const Header = () => {
     const navigate = useNavigate();
+    const [user, setUser] = useState(null)
 
     const handleLogout = async () => {
         try {
@@ -20,6 +18,13 @@ const Header = () => {
         }
     };
 
+    useEffect(() => {
+        const userData = getUser();
+        if (userData) {
+            setUser(userData);
+        }
+    }, []);
+    
     return (
         <Fragment>
             <div className="navbar bg-100">
@@ -67,13 +72,13 @@ const Header = () => {
                                 <ul
                                     tabIndex={0}
                                     className="mt-10 z-[1] p-2 shadow menu menu-sm dropdown-content rounded-box w-40 bg-100"
-                                    style={{ textDecoration: "none", color: "#58B741", backgroundColor:"white" }}
+                                    style={{ textDecoration: "none", color: "#58B741", backgroundColor: "white" }}
 
                                 >
                                     <li>
                                         <Link
                                             to="/predict/quality"
-                                            style={{ textDecoration: "none", color: "#58B741"}}
+                                            style={{ textDecoration: "none", color: "#58B741" }}
                                             className="flex items-center"
                                         >
                                             Predict Quality
@@ -82,7 +87,7 @@ const Header = () => {
                                     <li>
                                         <Link
                                             to="/quality/all"
-                                            style={{ textDecoration: "none", color: "#58B741"}}
+                                            style={{ textDecoration: "none", color: "#58B741" }}
                                             className="flex items-center"
                                         >
                                             Quality Predictions
@@ -91,7 +96,7 @@ const Header = () => {
                                     <li>
                                         <Link
                                             to="/predict/disease"
-                                            style={{ textDecoration: "none", color: "#58B741"}}
+                                            style={{ textDecoration: "none", color: "#58B741" }}
                                             className="flex items-center"
                                         >
                                             Predict Disease
@@ -100,7 +105,7 @@ const Header = () => {
                                     <li>
                                         <Link
                                             to="/disease/all"
-                                            style={{ textDecoration: "none", color: "#58B741"}}
+                                            style={{ textDecoration: "none", color: "#58B741" }}
                                             className="flex items-center"
                                         >
                                             Disease Predictions
@@ -149,29 +154,51 @@ const Header = () => {
                                 />
                             </svg>
                         </div>
-                        <ul
-                            tabIndex={0}
-                            className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-100 rounded-box w-52"
-                        >
-                            <li>
-                                <Link
-                                    to="/me"
-                                    style={{ textDecoration: "none", color: "#58B741" }}
-                                    className="flex items-center"
-                                >
-                                    Profile
-                                </Link>
-                            </li>
-                            <li>
-                                <Link
-                                    style={{ textDecoration: "none", color: "#58B741" }}
-                                    className="flex items-center"
-                                    onClick={handleLogout}
-                                >
-                                    Logout
-                                </Link>
-                            </li>
-                        </ul>
+                        {user ? (
+                            <ul
+                                tabIndex={0}
+                                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-100 rounded-box w-52"
+                            >
+                                {user.role === 'admin' && (
+                                    <li>
+                                        <Link className="flex items-center" style={{ textDecoration: "none", color: "#58B741" }} to="/admin/dashboard">Dashboard</Link>
+                                    </li>
+                                )}
+                                <li>
+                                    <Link
+                                        to="/me"
+                                        style={{ textDecoration: "none", color: "#58B741" }}
+                                        className="flex items-center"
+                                    >
+                                        Profile
+                                    </Link>
+                                </li>
+                                <li>
+                                    <Link
+                                        style={{ textDecoration: "none", color: "#58B741" }}
+                                        className="flex items-center"
+                                        onClick={handleLogout}
+                                    >
+                                        Logout
+                                    </Link>
+                                </li>
+                            </ul>
+                        ) : (
+                            <ul
+                                tabIndex={0}
+                                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-100 rounded-box w-52"
+                            >
+                                <li>
+                                    <Link
+                                        to="/login"
+                                        style={{ textDecoration: "none", color: "#58B741" }}
+                                        className="flex items-center"
+                                    >
+                                        Login
+                                    </Link>
+                                </li>
+                            </ul>
+                        )}
                     </div>
                 </div>
             </div>

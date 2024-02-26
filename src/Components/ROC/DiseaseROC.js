@@ -15,6 +15,7 @@ const DiseaseROC = () => {
     const options = {
         chart: {
             type: 'line',
+            height: '350', // height of the chart
             animations: {
                 enabled: true,
                 easing: 'easeinout',

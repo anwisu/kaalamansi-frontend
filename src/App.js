@@ -14,7 +14,10 @@ import Login from './Components/User/Login/Login';
 import Register from './Components/User/Register/Register';
 import Profile from './Components/User/Profile';
 import About from './Components/About';
-import QualityROC from './Components/ROC/QualityROC';
+import QualityDataset from './Components/Dataset/QualityDataset';
+import DiseaseDataset from './Components/Dataset/DiseaseDataset';
+import ProtectedRoute from './Route/ProtectedRoute';
+import Dashboard from './Components/Admin/Dashboard';
 
 
 function App() {
@@ -31,14 +34,17 @@ function App() {
           <Route path="/disease/all" element={<DiseaseList />} />
           <Route path="/quality/result" element={<QualityResult />} />
           <Route path="/disease/result" element={<DiseaseResult />} />
-          
-          {/* User Routes */}
+          <Route path="/quality/dataset" element={<QualityDataset />} />
+          <Route path="/disease/dataset" element={<DiseaseDataset />} />
+
+          {/* USER ROUTES */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/me" element={<Profile />} />
 
-          <Route path="/quality/roc-curve" element={<QualityROC />} />
 
+        {/* ADMIN ROUTES */}
+        <Route path="/admin/dashboard" element={ <ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>}/>
         </Routes>
       </Router>
     </div>
