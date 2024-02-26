@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { MDBDataTable } from "mdbreact";
+// import { MDBDataTable } from "mdbreact";
 import axios from "axios";
+import MUIDataTable from "mui-datatables";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const QualityList = () => {
   const [allQualityPredicts, setAllQualityPredicts] = useState([]);
@@ -26,40 +28,221 @@ const QualityList = () => {
     qualityList();
   }, []);
 
+  // const columns = [
+  //   { label: "Size", field: "size", sort: "asc" },
+  //   { label: "Firmness", field: "firmness", sort: "asc" },
+  //   { label: "Shape", field: "shape", sort: "asc" },
+  //   { label: "Skin Color", field: "skin_color", sort: "asc" },
+  //   { label: "Blemishes", field: "blemishes", sort: "asc" },
+  //   { label: "Soil Type", field: "soil_type", sort: "asc" },
+  //   { label: "Sun Exposure", field: "sun_exposure", sort: "asc" },
+  //   { label: "Location", field: "location", sort: "asc" },
+  //   { label: "Fertilizer", field: "fertilized", sort: "asc" },
+  //   { label: "Watering Schedule", field: "watering_sched", sort: "asc" },
+  //   { label: "Pruning", field: "pruning", sort: "asc" },
+  //   { label: "Pest Presence", field: "pest_presence", sort: "asc" },
+  //   { label: "Prediction", field: "predicted_quality", sort: "asc" },
+  // ];
+
   const columns = [
-    { label: "Size", field: "size", sort: "asc" },
-    { label: "Firmness", field: "firmness", sort: "asc" },
-    { label: "Shape", field: "shape", sort: "asc" },
-    { label: "Skin Color", field: "skin_color", sort: "asc" },
-    { label: "Blemishes", field: "blemishes", sort: "asc" },
-    { label: "Soil Type", field: "soil_type", sort: "asc" },
-    { label: "Sun Exposure", field: "sun_exposure", sort: "asc" },
-    { label: "Location", field: "location", sort: "asc" },
-    { label: "Fertilizer", field: "fertilized", sort: "asc" },
-    { label: "Watering Schedule", field: "watering_sched", sort: "asc" },
-    { label: "Pruning", field: "pruning", sort: "asc" },
-    { label: "Pest Presence", field: "pest_presence", sort: "asc" },
-    { label: "Prediction", field: "predicted_quality", sort: "asc" },
+    {
+      name: "size",
+      label: "Size",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "firmness",
+      label: "Firmness",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "shape",
+      label: "Shape",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "skin_color",
+      label: "Skin Color",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "blemishes",
+      label: "Blemishes",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "soil_type",
+      label: "Soil Type",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "sun_exposure",
+      label: "Sun Exposure",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "location",
+      label: "Location",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "fertilized",
+      label: "Fertilizer",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "watering_sched",
+      label: "Watering Schedule",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "pruning",
+      label: "Pruning",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "pest_presence",
+      label: "Pest Presence",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+      },
+    },
+    {
+      name: "predicted_quality",
+      label: "Prediction",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => (
+          <p
+            className={`capitalize px-3 py-1 bg-green-500 inline-block rounded-full 
+          ${value == "low" ? "bg-red-500" : "bg-green-500"}`}
+          >
+            {value}
+          </p>
+        ),
+      },
+    },
   ];
 
-  const data = {
-    columns,
+  const datas = {
     rows: allQualityPredicts,
   };
 
+  const options = {
+    selectableRows: false,
+    elevation: 0,
+    rowsPerPage: 5,
+    rowsPerPageOptions: [5, 10, 20, 30],
+    resizable: true,
+    print: false,
+  };
+
+  const muiTheme = () =>
+    createTheme({
+      typography: {
+        fontSize: "16px",
+      },
+      components: {
+        MuiTypography: {
+          styleOverrides: {
+            h6: {
+              fontSize: "30px", // Adjust the font size as needed
+              color: "#4AA032",
+              fontFamily: "League Spartan",
+            },
+          },
+        },
+        MuiTableCell: {
+          styleOverrides: {
+            head: {
+              padding: "7px 1px",
+              fontSize: "12px",
+              backgroundColor: "#75CD60",
+            },
+            body: {
+              padding: " 7px 15px",
+              fontSize: "14px",
+            },
+          },
+        },
+        MUIDataTable: {
+          styleOverrides: {
+            root: {
+              backgroundColor: "#fff",
+              borderRadius: "8px",
+              boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
+              padding: "2px",
+              fontSize: "18px",
+            },
+          },
+        },
+      },
+    });
+
   return (
-    <div class="container pl-2">
-      <h1 className="my-5 text-gray-900">All Quality Predictions</h1>
-      <MDBDataTable
-        responsive
-        striped
-        bordered
-        hover
-        data={data}
-        paging={true}
-        searching={true}
-        className="table text-gray-800 "
-      />
+    <div class="py-10 min-h-screen place-items-center">
+
+      <div class="mx-auto">
+
+        <ThemeProvider theme={muiTheme()}>
+          {allQualityPredicts.length > 0 && (
+            <MUIDataTable
+              title={"Predicted Quality"}
+              data={allQualityPredicts}
+              columns={columns}
+              options={options}
+              class="datatables"
+            />
+          )}
+        </ThemeProvider>
+      </div>
     </div>
   );
 };

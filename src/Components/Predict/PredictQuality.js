@@ -416,7 +416,7 @@ const PredictQuality = () => {
                 >
                   Predict
                 </button> */}
-                <button type="submit" class="button w-50 items-center mx-auto">
+                <button type="submit" class="buttons w-50 items-center mx-auto">
                   <div class="svg-wrapper-1">
                     <div class="svg-wrapper">
                       <svg
