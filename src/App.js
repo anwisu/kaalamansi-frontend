@@ -18,6 +18,7 @@ import QualityDataset from './Components/Dataset/QualityDataset';
 import DiseaseDataset from './Components/Dataset/DiseaseDataset';
 import ProtectedRoute from './Route/ProtectedRoute';
 import Dashboard from './Components/Admin/Dashboard';
+import UpdateProfile from './Components/User/updateProfile'
 
 
 function App() {
@@ -37,10 +38,12 @@ function App() {
           <Route path="/quality/dataset" element={<QualityDataset />} />
           <Route path="/disease/dataset" element={<DiseaseDataset />} />
 
+
           {/* USER ROUTES */}
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/me" element={<Profile />} />
+          <Route path="/me/update" element={<UpdateProfile />} />
 
 
         {/* ADMIN ROUTES */}
