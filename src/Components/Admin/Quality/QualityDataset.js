@@ -212,7 +212,7 @@ function QualityDataset() {
                             backgroundColor: "#75CD60",
                         },
                         body: {
-                            padding: " 7px 15px",
+                            padding: " 7px 10px",
                             fontSize: "14px",
                         },
                     },
@@ -236,7 +236,7 @@ function QualityDataset() {
             <div className="w-100">
                 <Sidebar />
             </div>
-            <div className="ml-6">
+            <div className="ml-[21rem] mr-6">
                 <h1 className="text-2xl font-bold mb-4">Understanding Dataset</h1>
                 {dataset ? (
                     <div className="bg-white p-4 rounded shadow">

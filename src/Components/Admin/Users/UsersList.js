@@ -198,7 +198,7 @@ const UsersList = () => {
                 <Sidebar />
             </div>
             <div className="flex-1 py-10">
-                <div className="mx-auto">
+                <div className="ml-[21rem] mr-6">
                     <ThemeProvider theme={muiTheme()}>
                         {allUsers.length > 0 && (
                             <MUIDataTable

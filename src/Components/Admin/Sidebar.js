@@ -62,8 +62,8 @@ const Sidebar = () => {
     };
 
     return (
-        <Card className="h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
-            <div className="mb-2 flex items-center gap-4 p-4">
+        <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 fixed top-0">            
+        <div className="mb-2 flex items-center gap-4 p-4">
                 <img src={process.env.PUBLIC_URL + '/images/user.png'} alt="avatar" className="h-8 w-8" />
                 <Typography variant="h5" color="blue-gray">
                     Admin <span style={{ color: "#008302" }}>{user.name}</span>

@@ -4,18 +4,18 @@ import axios from "axios";
 import { logout, getUser } from "../../utils/helpers";
 
 const Header = () => {
-  const navigate = useNavigate();
-  const [user, setUser] = useState(null);
+    const navigate = useNavigate();
+    const [user, setUser] = useState(null);
 
-  const handleLogout = async () => {
-    try {
-      await axios.get(`${process.env.REACT_APP_API}/logout`);
-      logout(); // Remove token and user data from session storage
-      navigate("/login");
-    } catch (error) {
-      console.error("Logout failed:", error);
-    }
-  };
+    const handleLogout = async () => {
+        try {
+            await axios.get(`${process.env.REACT_APP_API}/logout`);
+            logout(); // Remove token and user data from session storage
+            navigate("/login");
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
 
     useEffect(() => {
         const userData = getUser();
@@ -23,7 +23,7 @@ const Header = () => {
             setUser(userData);
         }
     }, []);
-    
+
     return (
         <Fragment>
             <div className="navbar bg-100">
