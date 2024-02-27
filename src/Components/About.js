@@ -57,14 +57,15 @@ const About = () => {
   return (
     <div className="container mx-auto">
       <h1 className="my-5">About Logistic Regression Model</h1>
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div className="bg-white shadow-md rounded-lg px-8 pt-6 pb-8 mb-4">
         <h2>Quality Classification Report</h2>
         <div>
-          Precision: {quality_metrics.report["weighted avg"]["precision"]}
+          Precision: {quality_metrics.report["weighted avg"]["precision"].toFixed(4)} / {quality_metrics.report["weighted avg"]["precision"].toFixed(2) * 100}%
         </div>
-        <div>Recall: {quality_metrics.report["weighted avg"]["recall"]}</div>
+        <div>Recall: {quality_metrics.report["weighted avg"]["recall"].toFixed(4)} / {quality_metrics.report["weighted avg"]["recall"].toFixed(2) * 100}%
+        </div>
         <div>
-          F1-score: {quality_metrics.report["weighted avg"]["f1-score"]}
+          F1-score: {quality_metrics.report["weighted avg"]["f1-score"].toFixed(4)} / {quality_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100}%
         </div>
         {/* <div>Accuracy: {quality_metrics.accuracy} / {(quality_metrics.accuracy * 100).toFixed(0)}%</div> */}
         <div className="flex mx-auto">
@@ -86,7 +87,7 @@ const About = () => {
       </div>
       <hr />
       <br />
-      <div className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+      <div className="bg-white shadow-lg rounded-lg px-8 pt-6 pb-8 mb-4">
         <h2>Disease Classification Report</h2>
         <div>
           Precision: {disease_metrics.report["weighted avg"]["precision"]}

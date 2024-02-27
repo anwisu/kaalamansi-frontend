@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 // import { Link } from "react-router-dom"; // Import Link for navigation
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
+import Sidebar from "../Sidebar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const DiseaseList = () => {
@@ -16,7 +17,7 @@ const DiseaseList = () => {
         },
       };
       const response = await axios.get(
-        `${process.env.REACT_APP_API}/disease/all`,
+        `${process.env.REACT_APP_API}/admin/disease/all`,
         config
       );
       setAllDiseasePredicts(response.data.disease_data);
@@ -29,7 +30,6 @@ const DiseaseList = () => {
     diseaseList();
   }, []);
 
-  // const columns = [
   //   { label: "Leaf Spots", label: "leaf_spots", sort: "asc" },
   //   { label: "Wilting", label: "wilting", sort: "asc" },
   //   { label: "Discoloration", label: "discoloration", sort: "asc" },
@@ -150,9 +150,8 @@ const DiseaseList = () => {
         sort: true,
         customBodyRender: (value) => (
           <p
-            className={`capitalize px-3 py-1 bg-green-500 inline-block rounded-full ${
-              value == "infected" ? "bg-red-500" : "bg-green-500"
-            }`}
+            className={`capitalize px-3 py-1 bg-green-500 inline-block rounded-full ${value == "infected" ? "bg-red-500" : "bg-green-500"
+              }`}
           >
             {value}
           </p>
@@ -241,21 +240,26 @@ const DiseaseList = () => {
   // };
 
   return (
-    <div class="py-10 min-h-screen place-items-center">
-      <div class="mx-auto">
-        <ThemeProvider theme={muiTheme()}>
-          {allDiseasePredicts.length > 0 ? (
-            <MUIDataTable
-              title={"Predicted Disease"}
-              data={allDiseasePredicts}
-              columns={columns}
-              options={options}
-              className="datatables"
-            />
-          ) : (
-            <p>No data available</p>
-          )}
-        </ThemeProvider>
+    <div className="flex">
+      <div className="w-100">
+        <Sidebar />
+      </div>
+      <div className="flex-1 py-10">
+        <div className="mx-auto">
+          <ThemeProvider theme={muiTheme()}>
+            {allDiseasePredicts.length > 0 ? (
+              <MUIDataTable
+                title={"Predicted Disease"}
+                data={allDiseasePredicts}
+                columns={columns}
+                options={options}
+                className="datatables"
+              />
+            ) : (
+              <p>No data available</p>
+            )}
+          </ThemeProvider>
+        </div>
       </div>
     </div>
   );

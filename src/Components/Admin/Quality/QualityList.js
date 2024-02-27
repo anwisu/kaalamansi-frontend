@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 // import { MDBDataTable } from "mdbreact";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
+import Sidebar from "../Sidebar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 const QualityList = () => {
@@ -15,7 +16,7 @@ const QualityList = () => {
         },
       };
       const response = await axios.get(
-        `${process.env.REACT_APP_API}/quality/all`,
+        `${process.env.REACT_APP_API}/admin/quality/all`,
         config
       );
       setAllQualityPredicts(response.data.quality_data);
@@ -27,22 +28,6 @@ const QualityList = () => {
   useEffect(() => {
     qualityList();
   }, []);
-
-  // const columns = [
-  //   { label: "Size", field: "size", sort: "asc" },
-  //   { label: "Firmness", field: "firmness", sort: "asc" },
-  //   { label: "Shape", field: "shape", sort: "asc" },
-  //   { label: "Skin Color", field: "skin_color", sort: "asc" },
-  //   { label: "Blemishes", field: "blemishes", sort: "asc" },
-  //   { label: "Soil Type", field: "soil_type", sort: "asc" },
-  //   { label: "Sun Exposure", field: "sun_exposure", sort: "asc" },
-  //   { label: "Location", field: "location", sort: "asc" },
-  //   { label: "Fertilizer", field: "fertilized", sort: "asc" },
-  //   { label: "Watering Schedule", field: "watering_sched", sort: "asc" },
-  //   { label: "Pruning", field: "pruning", sort: "asc" },
-  //   { label: "Pest Presence", field: "pest_presence", sort: "asc" },
-  //   { label: "Prediction", field: "predicted_quality", sort: "asc" },
-  // ];
 
   const columns = [
     {
@@ -227,21 +212,41 @@ const QualityList = () => {
     });
 
   return (
-    <div class="py-10 min-h-screen place-items-center">
+    // <div class="py-10 min-h-screen place-items-center">
 
-      <div class="mx-auto">
+    //   <div class="mx-auto">
 
-        <ThemeProvider theme={muiTheme()}>
-          {allQualityPredicts.length > 0 && (
-            <MUIDataTable
-              title={"Predicted Quality"}
-              data={allQualityPredicts}
-              columns={columns}
-              options={options}
-              class="datatables"
-            />
-          )}
-        </ThemeProvider>
+    //     <ThemeProvider theme={muiTheme()}>
+    //       {allQualityPredicts.length > 0 && (
+    //         <MUIDataTable
+    //           title={"Predicted Quality"}
+    //           data={allQualityPredicts}
+    //           columns={columns}
+    //           options={options}
+    //           class="datatables"
+    //         />
+    //       )}
+    //     </ThemeProvider>
+    //   </div>
+    // </div>
+    <div className="flex">
+      <div className="w-100">
+        <Sidebar />
+      </div>
+      <div className="flex-1 py-10">
+        <div className="mx-auto">
+          <ThemeProvider theme={muiTheme()}>
+            {allQualityPredicts.length > 0 && (
+              <MUIDataTable
+                title={"Predicted Quality"}
+                data={allQualityPredicts}
+                columns={columns}
+                options={options}
+                class="datatables"
+              />
+            )}
+          </ThemeProvider>
+        </div>
       </div>
     </div>
   );

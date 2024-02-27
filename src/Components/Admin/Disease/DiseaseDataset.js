@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Sidebar from '../Sidebar';
 import axios from 'axios';
 
 function DiseaseDataset() {
@@ -11,15 +12,19 @@ function DiseaseDataset() {
     }, []);
 
     return (
-        <div>
-            {shape ? (
-                <div>
-                    <p>Shape of dataset: {shape[0]}, {shape[1]}</p>
-                    {/* <p>Number of Rows: {shape[0]}</p>
-                    <p>Number of Columns: {shape[1]}</p> */}
-                </div>
-            ) : 'Loading...'}
+        <div className="flex">
+        <div className="w-100">
+            <Sidebar />
         </div>
+        <div className="ml-6">
+            <h1 className="text-2xl font-bold mb-4">Disease Dataset</h1>
+            {shape ? (
+                <div className="bg-white p-4 rounded shadow">
+                    <p className="mb-2">Shape of dataset: ({shape[0]} rows, {shape[1]} columns)</p>
+                </div>
+            ) : <p className="text-gray-600">Loading...</p>}
+        </div>
+    </div>
     );
 }
 
