@@ -1,9 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import { getToken } from "../../../utils/helpers";
 import Sidebar from "../Sidebar";
 import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { 
+    PencilSquareIcon, 
+    TrashIcon 
+} from '@heroicons/react/24/solid';
+
+
 
 const UsersList = () => {
     const [allUsers, setAllUsers] = useState([]);
@@ -29,6 +35,38 @@ const UsersList = () => {
     useEffect(() => {
         userList();
     }, []);
+
+    const updateUser = async (id, updatedData) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${getToken()}`
+                },
+            };
+            await axios.put(`${process.env.REACT_APP_API}/admin/users/${id}`, updatedData, config);
+            // After updating, refresh the user list
+            userList();
+        } catch (error) {
+            console.error("Error updating user:", error);
+        }
+    };
+    
+    const deleteUser = async (id) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${getToken()}`
+                },
+            };
+            await axios.delete(`${process.env.REACT_APP_API}/admin/users/${id}`, config);
+            // After deleting, refresh the user list
+            userList();
+        } catch (error) {
+            console.error("Error deleting user:", error);
+        }
+    };
 
     const columns = [
         {
@@ -58,7 +96,46 @@ const UsersList = () => {
                 customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
             },
         },
+        {
+            name: "actions",
+            label: "Actions",
+            options: {
+                filter: false,
+                sort: false,
+                empty: true,
+                customBodyRenderLite: (dataIndex) => {
+                    return (
+                    <Fragment>
+                        <button 
+                            onClick={() => handleUpdate(allUsers[dataIndex]._id)}
+                            className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 ml-2"
+                        >
+                            <PencilSquareIcon className="h-5 w-5"/>
+                        </button>
+                        <button 
+                            onClick={() => handleDelete(allUsers[dataIndex]._id)}
+                            className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                        >
+                            <TrashIcon className="h-5 w-5"/>
+                        </button>
+                    </Fragment>
+                    );
+                },
+            },
+        },
     ];
+
+    const handleUpdate = (id) => {
+        // Here you need to implement the logic to get the updated data
+        // For example, you can open a modal with a form to edit the user data
+        // Once you have the updated data, you can call the updateUser function
+        const updatedData = {}; // Replace this with the actual updated data
+        updateUser(id, updatedData);
+    }
+
+    const handleDelete = (id) => {
+        deleteUser(id)
+    }
 
     const datas = {
         rows: allUsers,
