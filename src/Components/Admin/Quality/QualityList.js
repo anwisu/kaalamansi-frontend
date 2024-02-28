@@ -1,9 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 // import { MDBDataTable } from "mdbreact";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import Sidebar from "../Sidebar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { getToken } from "../../../utils/helpers";
+import { 
+  TrashIcon 
+} from '@heroicons/react/24/solid';
 
 const QualityList = () => {
   const [allQualityPredicts, setAllQualityPredicts] = useState([]);
@@ -28,6 +32,22 @@ const QualityList = () => {
   useEffect(() => {
     qualityList();
   }, []);
+
+  const deleteQuality = async (id) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${getToken()}`
+        },
+      };
+      await axios.delete(`${process.env.REACT_APP_API}/admin/quality/${id}`, config);
+      // Refresh the quality list after deletion
+      qualityList();
+    } catch (error) {
+      console.error("Error deleting quality data:", error);
+    }
+  };
 
   const columns = [
     {
@@ -154,7 +174,32 @@ const QualityList = () => {
         ),
       },
     },
+    {
+      name: "actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        empty: true,
+        customBodyRenderLite: (dataIndex) => {
+          return (
+            <Fragment>
+              <button
+                onClick={() => handleDelete(allQualityPredicts[dataIndex]._id)}
+                className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+              >
+                <TrashIcon className="h-5 w-5" />
+              </button>
+            </Fragment>
+          );
+        },
+      },
+    },
   ];
+
+  const handleDelete = (id) => {
+    deleteQuality(id)
+  }
 
   const datas = {
     rows: allQualityPredicts,
@@ -187,12 +232,12 @@ const QualityList = () => {
         MuiTableCell: {
           styleOverrides: {
             head: {
-              padding: "7px 1px",
+              padding: "7px 0",
               fontSize: "12px",
               backgroundColor: "#75CD60",
             },
             body: {
-              padding: " 7px 13px",
+              padding: " 7px 8px",
               fontSize: "14px",
             },
           },
@@ -212,23 +257,6 @@ const QualityList = () => {
     });
 
   return (
-    // <div class="py-10 min-h-screen place-items-center">
-
-    //   <div class="mx-auto">
-
-    //     <ThemeProvider theme={muiTheme()}>
-    //       {allQualityPredicts.length > 0 && (
-    //         <MUIDataTable
-    //           title={"Predicted Quality"}
-    //           data={allQualityPredicts}
-    //           columns={columns}
-    //           options={options}
-    //           class="datatables"
-    //         />
-    //       )}
-    //     </ThemeProvider>
-    //   </div>
-    // </div>
     <div className="flex">
       <div className="w-100">
         <Sidebar />

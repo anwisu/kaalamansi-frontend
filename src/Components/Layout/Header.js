@@ -85,29 +85,11 @@ const Header = () => {
                                     </li>
                                     <li>
                                         <Link
-                                            to="/quality/all"
-                                            style={{ textDecoration: "none", color: "#58B741" }}
-                                            className="flex items-center"
-                                        >
-                                            Quality Predictions
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
                                             to="/predict/disease"
                                             style={{ textDecoration: "none", color: "#58B741" }}
                                             className="flex items-center"
                                         >
                                             Predict Disease
-                                        </Link>
-                                    </li>
-                                    <li>
-                                        <Link
-                                            to="/disease/all"
-                                            style={{ textDecoration: "none", color: "#58B741" }}
-                                            className="flex items-center"
-                                        >
-                                            Disease Predictions
                                         </Link>
                                     </li>
                                 </ul>
