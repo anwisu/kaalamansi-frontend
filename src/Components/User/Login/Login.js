@@ -28,6 +28,7 @@ const Login = () => {
         if (authenticate(data)) {
           // Navigate to '/' upon successful authentication
           navigate('/');
+          window.location.reload()
         } else {
           console.error('Failed to authenticate');
         }

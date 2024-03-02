@@ -35,6 +35,7 @@ const About = () => {
     chart: {
       type: "radialBar",
       height: 350,
+    
     },
     plotOptions: {
       radialBar: {
@@ -45,6 +46,7 @@ const About = () => {
           },
           value: {
             show: true,
+            fontSize: '20px',
             formatter: function (val) {
               return val.toFixed(2) + "%";
             },

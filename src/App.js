@@ -20,6 +20,8 @@ import QualityDataset from './Components/Admin/Quality/QualityDataset';
 import DiseaseDataset from './Components/Admin/Disease/DiseaseDataset';
 import UpdateProfile from './Components/User/updateProfile';
 import UsersList from './Components/Admin/Users/UsersList';
+import QualityRecoList from './Components/Admin/Recommendations/QualityRecoList';
+import NewQualityRecommendations from './Components/Admin/Recommendations/NewQualityRecommendations';
 import UpdateUser from './Components/Admin/Users/updateUsers';
 
 function App() {
@@ -32,7 +34,7 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/predict/quality" element={<PredictQuality />} />
           <Route path="/predict/disease" element={<PredictDisease />} />
-          <Route path="/quality/result" element={<QualityResult />} />
+          <Route path="/predict/quality/:id"  element={<QualityResult />} />
           <Route path="/disease/result" element={<DiseaseResult />} />
 
           {/* USER ROUTES */}
@@ -50,6 +52,8 @@ function App() {
           <Route path="/admin/users/:id" element={<ProtectedRoute isAdmin={true}><UpdateUser /></ProtectedRoute>} />
           <Route path="/admin/quality/dataset" element={<ProtectedRoute isAdmin={true}><QualityDataset /></ProtectedRoute>} />
           <Route path="/admin/disease/dataset" element={<ProtectedRoute isAdmin={true}><DiseaseDataset /></ProtectedRoute>} />
+          <Route path="/admin/quality/recommendation/new" element={<ProtectedRoute isAdmin={true}><NewQualityRecommendations /></ProtectedRoute>} />
+          <Route path="/admin/quality/recommendations/all" element={<ProtectedRoute isAdmin={true}><QualityRecoList /></ProtectedRoute>} />
         </Routes>
       </Router>
     </div>

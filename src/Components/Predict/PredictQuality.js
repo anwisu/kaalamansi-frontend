@@ -26,10 +26,10 @@ const PredictQuality = () => {
         }
       );
 
-      if (response.data && response.data.inserted_data) {
-        navigate("/quality/result", {
-          state: { qualityData: response.data.inserted_data },
-        });
+      if (response.data && response.data.reco_data) {
+        console.log(response.data.reco_data._id); // Log the id
+        const result = navigate(`/predict/quality/${response.data.reco_data._id}`);
+        console.log(result); // Log the result of the navigate function
       } else {
         setError("Prediction failed. Please try again.");
       }

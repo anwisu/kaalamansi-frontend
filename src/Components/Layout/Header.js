@@ -11,7 +11,8 @@ const Header = () => {
         try {
             await axios.get(`${process.env.REACT_APP_API}/logout`);
             logout(); // Remove token and user data from session storage
-            navigate("/login");
+            navigate("/");
+            window.location.reload()
         } catch (error) {
             console.error("Logout failed:", error);
         }

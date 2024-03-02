@@ -1,20 +1,47 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 
 const QualityResult = () => {
-  const location = useLocation();
-  const qualityData = location.state && location.state.qualityData;
+  const [combinedQualityData, setCombinedQualityData] = useState(null);
+  const { id } = useParams();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios(
+          `${process.env.REACT_APP_API}/predict/quality/${id}`,
+        );
+        // console.log(result.data); // Log the fetched data
+
+        setCombinedQualityData(result.data);
+        console.log(combinedQualityData);
+        // Fetch additional data from the quality collection
+        const qualityResult = await axios(
+          `${process.env.REACT_APP_API}/admin/quality/${result.data.reco_data.quality_id}`,
+        );
+        // console.log(qualityResult.data); // Log the fetched quality data
+
+        setCombinedQualityData(prevData => ({
+          ...prevData,
+          qualityData: qualityResult.data,
+        }));
+        console.log(combinedQualityData);
+
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  if (!combinedQualityData || !combinedQualityData.qualityData) {
+    return <div>Loading...</div>;
+  }
+
 
   return (
-    // <div>
-    //     <h1>Quality Result</h1>
-    //     {qualityData && (
-    //         <div>
-    //             <p>Quality ID: {qualityData._id}</p>
-    //             <p>Predicted Quality: {qualityData.predicted_quality}</p>
-    //         </div>
-    //     )}
-    // </div>
     <div>
       <div class="mt-8 mx-30 w-80 items-center text-center justify-between mx-auto">
         <h1
@@ -27,7 +54,7 @@ const QualityResult = () => {
           Quality Result
         </h1>
         <div class="card1 p-10 py-10 bg-gray-200  text-center">
-          {qualityData && qualityData.predicted_quality === "low" ? (
+          {combinedQualityData && combinedQualityData.qualityData.quality_data.predicted_quality === "low" ? (
             <div>
               <div className="flex items-center">
                 <span>
@@ -58,7 +85,54 @@ const QualityResult = () => {
               </div>
 
               <p class="text-gray-600 text-sm">
-                <b>Quality ID:</b> xxxxxxxxxx {qualityData._id}
+                <b>Quality ID:</b> {combinedQualityData.reco_data.quality_id}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Size:</b> {combinedQualityData.qualityData.quality_data.size}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Shape:</b> {combinedQualityData.qualityData.quality_data.shape}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Firmness:</b> {combinedQualityData.qualityData.quality_data.firmness}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Skin Color:</b> {combinedQualityData.qualityData.quality_data.skin_color}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Blemishes:</b> {combinedQualityData.qualityData.quality_data.blemishes}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Soil Type:</b> {combinedQualityData.qualityData.quality_data.soil_type}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Sun Exposure:</b> {combinedQualityData.qualityData.quality_data.sun_exposure}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Location:</b> {combinedQualityData.qualityData.quality_data.location}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Fertilized:</b> {combinedQualityData.qualityData.quality_data.fertilized}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Watering Schedule:</b> {combinedQualityData.qualityData.quality_data.watering_sched}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Pruning:</b> {combinedQualityData.qualityData.quality_data.pruning}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Pest Presence:</b> {combinedQualityData.qualityData.quality_data.pest_presence}
+              </p>
+              <p class="text-gray-600 text-sm">
+                {combinedQualityData.reco_data.soil_recommendation && (
+                  <><b>Soil Recommendations:</b> {combinedQualityData.reco_data.soil_recommendation}<br /></>
+                )}
+                {combinedQualityData.reco_data.sun_recommendation && (
+                  <><b>Sun Recommendations:</b> {combinedQualityData.reco_data.sun_recommendation}<br /></>
+                )}
+                {combinedQualityData.reco_data.watering_recommendation && (
+                  <><b>Watering Recommendations:</b> {combinedQualityData.reco_data.watering_recommendation}<br /></>
+                )}
               </p>
             </div>
           ) : (
@@ -93,7 +167,54 @@ const QualityResult = () => {
               </div>
 
               <p class="text-gray-600 text-sm">
-                <b>Quality ID:</b> xxxxxxxxxx {qualityData._id}
+                <b>Quality ID:</b> {combinedQualityData.reco_data.quality_id}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Size:</b> {combinedQualityData.qualityData.quality_data.size}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Shape:</b> {combinedQualityData.qualityData.quality_data.shape}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Firmness:</b> {combinedQualityData.qualityData.quality_data.firmness}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Skin Color:</b> {combinedQualityData.qualityData.quality_data.skin_color}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Blemishes:</b> {combinedQualityData.qualityData.quality_data.blemishes}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Soil Type:</b> {combinedQualityData.qualityData.quality_data.soil_type}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Sun Exposure:</b> {combinedQualityData.qualityData.quality_data.sun_exposure}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Location:</b> {combinedQualityData.qualityData.quality_data.location}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Fertilized:</b> {combinedQualityData.qualityData.quality_data.fertilized}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Watering Schedule:</b> {combinedQualityData.qualityData.quality_data.watering_sched}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Pruning:</b> {combinedQualityData.qualityData.quality_data.pruning}
+              </p>
+              <p class="text-gray-600 text-sm">
+                <b>Pest Presence:</b> {combinedQualityData.qualityData.quality_data.pest_presence}
+              </p>
+              <p class="text-gray-600 text-sm">
+                {combinedQualityData.reco_data.soil_recommendation && (
+                  <><b>Soil Recommendations:</b> {combinedQualityData.reco_data.soil_recommendation}<br /></>
+                )}
+                {combinedQualityData.reco_data.sun_recommendation && (
+                  <><b>Sun Recommendations:</b> {combinedQualityData.reco_data.sun_recommendation}<br /></>
+                )}
+                {combinedQualityData.reco_data.watering_recommendation && (
+                  <><b>Watering Recommendations:</b> {combinedQualityData.reco_data.watering_recommendation}<br /></>
+                )}
               </p>
             </div>
           )}
