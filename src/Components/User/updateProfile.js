@@ -64,7 +64,7 @@ const UpdateProfile = () => {
       navigate("/me", { replace: true });
     } catch (error) {
       console.log("Error:", error);
-      toast.error(" Thier is an Error ", {
+      toast.error(" There is an Error ", {
         position: "top-right",
       });
     }
