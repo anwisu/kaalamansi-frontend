@@ -20,6 +20,7 @@ import QualityDataset from './Components/Admin/Quality/QualityDataset';
 import DiseaseDataset from './Components/Admin/Disease/DiseaseDataset';
 import UpdateProfile from './Components/User/updateProfile';
 import UsersList from './Components/Admin/Users/UsersList';
+import UpdateUser from './Components/Admin/Users/updateUsers';
 
 function App() {
   return (
@@ -46,6 +47,7 @@ function App() {
           <Route path="/admin/quality/all" element={<ProtectedRoute isAdmin={true}><QualityList /></ProtectedRoute>} />
           <Route path="/admin/disease/all" element={<ProtectedRoute isAdmin={true}><DiseaseList /></ProtectedRoute>} />
           <Route path="/admin/users" element={<ProtectedRoute isAdmin={true}><UsersList /></ProtectedRoute>} />
+          <Route path="/admin/users/:id" element={<ProtectedRoute isAdmin={true}><UpdateUser /></ProtectedRoute>} />
           <Route path="/admin/quality/dataset" element={<ProtectedRoute isAdmin={true}><QualityDataset /></ProtectedRoute>} />
           <Route path="/admin/disease/dataset" element={<ProtectedRoute isAdmin={true}><DiseaseDataset /></ProtectedRoute>} />
         </Routes>
