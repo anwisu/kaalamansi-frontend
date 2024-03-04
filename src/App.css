@@ -272,3 +272,8 @@ body {
   padding: 2%;
 }
 
+.charts-container {
+  display: flex;
+  flex-direction: row;
+  width: 100%; /* Adjust the width based on your layout requirements */
+}
