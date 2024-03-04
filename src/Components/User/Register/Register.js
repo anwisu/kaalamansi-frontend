@@ -43,8 +43,8 @@ const Register = () => {
         <video src='./videos/watering-plants.mp4' className='registerVideo' autoPlay muted loop></video>
 
         <div className='textDiv'>
-          <h2 className='title'>Create and Sell Extraordinary Products</h2>
-          <p>Adopt the peace of nature!</p>
+          <h2 className='title'>Adopt the peace of nature!</h2>
+          <p></p>
         </div>
 
         <div className='footerDiv registerFlex'>
