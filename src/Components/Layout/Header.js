@@ -27,7 +27,7 @@ const Header = () => {
 
     return (
         <Fragment>
-            <div className="navbar bg-100">
+            <div className="navbar bg-white-900">
                 <div className="flex-1">
                     <Link to="/" className="inline-block text-teal-600">
                         <div className="flex items-center">
@@ -44,7 +44,7 @@ const Header = () => {
                         <li>
                             <Link
                                 to="/"
-                                style={{ textDecoration: "none", color: "#58B741" }}
+                                style={{ textDecoration: "none", color: "#58B741"}}
                                 className="flex items-center"
                             >
                                 Home
