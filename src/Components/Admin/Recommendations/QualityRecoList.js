@@ -78,6 +78,24 @@ const QualityRecoList = () => {
                 customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
             },
         },
+        {
+            name: "images",
+            label: "Images",
+            options: {
+                filter: true,
+                sort: true,
+                customBodyRender: (value) => {
+                    console.log(value); // Log the image URLs
+                    return (
+                        <div style={{ display: 'flex'}}>
+                        {Array.isArray(value) && value.map((image, index) => (
+                            <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '80px', height: 'auto', marginRight: '10px' }} />
+                        ))}
+                        </div>
+                    );
+                },
+            },
+        },
         // {
         //     name: "actions",
         //     label: "Actions",
