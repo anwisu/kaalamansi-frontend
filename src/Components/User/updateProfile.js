@@ -4,10 +4,14 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getToken } from "../../utils/helpers";
+import { Avatar } from '@material-tailwind/react';
 
 const UpdateProfile = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
+  const [avatar, setAvatar] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState('');
+
 
   const [error, setError] = useState("");
   const [user, setUser] = useState({});
@@ -29,6 +33,7 @@ const UpdateProfile = () => {
       console.log(data);
       setName(data.user.name);
       setEmail(data.user.email);
+      setAvatarPreview(data.user.avatar.url)
       setLoading(false);
     } catch (error) {
       toast.error("User Cannot find", {
@@ -37,49 +42,56 @@ const UpdateProfile = () => {
     }
   };
 
-  const updateProfile = async (userData) => {
+  const submitHandler = (e) => {
+    e.preventDefault();
+  
+    if (avatar) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const data = {
+          name,
+          email,
+          avatar: reader.result
+        };
+        updateProfile(data);
+      };
+      reader.readAsDataURL(avatar);
+    } else {
+      const data = {
+        name,
+        email
+      };
+      updateProfile(data);
+    }
+  };
+  
+  const updateProfile = async (data) => {
     const config = {
       headers: {
-        Authorization: `Bearer ${getToken()}`,
+        'Authorization': `Bearer ${getToken()}`,
+        'Content-Type': 'application/json'
       },
     };
-
+  
     try {
-      const formData = new FormData();
-      Object.keys(userData).forEach((key) =>
-        formData.append(key, userData[key])
-      );
-
-      const { data } = await axios.put(
+      const response = await axios.put(
         `${process.env.REACT_APP_API}/me/update`,
+        JSON.stringify(data),
         config
       );
-      console.log("Response data:", data);
-      setIsUpdated(data.success);
+      console.log("Response data:", response.data);
+      setIsUpdated(response.data.success);
       setLoading(false);
       toast.success("Profile Update Success", {
         position: "top-right",
       });
-
+  
       navigate("/me", { replace: true });
     } catch (error) {
-      console.log("Error:", error);
-      toast.error(" There is an Error ", {
-        position: "top-right",
-      });
+      console.error("Error updating profile:", error);
     }
   };
 
-  const submitHandler = (e) => {
-    e.preventDefault();
-    const formData = {
-      name,
-      email,
-    };
-
-    console.log("User data:", { name, email });
-    updateProfile(formData);
-  };
 
   useEffect(() => {
     getProfile();
@@ -128,11 +140,32 @@ const UpdateProfile = () => {
             />
           </div>
 
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-600" for="avatar">
+              Avatar
+            </label>
+            <span>
+            <Avatar
+                  src={avatarPreview}
+                  size="large"
+                />
+            <input
+              class="mt-1 p-2 w-full border rounded-md"
+              name="avatar"
+              id="avatar_field"
+              type="file"
+              onChange={(e) => {
+                setAvatar(e.target.files[0]);
+                setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+            </span>
+          </div>
+
           <div class="flex justify-end">
             <button
               class="[background:linear-gradient(144deg,#af40ff,#5b42f3_50%,#00ddeb)] text-white px-4 py-2 font-bold rounded-md hover:opacity-80"
               type="submit"
-              disabled="true"
             >
               Update
             </button>
