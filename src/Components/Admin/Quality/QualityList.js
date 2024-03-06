@@ -44,6 +44,7 @@ const QualityList = () => {
       await axios.delete(`${process.env.REACT_APP_API}/admin/quality/${id}`, config);
       // Refresh the quality list after deletion
       qualityList();
+      window.location.reload()
     } catch (error) {
       console.error("Error deleting quality data:", error);
     }
