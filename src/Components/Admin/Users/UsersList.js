@@ -80,6 +80,22 @@ const UsersList = () => {
       },
     },
     {
+      name: "avatar",
+      label: "Avatar",
+      options: {
+        filter: true,
+        sort: true,
+        customBodyRender: (value) => {
+          console.log(value); // Log the image URLs
+          return (
+            <div style={{ display: 'flex' }}>
+              {value && <img src={value.url} alt={value.name} style={{ width: '80px', height: 'auto'}} />}            
+            </div>
+          );
+        },
+      },
+    },
+    {
       name: "actions",
       label: "Actions",
       options: {
@@ -90,16 +106,10 @@ const UsersList = () => {
           return (
             <Fragment>
               <Link to={`/admin/users/${allUsers[dataIndex]._id}`}>
-                <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 ml-2">
+                <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 mr-2">
                   <PencilSquareIcon className="h-5 w-5" />
                 </button>
               </Link>
-              {/* <button
-                onClick={() => handleUpdate(allUsers[dataIndex]._id)}
-                className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 ml-2"
-              >
-                <PencilSquareIcon className="h-5 w-5" />
-              </button> */}
               <button
                 onClick={() => handleDelete(allUsers[dataIndex]._id)}
                 className="bg-red-500 text-white p-2 rounded hover:bg-red-700"

@@ -4,6 +4,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { getToken } from "../../../utils/helpers";
+import { Avatar } from '@material-tailwind/react';
 
 const UpdateProfile = () => {
   const [name, setName] = useState("");
@@ -13,6 +14,8 @@ const UpdateProfile = () => {
   const [error, setError] = useState("");
   const [user, setUser] = useState(true);
   const [isUpdated, setIsUpdated] = useState(false);
+  const [avatar, setAvatar] = useState("");
+  const [avatarPreview, setAvatarPreview] = useState('');
   let navigate = useNavigate();
 
   const { id } = useParams();
@@ -31,6 +34,7 @@ const UpdateProfile = () => {
       setEmail(data.user.email);
         setName(data.user.name);
         setRole(data.user.role);
+        setAvatarPreview(data.user.avatar.url)
       setLoading(false);
     } catch (error) {
       setError(error.response.data.message);
@@ -45,7 +49,11 @@ const UpdateProfile = () => {
       const { data } = await axios.put(
         `${process.env.REACT_APP_API}/admin/users/${id}`,
         userData,
-        config
+        {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        }
       );
       setIsUpdated(data.success);
       setLoading(false);
@@ -78,15 +86,16 @@ const UpdateProfile = () => {
 
   const submitHandler = (e) => {
     e.preventDefault();
-    // const formData = new FormData();
-    // formData.set("name", name);
-    // formData.set("email", email);
-    // formData.set("role", role);
-    const formData = {
-        name,
-        email,
-        role
-      };
+  
+    const formData = new FormData();
+    formData.append('name', name);
+    formData.append('email', email);
+    formData.append('role', role);
+  
+    if (avatar) {
+      formData.append('avatar', avatar);
+    }
+  
     updateUser(id, formData);
   };
   console.log(user);
@@ -149,6 +158,28 @@ const UpdateProfile = () => {
               <option value="admin">Admin</option>
               <option value="user">User</option>
             </select>
+          </div>
+
+          <div class="mb-4">
+            <label class="block text-sm font-medium text-gray-600" for="avatar">
+              Avatar
+            </label>
+            <span>
+            <Avatar
+                  src={avatarPreview}
+                  size="large"
+                />
+            <input
+              class="mt-1 p-2 w-full border rounded-md"
+              name="avatar"
+              id="avatar_field"
+              type="file"
+              onChange={(e) => {
+                setAvatar(e.target.files[0]);
+                setAvatarPreview(URL.createObjectURL(e.target.files[0]));
+              }}
+            />
+            </span>
           </div>
 
           <div class="flex justify-end">
