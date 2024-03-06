@@ -38,12 +38,6 @@ const Profile = () => {
         <p>Loading user profile...</p>
       ) : (
         <Fragment>
-          {/* <div>
-                        <h2>User Profile</h2>
-                        <p>Name: {user.name}</p>
-                        <p>Email: {user.email}</p>
-                    </div> */}
-
           <div class="h-full bg-gray-200 p-8">
             <div className="container mx-auto">
               <div class="bg-white rounded-lg shadow-xl pb-8">
@@ -55,30 +49,14 @@ const Profile = () => {
                 </div>
                 <div class="flex flex-col items-center -mt-20">
                   <img
-                    src="./images/user.png"
+                    src={user.avatar.url} alt={user.name}
                     class="w-40 border-4 border-white rounded-full"
                   />
                   <div class="flex items-center space-x-2 mt-2">
-                    <p class="text-2xl">{user.name}</p>
-                    <span class="bg-blue-500 rounded-full p-1" title="Verified">
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        class="text-gray-100 h-2.5 w-2.5"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="4"
-                          d="M5 13l4 4L19 7"
-                        ></path>
-                      </svg>
-                    </span>
+                    <p class="text-3xl  text-green-700">{user.name}</p>
                   </div>
                   <p class=" capitalize text-gray-700">{user.role}</p>
-                  <p class="text-sm text-gray-500">Taguig City, Philippines</p>
+                  
                 </div>
                 <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
                   <div class="flex items-center space-x-4 mt-2">
@@ -114,6 +92,10 @@ const Profile = () => {
                       <li class="flex border-b py-2">
                         <span class="font-bold w-24">Email:</span>
                         <span class="text-gray-700">{user.email}</span>
+                      </li>
+                      <li class="flex border-b py-2">
+                        <span class="font-bold w-24">Joined On:</span>
+                        <span class="text-gray-700">{String(user.created_at).substring(0, 16)}</span>
                       </li>
                       {/* <li class="flex border-b py-2">
                                                 <span class="font-bold w-24">Birthday:</span>
