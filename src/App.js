@@ -23,6 +23,8 @@ import UsersList from './Components/Admin/Users/UsersList';
 import QualityRecoList from './Components/Admin/Recommendations/QualityRecoList';
 import NewQualityRecommendations from './Components/Admin/Recommendations/NewQualityRecommendations';
 import UpdateUser from './Components/Admin/Users/updateUsers';
+import DiseaseRecoList from './Components/Admin/Recommendations/DiseaseRecoList';
+import NewDiseaseRecommendations from './Components/Admin/Recommendations/NewDiseaseRecommendations';
 
 function App() {
   return (
@@ -54,6 +56,8 @@ function App() {
           <Route path="/admin/disease/dataset" element={<ProtectedRoute isAdmin={true}><DiseaseDataset /></ProtectedRoute>} />
           <Route path="/admin/quality/recommendation/new" element={<ProtectedRoute isAdmin={true}><NewQualityRecommendations /></ProtectedRoute>} />
           <Route path="/admin/quality/recommendations/all" element={<ProtectedRoute isAdmin={true}><QualityRecoList /></ProtectedRoute>} />
+          <Route path="/admin/disease/recommendation/new" element={<ProtectedRoute isAdmin={true}><NewDiseaseRecommendations /></ProtectedRoute>} />
+          <Route path="/admin/disease/recommendations/all" element={<ProtectedRoute isAdmin={true}><DiseaseRecoList /></ProtectedRoute>} />
         </Routes>
       </Router>
     </div>

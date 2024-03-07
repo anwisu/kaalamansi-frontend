@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Fragment } from "react";
-// import { MDBDataTable } from "mdbreact";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import Sidebar from "../Sidebar";
@@ -10,10 +9,10 @@ import {
     TrashIcon
 } from '@heroicons/react/24/solid';
 
-const QualityRecoList = () => {
-    const [allQualityReco, setAllQualityReco] = useState([]);
+const DiseaseRecoList = () => {
+    const [allDiseaseReco, setAllDiseaseReco] = useState([]);
 
-    const qualityRecoList = async () => {
+    const diseaseRecoList = async () => {
         try {
             const config = {
                 headers: {
@@ -21,20 +20,20 @@ const QualityRecoList = () => {
                 },
             };
             const response = await axios.get(
-                `${process.env.REACT_APP_API}/admin/quality/recommendations/all`,
+                `${process.env.REACT_APP_API}/admin/disease/recommendations/all`,
                 config
             );
-            setAllQualityReco(response.data.qualityReco);
+            setAllDiseaseReco(response.data.diseaseReco);
         } catch (error) {
-            console.error("Error fetching quality data:", error);
+            console.error("Error fetching disease data:", error);
         }
     };
 
     useEffect(() => {
-        qualityRecoList();
+        diseaseRecoList();
     }, []);
 
-    // const deleteQuality = async (id) => {
+    // const deleteDisease = async (id) => {
     //     try {
     //         const config = {
     //             headers: {
@@ -42,11 +41,11 @@ const QualityRecoList = () => {
     //                 'Authorization': `Bearer ${getToken()}`
     //             },
     //         };
-    //         await axios.delete(`${process.env.REACT_APP_API}/admin/quality/${id}`, config);
-    //         // Refresh the quality list after deletion
-    //         qualityList();
+    //         await axios.delete(`${process.env.REACT_APP_API}/admin/disease/${id}`, config);
+    //         // Refresh the disease list after deletion
+    //         diseaseList();
     //     } catch (error) {
-    //         console.error("Error deleting quality data:", error);
+    //         console.error("Error deleting disease data:", error);
     //     }
     // };
 
@@ -107,7 +106,7 @@ const QualityRecoList = () => {
         //             return (
         //                 <Fragment>
         //                     <button
-        //                         onClick={() => handleDelete(allQualityPredicts[dataIndex]._id)}
+        //                         onClick={() => handleDelete(allDiseasePredicts[dataIndex]._id)}
         //                         className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
         //                     >
         //                         <TrashIcon className="h-5 w-5" />
@@ -120,11 +119,11 @@ const QualityRecoList = () => {
     ];
 
     // const handleDelete = (id) => {
-    //     deleteQuality(id)
+    //     deleteDisease(id)
     // }
 
     const datas = {
-        rows: allQualityReco,
+        rows: allDiseaseReco,
     };
 
     const options = {
@@ -185,14 +184,14 @@ const QualityRecoList = () => {
             </div>
             <div className="flex-1 py-10">
                 <div className="ml-[21rem] mr-6">
-                    <a href="/admin/quality/recommendation/new">
+                    <a href="/admin/disease/recommendation/new">
                         <Button variant='outlined' color='teal'>Add Recommendation</Button>
                     </a>
                     <ThemeProvider theme={muiTheme()}>
-                        {allQualityReco.length > 0 && (
+                        {allDiseaseReco.length > 0 && (
                             <MUIDataTable
-                                title={"All Quality Recommendation"}
-                                data={allQualityReco}
+                                title={"All Disease Recommendation"}
+                                data={allDiseaseReco}
                                 columns={columns}
                                 options={options}
                                 class="datatables"
@@ -202,7 +201,7 @@ const QualityRecoList = () => {
                 </div>
             </div>
         </div>
-    );
-};
+    )
+}
 
-export default QualityRecoList;
+export default DiseaseRecoList

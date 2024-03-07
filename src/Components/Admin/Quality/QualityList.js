@@ -23,6 +23,7 @@ const QualityList = () => {
         `${process.env.REACT_APP_API}/admin/quality/all`,
         config
       );
+      console.log(response.data.quality_data);
       setAllQualityPredicts(response.data.quality_data);
     } catch (error) {
       console.error("Error fetching quality data:", error);

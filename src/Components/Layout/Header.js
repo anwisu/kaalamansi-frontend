@@ -2,6 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { logout, getUser } from "../../utils/helpers";
+import { Avatar } from "@material-tailwind/react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -122,22 +123,14 @@ const Header = () => {
             <div
               tabIndex={0}
               role="button"
-              className="btn btn-ghost btn-circle avatar bg-100"
+              // className="btn btn-ghost btn-circle avatar bg-100"
             >
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth={1.5}
-                stroke="#58B741"
-                className="w-6 h-6"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+              <Avatar 
+                    size="sm"
+                    src={user && user.avatar ? user.avatar.url : 'defaultAvatarUrl'} 
+                    alt="avatar"
+                    className="border border-green-700 shadow-xl shadow-green-900/20 ring-4 ring-green-500/30"
                 />
-              </svg>
             </div>
             {user ? (
               <ul

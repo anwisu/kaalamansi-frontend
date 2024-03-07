@@ -3,6 +3,7 @@ import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
 import { getToken } from '../../utils/helpers';
 import {
+    Avatar,
     Card,
     Typography,
     List,
@@ -64,11 +65,17 @@ const Sidebar = () => {
 
     return (
         <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 fixed top-0">
-            <div className="mb-2 flex items-center gap-4 p-4">
-                <img src={process.env.PUBLIC_URL + '/images/user.png'} alt="avatar" className="h-8 w-8" />
+            <div className="mb-2 flex items-center gap-2 p-4">
+                {/* <Avatar 
+                    src={user && user.avatar ? user.avatar.url : 'defaultAvatarUrl'} 
+                    alt="avatar"
+                    // withBorder={true}
+                    // color="green"
+                    className="border border-green-700 shadow-xl shadow-green-900/20 ring-4 ring-green-500/30"
+                />
                 <Typography variant="h5" color="blue-gray">
                     Admin <span style={{ color: "#008302" }}>{user.name}</span>
-                </Typography>
+                </Typography> */}
             </div>
             <div className="p-2">
                 <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" />

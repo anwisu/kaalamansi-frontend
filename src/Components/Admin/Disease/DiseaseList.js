@@ -1,10 +1,14 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment  } from "react";
 // import { MDBDataTable, MDBBtn } from "mdbreact";
 // import { Link } from "react-router-dom"; // Import Link for navigation
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import Sidebar from "../Sidebar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { getToken } from "../../../utils/helpers";
+import { 
+  TrashIcon 
+} from '@heroicons/react/24/solid';
 
 const DiseaseList = () => {
   const [allDiseasePredicts, setAllDiseasePredicts] = useState([]);
@@ -20,6 +24,7 @@ const DiseaseList = () => {
         `${process.env.REACT_APP_API}/admin/disease/all`,
         config
       );
+      console.log(response.data.disease_data);
       setAllDiseasePredicts(response.data.disease_data);
     } catch (error) {
       console.error("Error fetching disease data:", error);
@@ -29,6 +34,22 @@ const DiseaseList = () => {
   useEffect(() => {
     diseaseList();
   }, []);
+
+  const deleteDisease = async (id) => {
+    try {
+      const config = {
+        headers: {
+          "Content-Type": "application/json",
+          'Authorization': `Bearer ${getToken()}`
+        },
+      };
+      await axios.delete(`${process.env.REACT_APP_API}/admin/disease/${id}`, config);
+      diseaseList();
+      window.location.reload()
+    } catch (error) {
+      console.error("Error deleting disease data:", error);
+    }
+  };
 
   //   { label: "Leaf Spots", label: "leaf_spots", sort: "asc" },
   //   { label: "Wilting", label: "wilting", sort: "asc" },
@@ -158,24 +179,36 @@ const DiseaseList = () => {
         ),
       },
     },
-    // {
-    //   label: "Actions",
-    //   label: "actions",
-    //   customBodyRender: (rowData) => (
-    //     <div>
-    //       <Link
-    //         to={`/admin/pest/update/${rowData._id}`}
-    //         classlabel="btn btn-success py-1 px-1 me-2"
-    //       >
-    //         <i className="fa fa-pencil"></i>
-    //       </Link>
-    //       {/* <button className="btn btn-danger py-1 px-2 ml-2" onClick={() => handleDelete(rowData._id)}>
-    //                   <i className="fa fa-trash"></i>
-    //               </button> */}
-    //     </div>
-    //   ),
-    // },
+    {
+      name: "actions",
+      label: "Actions",
+      options: {
+        filter: false,
+        sort: false,
+        empty: true,
+        customBodyRenderLite: (dataIndex) => {
+          return (
+            <Fragment>
+              <button
+                onClick={() => handleDelete(allDiseasePredicts[dataIndex]._id)}
+                className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+              >
+                <TrashIcon className="h-5 w-5" />
+              </button>
+            </Fragment>
+          );
+        },
+      },
+    },
   ];
+
+  const handleDelete = (id) => {
+    if (id) {
+      deleteDisease(id)
+    } else {
+      console.error('Cannot delete disease: ID is undefined');
+    }
+  }
 
   const options = {
     selectableRows: "none", // or 'multiple' or 'single' based on your requirements
@@ -232,12 +265,6 @@ const DiseaseList = () => {
         },
       },
     });
-
-  // handle delete action
-  // const handleDelete = (id) => {
-  //     // Implement your delete logic here, using the provided id
-  //     console.log('Delete clicked for id:', id);
-  // };
 
   return (
     <div className="flex">

@@ -5,7 +5,8 @@ import axios from 'axios';
 import { Input, Select, Button, Textarea } from '@material-tailwind/react';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
 
-const NewQualityRecommendations = () => {
+
+const NewDiseaseRecommendations = () => {
     const [recommendation, setRecommendation] = useState({
         factor: '',
         value: '',
@@ -60,22 +61,28 @@ const NewQualityRecommendations = () => {
             formData.append('value', recommendation.value);
             formData.append('recommendation', recommendation.recommendation);
 
-            const response = await axios.post(`${process.env.REACT_APP_API}/admin/quality/recommendation/new`, formData, {
+            const response = await axios.post(`${process.env.REACT_APP_API}/admin/disease/recommendation/new`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }
             });
             console.log(`Response: ${response.data}`);
-            navigate('/admin/quality/recommendations/all');
+            navigate('/admin/disease/recommendations/all');
         } catch (error) {
             console.error(`Error: ${error}`);
         }
     }
 
     const factorOptions = {
-        'soil_type': { options: ['loamy', 'clayey', 'sandy'], labels: ['Loamy', 'Clayey', 'Sandy'] },
-        'watering_sched': { options: ['regular', 'irregular'], labels: ['Regular', 'Irregular'] },
-        'sun_exposure': { options: ['full_shade', 'partial_shade', 'full_sun'], labels: ['Full Shade', 'Partial Shade', 'Full Sun'] }
+        'discoloration': { options: ['Absent', 'Present'], labels: ['Absent', 'Present'] },
+        'leaf_spots': { options: ['Absent', 'Mild', 'Moderate', 'Severe'], labels: ['Absent', 'Mild', 'Moderate', 'Severe'] },
+        'wilting': { options: ['Absent', 'Mild', 'Moderate', 'Severe'], labels: ['Absent', 'Mild', 'Moderate', 'Severe'] },
+        'lesions': { options: ['Absent', 'Present'], labels: ['Absent', 'Present'] },
+        'fertilized': { options: ['No', 'Yes'], labels: ['Not Fertilized', 'Fertilized'] },
+        'watering_sched': { options: ['Irregular', 'Regular'], labels: ['Irregular', 'Regular'] },
+        'pruning': { options: ['Never', 'Occasional', 'Regular', 'Frequent'], labels: ['Never', 'Occasional', 'Regular', 'Frequent'] },
+        'pesticide_used': { options: ['Nothing', 'Fungicide', 'Insecticide'], labels: ['None', 'Fungicide', 'Insecticide'] },
+        'pest_presence': { options: ['Absent', 'Present'], labels: ['Absent', 'Present'] }
     };
 
     useEffect(() => {
@@ -85,7 +92,6 @@ const NewQualityRecommendations = () => {
             setValueOptions([]);
         }
     }, [recommendation.factor]);
-
     return (
         <Fragment>
             <div className="flex">
@@ -109,10 +115,15 @@ const NewQualityRecommendations = () => {
                                 outline={false}
                             >
                                 <option value="">Select a factor</option>
-                                <option value="soil_type">Soil Type</option>
+                                <option value="discoloration">Discoloration</option>
+                                <option value="leaf_spots">Leaf Spots</option>
+                                <option value="wilting">Wilting</option>
+                                <option value="lesions">Lesions</option>
+                                <option value="fertilized">Fertilized</option>
                                 <option value="watering_sched">Watering Schedule</option>
-                                <option value="sun_exposure">Sun Exposure</option>
-                                {/* Add more options as needed */}
+                                <option value="pruning">Pruning</option>
+                                <option value="pesticide_used">Pesticide Used</option>
+                                <option value="pest_presence">Pest Presence</option>
                             </select>
                             <label htmlFor="factor" className="block text-sm font-medium leading-6 text-gray-900">
                                 Value
@@ -189,9 +200,7 @@ const NewQualityRecommendations = () => {
                 </div>
             </div>
         </Fragment>
-
-
     )
 }
 
-export default NewQualityRecommendations
+export default NewDiseaseRecommendations
