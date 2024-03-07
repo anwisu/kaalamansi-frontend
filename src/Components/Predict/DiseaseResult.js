@@ -1,17 +1,50 @@
-import React from "react";
-import { useLocation } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import axios from "axios";
+import { useParams } from "react-router-dom";
 
 const DiseaseResult = () => {
-  const location = useLocation();
-  const diseaseData = location.state && location.state.diseaseData;
+  const [combinedDiseaseData, setCombinedDiseaseData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const { id } = useParams();
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const result = await axios(
+          `${process.env.REACT_APP_API}/predict/disease/${id}`
+        );
+
+        setCombinedDiseaseData(result.data);
+
+        const diseaseResult = await axios(
+          `${process.env.REACT_APP_API}/admin/disease/${result.data.reco_data.disease_id}`
+        );
+
+        setCombinedDiseaseData((prevData) => ({
+          ...prevData,
+          diseaseData: diseaseResult.data,
+        }));
+
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [id]);
+
+  if (isLoading || !combinedDiseaseData || !combinedDiseaseData.diseaseData) {
+    return <div>Loading...</div>;
+  }
   return (
     // <div>
     //     <h1>Disease Result</h1>
     //     {diseaseData && (
     //         <div>
-    //             <p>Quality ID: {diseaseData._id}</p>
-    //             <p>Predicted Quality: {diseaseData.predicted_disease}</p>
+    //             <p>Disease ID: {diseaseData._id}</p>
+    //             <p>Predicted Disease: {diseaseData.predicted_disease}</p>
     //         </div>
     //     )}
     // </div>
@@ -27,7 +60,9 @@ const DiseaseResult = () => {
           Disease Result
         </h1>
         <div class="card1 p-10 py-10 bg-gray-200  text-center">
-          {diseaseData && diseaseData.predicted_disease === "infected" ? (
+          {combinedDiseaseData &&
+            combinedDiseaseData.diseaseData.disease_data.predicted_disease ===
+            "infected" ? (
             <div>
               <div className="flex items-center">
                 <span>
@@ -54,12 +89,15 @@ const DiseaseResult = () => {
                     // textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)",
                   }}
                 >
-                  Infected
+                  {
+                    combinedDiseaseData.diseaseData.disease_data.predicted_disease.charAt(0).toUpperCase() +
+                    combinedDiseaseData.diseaseData.disease_data.predicted_disease.slice(1).toLowerCase()
+                  }
                 </p>
               </div>
 
               <p class="text-gray-600 text-sm">
-                <b>Quality ID:</b> xxxxxxxxxx {/* {diseaseData._id} */}
+                <b>Disease ID:</b> xxxxxxxxxx {/* {diseaseData._id} */}
               </p>
             </div>
           ) : (
@@ -89,12 +127,15 @@ const DiseaseResult = () => {
                     // textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)",
                   }}
                 >
-                  Not Infected
+                  {
+                    combinedDiseaseData.diseaseData.disease_data.predicted_disease.charAt(0).toUpperCase() +
+                    combinedDiseaseData.diseaseData.disease_data.predicted_disease.slice(1).toLowerCase()
+                  }
                 </p>
               </div>
 
               <p class="text-gray-600 text-sm">
-                <b>Quality ID:</b> xxxxxxxxxx {/* {diseaseData._id} */}
+                <b>Disease ID:</b> xxxxxxxxxx {/* {diseaseData._id} */}
               </p>
             </div>
           )}

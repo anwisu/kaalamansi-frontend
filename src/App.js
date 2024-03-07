@@ -37,7 +37,7 @@ function App() {
           <Route path="/predict/quality" element={<PredictQuality />} />
           <Route path="/predict/disease" element={<PredictDisease />} />
           <Route path="/predict/quality/:id"  element={<QualityResult />} />
-          <Route path="/disease/result" element={<DiseaseResult />} />
+          <Route path="/predict/disease/:id" element={<DiseaseResult />} />
 
           {/* USER ROUTES */}
           <Route path="/login" element={<Login />} />

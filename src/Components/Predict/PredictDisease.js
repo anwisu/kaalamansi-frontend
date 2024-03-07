@@ -25,11 +25,13 @@ const PredictDisease = () => {
           },
         }
       );
-      console.log("Frontend Response Data:", response.data);
-      if (response.data && response.data.inserted_data) {
-        navigate("/disease/result", {
-          state: { diseaseData: response.data.inserted_data },
-        });
+
+      if (response.data && response.data.reco_data) {
+        console.log(response.data.reco_data._id); // Log the id
+        const result = navigate(`/predict/disease/${response.data.reco_data._id}`);
+        // navigate("/disease/result", {
+        //   state: { diseaseData: response.data.inserted_data },
+        // });
       } else {
         setError("Prediction failed. Please try again.");
       }
@@ -92,74 +94,6 @@ const PredictDisease = () => {
                         >
                           Discoloration:
                         </label>
-                        {/* <div class="flex flex-wrap">
-                          <div class="flex items-center me-4">
-                            <input
-                              id="absent-radio"
-                              type="radio"
-                              value="Absent"
-                              name="leaf_spots"
-                              class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label
-                              for="absent-radio"
-                              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                              Absent
-                            </label>
-                          </div>
-                          <div class="flex items-center me-4">
-                            <input
-                              id="mild-radio"
-                              type="radio"
-                              value="Mild"
-                              name="leaf_spots"
-                              class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label
-                              for="mild-radio"
-                              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                              Mild
-                            </label>
-                          </div>
-                          <div class="flex items-center me-4">
-                            <input
-                              id="moderate-radio"
-                              type="radio"
-                              value="Moderate"
-                              name="leaf_spots"
-                              class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label
-                              for="moderate-radio"
-                              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                              Moderate
-                            </label>
-                          </div>
-                          <div class="flex items-center me-4">
-                            <input
-                              id="severe-radio"
-                              type="radio"
-                              value="Severe"
-                              name="leaf_spots"
-                              class="w-4 h-4 text-green-600 bg-gray-100 border-gray-300 focus:ring-green-500 dark:focus:ring-green-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                            />
-                            <label
-                              for="severe-radio"
-                              class="ms-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-                            >
-                              Severe
-                            </label>
-                          </div>
-                        </div>
-                        <label
-                          for="leaf_spots"
-                          class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
-                        >
-                          Leaf Spots:
-                        </label> */}
                         <div class="relative h-10 w-100  mt-6">
                           <select
                             id="lesions"

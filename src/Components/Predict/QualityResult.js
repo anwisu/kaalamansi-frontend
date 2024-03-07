@@ -55,7 +55,7 @@ const QualityResult = () => {
           <div>
             <div className="flex items-center text-center justify-center">
               {combinedQualityData &&
-              combinedQualityData.qualityData.quality_data.predicted_quality ===
+                combinedQualityData.qualityData.quality_data.predicted_quality ===
                 "low" ? (
                 <div className="flex items-center text-center justify-center">
                   <svg
@@ -82,7 +82,8 @@ const QualityResult = () => {
                     >
                       {
                         combinedQualityData.qualityData.quality_data
-                          .predicted_quality
+                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.qualityData.quality_data
+                            .predicted_quality.slice(1).toLowerCase()
                       }{" "}
                       Quality
                     </p>
@@ -114,7 +115,8 @@ const QualityResult = () => {
                     >
                       {
                         combinedQualityData.qualityData.quality_data
-                          .predicted_quality
+                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.qualityData.quality_data
+                            .predicted_quality.slice(1).toLowerCase()
                       }{" "}
                       Quality
                     </p>
