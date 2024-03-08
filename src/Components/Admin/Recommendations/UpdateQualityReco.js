@@ -263,6 +263,7 @@ const UpdateQualityReco = () => {
                           type="file"
                           onChange={onChange}
                           className="sr-only"
+                          multiple
                         />
                       </label>
                       <p className="pl-1">or drag and drop</p>
