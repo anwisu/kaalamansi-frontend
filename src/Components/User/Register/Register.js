@@ -19,7 +19,7 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
-  const [avatarPreview, setAvatarPreview] = useState('/images/user.png');
+  const [avatarPreview, setAvatarPreview] = useState('/images/default-user-icon.jpg');
 
   // const handleChange = (e) => {
   //   setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -119,14 +119,14 @@ const Register = () => {
                 />
               </div>
             </div>
-            <div className='form-group'>
+            <div className='form-group inputDiv registerFlex'>
               <label htmlFor='avatar_upload'>Avatar</label>
-              <div className='d-flex align-items-center'>
+              <div className='d-flex align-items-center registerFlex'>
                 <Avatar
                   src={avatarPreview}
                   size="large"
                 />
-                <div className='custom-file'>
+                <div className='registerFlex'>
                   <input
                     type='file'
                     name='avatar'
