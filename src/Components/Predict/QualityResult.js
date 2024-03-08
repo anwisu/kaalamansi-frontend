@@ -1,10 +1,41 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import generatePDF, { Resolution, Margin, usePDF } from "react-to-pdf";
 
 const QualityResult = () => {
   const [combinedQualityData, setCombinedQualityData] = useState(null);
   const { id } = useParams();
+  const { toPDF, targetRef } = usePDF({
+    method: "save",
+    filename: "Quality_Result.pdf",
+  });
+
+  const options = {
+    method: "open",
+    resolution: Resolution.HIGH,
+    page: {
+      margin: Margin.LARGE,
+      format: "A4",
+      orientation: "landscape",
+    },
+    // scale: 1000, // Set to make it wide like the width of the letter in landscape
+    // x: "100%", // Center the content horizontally
+    // y: 5, // Center the content vertically
+    canvas: {
+      mimeType: "image/png",
+      qualityRatio: 1,
+    },
+    overrides: {
+      pdf: {
+        compress: false,
+      },
+
+      canvas: {
+        useCORS: true,
+      },
+    },
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -41,7 +72,10 @@ const QualityResult = () => {
 
   return (
     <div>
-      <div class="mt-8 mx-30 items-center text-center justify-between mx-auto w-1/2">
+      <div
+        ref={targetRef}
+        class="mt-8 mx-30 items-center text-center justify-between mx-auto w-1/2"
+      >
         <h1
           class="text-3xl font-semibold mb-3 text-gray-700"
           style={{
@@ -54,8 +88,9 @@ const QualityResult = () => {
         <div class="p-10 py-10 bg-gray-200 text-center w-90 rounded-2xl">
           <div>
             <div className="flex items-center text-center justify-center">
-              {combinedQualityData && combinedQualityData.quality_data && combinedQualityData.quality_data.predicted_quality ===
-                "low" ? (
+              {combinedQualityData &&
+              combinedQualityData.quality_data &&
+              combinedQualityData.quality_data.predicted_quality === "low" ? (
                 <div className="flex items-center text-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -79,11 +114,12 @@ const QualityResult = () => {
                         textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)",
                       }}
                     >
-                      {
-                        combinedQualityData.quality_data
-                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.quality_data
-                            .predicted_quality.slice(1).toLowerCase()
-                      }{" "}
+                      {combinedQualityData.quality_data.predicted_quality
+                        .charAt(0)
+                        .toUpperCase() +
+                        combinedQualityData.quality_data.predicted_quality
+                          .slice(1)
+                          .toLowerCase()}{" "}
                       Quality
                     </p>
                   </span>
@@ -112,11 +148,12 @@ const QualityResult = () => {
                         textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)",
                       }}
                     >
-                      {
-                        combinedQualityData.quality_data
-                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.quality_data
-                            .predicted_quality.slice(1).toLowerCase()
-                      }{" "}
+                      {combinedQualityData.quality_data.predicted_quality
+                        .charAt(0)
+                        .toUpperCase() +
+                        combinedQualityData.quality_data.predicted_quality
+                          .slice(1)
+                          .toLowerCase()}{" "}
                       Quality
                     </p>
                   </span>
@@ -132,39 +169,33 @@ const QualityResult = () => {
             <div className="grid grid-cols-3 gap-4 text-left">
               <div className="col-span-1">
                 <p className="text-gray-600 text-sm">
-                  <b>Size:</b>{" "}
-                  {combinedQualityData.quality_data.size}
+                  <b>Size:</b> {combinedQualityData.quality_data.size}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  <b>Shape:</b>{" "}
-                  {combinedQualityData.quality_data.shape}
+                  <b>Shape:</b> {combinedQualityData.quality_data.shape}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  <b>Firmness:</b>{" "}
-                  {combinedQualityData.quality_data.firmness}
+                  <b>Firmness:</b> {combinedQualityData.quality_data.firmness}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Skin Color:</b>{" "}
                   {combinedQualityData.quality_data.skin_color}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  <b>Blemishes:</b>{" "}
-                  {combinedQualityData.quality_data.blemishes}
+                  <b>Blemishes:</b> {combinedQualityData.quality_data.blemishes}
                 </p>
               </div>
 
               <div className="col-span-1">
                 <p className="text-gray-600 text-sm">
-                  <b>Soil Type:</b>{" "}
-                  {combinedQualityData.quality_data.soil_type}
+                  <b>Soil Type:</b> {combinedQualityData.quality_data.soil_type}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Sun Exposure:</b>{" "}
                   {combinedQualityData.quality_data.sun_exposure}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  <b>Location:</b>{" "}
-                  {combinedQualityData.quality_data.location}
+                  <b>Location:</b> {combinedQualityData.quality_data.location}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Fertilized:</b>{" "}
@@ -178,35 +209,11 @@ const QualityResult = () => {
 
               <div className="col-span-1">
                 <p className="text-gray-600 text-sm">
-                  <b>Pruning:</b>{" "}
-                  {combinedQualityData.quality_data.pruning}
+                  <b>Pruning:</b> {combinedQualityData.quality_data.pruning}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Pest Presence:</b>{" "}
                   {combinedQualityData.quality_data.pest_presence}
-                </p>
-                <p className="text-gray-600 text-sm">
-                  {combinedQualityData.soil_recommendation && (
-                    <>
-                      <b>Soil Recommendations:</b>{" "}
-                      {combinedQualityData.soil_recommendation}
-                      <br />
-                    </>
-                  )}
-                  {combinedQualityData.sun_recommendation && (
-                    <>
-                      <b>Sun Recommendations:</b>{" "}
-                      {combinedQualityData.sun_recommendation}
-                      <br />
-                    </>
-                  )}
-                  {combinedQualityData.watering_recommendation && (
-                    <>
-                      <b>Watering Recommendations:</b>{" "}
-                      {combinedQualityData.watering_recommendation}
-                      <br />
-                    </>
-                  )}
                 </p>
               </div>
             </div>
@@ -233,24 +240,73 @@ const QualityResult = () => {
             PREDICT AGAIN
           </a>
         </div>
-        <div class="btn btn-success px-12 rounded-full btns">
-          <span class="icons ">
+        <button
+          onClick={() => generatePDF(targetRef, options)}
+          className="btn btn-success px-12 rounded-full btns"
+        >
+          <span className="icons">
             <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 24 24"
               fill="currentColor"
-              class="w-6 h-6"
+              className="w-6 h-6"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M12 2.25a.75.75 0 0 1 .75.75v11.69l3.22-3.22a.75.75 0 1 1 1.06 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-4.5-4.5a.75.75 0 1 1 1.06-1.06l3.22 3.22V3a.75.75 0 0 1 .75-.75Zm-9 13.5a.75.75 0 0 1 .75.75v2.25a1.5 1.5 0 0 0 1.5 1.5h13.5a1.5 1.5 0 0 0 1.5-1.5V16.5a.75.75 0 0 1 1.5 0v2.25a3 3 0 0 1-3 3H5.25a3 3 0 0 1-3-3V16.5a.75.75 0 0 1 .75-.75Z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               />
             </svg>
           </span>
-          <a href="#" class="text">
-            SAVE
-          </a>
+          <span className="text">Save</span>
+        </button>
+        <div class="mt-20 items-center mx-auto text-center justify-center">
+          <h1
+            class="text-3xl font-semibold mb-3 text-gray-700"
+            style={{
+              color: "#4AA032",
+              fontFamily: "League Spartan",
+            }}
+          >
+            Recommendation
+          </h1>
+          <div>
+            {combinedQualityData ? (
+              < div class="mx-20 my-10 flex items-center text-center justify-center">
+                {combinedQualityData.soil_recommendation && (
+                  <div class="p-10 py-10 bg-gray-100 text-center item-center rounded-2xl w-80 mr-10">
+                    <>
+                      <b>Soil Recommendations:</b>{" "}
+                      {combinedQualityData.soil_recommendation}
+                      <br />
+                    </>
+                  </div>
+                )}
+                {combinedQualityData.sun_recommendation && (
+                  <div class="p-10 py-10 bg-gray-100 text-center item-center w-80 rounded-2xl">
+                    <>
+                      <b>Sun Recommendations:</b>{" "}
+                      {combinedQualityData.sun_recommendation}
+                      <br />
+                    </>
+                  </div>
+                )}
+                {combinedQualityData.watering_recommendation && (
+                  <div class="p-10 py-10 bg-gray-100 text-center item-center w-80 rounded-2xl ml-10">
+                    <>
+                      <b>Watering Recommendations:</b>{" "}
+                      {combinedQualityData.watering_recommendation}
+                      <br />
+                    </>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div class="p-10 py-10 bg-gray-200 text-center w-90 rounded-2xl">
+                No Recommendations
+              </div>
+            )}
+          </div>
         </div>
       </div>
     </div>
