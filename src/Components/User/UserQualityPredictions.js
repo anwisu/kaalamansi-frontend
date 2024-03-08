@@ -130,16 +130,41 @@ const UserQualityPredictions = () => {
                                         <hr />
                                         <br />
                                         <h2>Recommendations</h2>
-                                        {prediction.soil_recommendation && (
-                                            <div>Soil Recommendation: {prediction.soil_recommendation}</div>
-                                        )}
-                                        {prediction.watering_recommendation && (
-                                            <div>Watering Recommendation: {prediction.watering_recommendation}</div>
-                                        )}
-                                        {prediction.sun_recommendation && (
-                                            <div>Sun Recommendation: {prediction.sun_recommendation}</div>
-                                        )}
-
+                                        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
+                                            {prediction.soil_recommendation && (
+                                                <div style={{ margin: '20px' }}>
+                                                    <div>Soil Recommendation: <br />{prediction.soil_recommendation}</div>
+                                                    {prediction.soil_image && (
+                                                        <img
+                                                            src={prediction.soil_image.url}
+                                                            alt=""
+                                                        />
+                                                    )}
+                                                </div>
+                                            )}
+                                            {prediction.watering_recommendation && (
+                                                <div style={{ margin: '20px' }}>
+                                                    <div>Watering Recommendation: <br />{prediction.watering_recommendation}</div>
+                                                    {prediction.watering_image && (
+                                                        <img
+                                                            src={prediction.watering_image.url}
+                                                            alt=""
+                                                        />
+                                                    )}
+                                                </div>
+                                            )}
+                                            {prediction.sun_recommendation && (
+                                                <div style={{ margin: '20px' }}>
+                                                    <div>Sun Recommendation: <br />{prediction.sun_recommendation}</div>
+                                                    {prediction.sun_image && (
+                                                        <img
+                                                            src={prediction.sun_image.url}
+                                                            alt=""
+                                                        />
+                                                    )}
+                                                </div>
+                                            )}
+                                        </div>
                                     </AccordionBody>
                                 </Accordion>
                             </Fragment>

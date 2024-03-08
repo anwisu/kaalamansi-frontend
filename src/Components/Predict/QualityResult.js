@@ -41,7 +41,7 @@ const QualityResult = () => {
           `${process.env.REACT_APP_API}/predict/quality/${id}`
         );
 
-        setCombinedQualityData(result.data.reco_data);
+        setCombinedQualityData(result.data.quality_data);
         console.log(combinedQualityData);
         console.log(combinedQualityData);
       } catch (error) {
@@ -51,6 +51,8 @@ const QualityResult = () => {
 
     fetchData();
   }, [id]);
+
+  
 
   if (!combinedQualityData || !combinedQualityData.quality_data) {
     return <div>Loading...</div>;

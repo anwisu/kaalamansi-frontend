@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/helpers";
 
 const PredictDisease = () => {
   const [error, setError] = useState("");
@@ -22,16 +23,15 @@ const PredictDisease = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${getToken()}`
           },
         }
       );
 
-      if (response.data && response.data.reco_data) {
-        console.log(response.data.reco_data._id); // Log the id
-        const result = navigate(`/predict/disease/${response.data.reco_data._id}`);
-        // navigate("/disease/result", {
-        //   state: { diseaseData: response.data.inserted_data },
-        // });
+      if (response.data && response.data.disease_data) {
+        console.log(response.data.disease_data._id); // Log the id
+        const result = navigate(`/predict/disease/${response.data.disease_data._id}`);
+        console.log(result);  
       } else {
         setError("Prediction failed. Please try again.");
       }
