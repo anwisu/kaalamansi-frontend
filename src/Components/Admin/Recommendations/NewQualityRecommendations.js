@@ -10,10 +10,9 @@ const NewQualityRecommendations = () => {
         factor: '',
         value: '',
         recommendation: '',
-        images: ''
+        image: ''
     });
-    const [images, setImages] = useState([]);
-    const [imagesPreview, setImagesPreview] = useState([])
+    const [imagePreview, setImagePreview] = useState('')
     const [valueOptions, setValueOptions] = useState([]);
     const navigate = useNavigate();
 
@@ -22,56 +21,30 @@ const NewQualityRecommendations = () => {
     }
 
     const onChange = e => {
-        const files = Array.from(e.target.files)
-        const promises = files.map(file => {
-            return new Promise((resolve, reject) => {
-                const reader = new FileReader();
-                reader.onload = () => {
-                    if (reader.readyState === 2) {
-                        resolve({ file, result: reader.result });
-                    }
+        if (e.target.name === 'image') {
+            const reader = new FileReader();
+            reader.onload = () => {
+                if (reader.readyState === 2) {
+                    setImagePreview(reader.result);
+                    setRecommendation({ ...recommendation, image: reader.result });
                 }
-                reader.onerror = reject;
-                reader.readAsDataURL(file)
-            })
-        });
-
-        Promise.all(promises).then(images => {
-            const newImages = images.map(image => image.file);
-            const newImagesPreview = images.map(image => image.result);
-            setImages(oldArray => [...oldArray, ...newImages]);
-            setImagesPreview(oldArray => [...oldArray, ...newImagesPreview]);
-        }).catch(error => {
-            console.error(`Error: ${error}`);
-        });
+            }
+            reader.readAsDataURL(e.target.files[0]);
+        } else {
+            setRecommendation({ ...recommendation, [e.target.name]: e.target.value });
+        }
     }
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const formData = new FormData();
-            images.forEach((image, index) => {
-                formData.append('images', image);
-            });
-            for (var pair of formData.entries()) {
-                console.log(pair[0] + ', ' + pair[1]);
-            }
-            formData.append('factor', recommendation.factor);
-            formData.append('value', recommendation.value);
-            formData.append('recommendation', recommendation.recommendation);
-
-            const response = await axios.post(`${process.env.REACT_APP_API}/admin/quality/recommendation/new`, formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data'
-                }
-            });
+            const response = await axios.post(`${process.env.REACT_APP_API}/admin/quality/recommendation/new`, recommendation);
             console.log(`Response: ${response.data}`);
             navigate('/admin/quality/recommendations/all');
         } catch (error) {
             console.error(`Error: ${error}`);
         }
     }
-
     const factorOptions = {
         'soil_type': { options: ['loamy', 'clayey', 'sandy'], labels: ['Loamy', 'Clayey', 'Sandy'] },
         'watering_sched': { options: ['regular', 'irregular'], labels: ['Regular', 'Irregular'] },
@@ -147,7 +120,7 @@ const NewQualityRecommendations = () => {
                             />
                             <div className="col-span-full">
                                 <label htmlFor="file-upload" className="block text-sm font-medium leading-6 text-gray-900">
-                                    Choose Images
+                                    Choose an Image
                                 </label>
                                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                                     <div className="text-center">
@@ -160,7 +133,7 @@ const NewQualityRecommendations = () => {
                                                 <span>Upload a file</span>
                                                 <input
                                                     id="file-upload"
-                                                    name="images"
+                                                    name="image"
                                                     type="file"
                                                     onChange={onChange}
                                                     className="sr-only" />
@@ -169,9 +142,7 @@ const NewQualityRecommendations = () => {
                                         </div>
                                         <p className="text-xs leading-5 text-gray-600">PNG, JPG, GIF up to 10MB</p>
                                     </div>
-                                    {imagesPreview.map(img => (
-                                        <img src={img} key={img} alt="Images Preview" className="mt-3 mr-2" width="150" height="150" />
-                                    ))}
+                                    {imagePreview && <img src={imagePreview} alt="Preview" width='100px' />}
                                 </div>
                             </div>
                             <Button
@@ -189,8 +160,6 @@ const NewQualityRecommendations = () => {
                 </div>
             </div>
         </Fragment>
-
-
     )
 }
 

@@ -1,13 +1,16 @@
 import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import Sidebar from "../Sidebar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Button } from "@material-tailwind/react";
 import { getToken } from "../../../utils/helpers";
 import {
+    PencilSquareIcon,
     TrashIcon
 } from '@heroicons/react/24/solid';
+import { Tooltip, Typography } from "@material-tailwind/react";
 
 const DiseaseRecoList = () => {
     const [allDiseaseReco, setAllDiseaseReco] = useState([]);
@@ -33,21 +36,21 @@ const DiseaseRecoList = () => {
         diseaseRecoList();
     }, []);
 
-    // const deleteDisease = async (id) => {
-    //     try {
-    //         const config = {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 'Authorization': `Bearer ${getToken()}`
-    //             },
-    //         };
-    //         await axios.delete(`${process.env.REACT_APP_API}/admin/disease/${id}`, config);
-    //         // Refresh the disease list after deletion
-    //         diseaseList();
-    //     } catch (error) {
-    //         console.error("Error deleting disease data:", error);
-    //     }
-    // };
+    const deleteDiseaseReco = async (id) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${getToken()}`
+                },
+            };
+            await axios.delete(`${process.env.REACT_APP_API}/admin/disease/recommendations/${id}`, config);
+            // Refresh the disease list after deletion
+            diseaseRecoList();
+        } catch (error) {
+            console.error("Error deleting disease data:", error);
+        }
+    };
 
     const columns = [
         {
@@ -78,49 +81,86 @@ const DiseaseRecoList = () => {
             },
         },
         {
-            name: "images",
-            label: "Images",
+            name: "image",
+            label: "Image",
             options: {
                 filter: true,
                 sort: true,
                 customBodyRender: (value) => {
                     console.log(value); // Log the image URLs
                     return (
-                        <div style={{ display: 'flex'}}>
-                        {Array.isArray(value) && value.map((image, index) => (
-                            <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '80px', height: 'auto', marginRight: '10px' }} />
-                        ))}
+                        <div style={{ display: 'flex' }}>
+                            {value && <img src={value.url} alt={value.name} style={{ width: '80px', height: 'auto'}} />}
                         </div>
                     );
                 },
             },
         },
-        // {
-        //     name: "actions",
-        //     label: "Actions",
-        //     options: {
-        //         filter: false,
-        //         sort: false,
-        //         empty: true,
-        //         customBodyRenderLite: (dataIndex) => {
-        //             return (
-        //                 <Fragment>
-        //                     <button
-        //                         onClick={() => handleDelete(allDiseasePredicts[dataIndex]._id)}
-        //                         className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
-        //                     >
-        //                         <TrashIcon className="h-5 w-5" />
-        //                     </button>
-        //                 </Fragment>
-        //             );
-        //         },
-        //     },
-        // },
+        {
+            name: "actions",
+            label: "Actions",
+            options: {
+                filter: false,
+                sort: false,
+                empty: true,
+                customBodyRenderLite: (dataIndex) => {
+                    return (
+                        <Fragment>
+                            <Link to={`/admin/disease/recommendations/${allDiseaseReco[dataIndex]._id}`}>
+                                <Tooltip
+                                    className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
+                                    content={
+                                        <Typography
+                                            color="blue-gray"
+                                            variant="small"
+                                            className="font-normal opacity-80"
+                                        >
+                                            Update Recommendation
+                                        </Typography>
+                                    }
+                                    animate={{
+                                        mount: { scale: 1, y: 0 },
+                                        unmount: { scale: 0, y: 25 },
+                                    }}
+                                >
+                                    <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 mr-2">
+                                        <PencilSquareIcon className="h-5 w-5" />
+                                    </button>
+                                </Tooltip>
+                            </Link>
+                            <Tooltip
+                                className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
+                                content={
+                                    <Typography
+                                        color="blue-gray"
+                                        variant="small"
+                                        className="font-normal opacity-80"
+                                    >
+                                        Delete Recommendation
+                                    </Typography>
+                                }
+                                animate={{
+                                    mount: { scale: 1, y: 0 },
+                                    unmount: { scale: 0, y: 25 },
+                                }}
+                            >
+                                <button
+                                    onClick={() => handleDelete(allDiseaseReco[dataIndex]._id)}
+                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                                >
+                                    <TrashIcon className="h-5 w-5" />
+                                </button>
+                            </Tooltip>
+                        </Fragment>
+                    );
+                },
+            },
+        },
     ];
 
-    // const handleDelete = (id) => {
-    //     deleteDisease(id)
-    // }
+    const handleDelete = (id) => {
+        deleteDiseaseReco(id)
+    }
 
     const datas = {
         rows: allDiseaseReco,

@@ -11,21 +11,35 @@ const UpdateQualityReco = () => {
   const [factor, setFactor] = useState("");
   const [value, setValue] = useState("");
   const [recommendation, setRecommendation] = useState("");
-  const [images, setImages] = useState([]);
-  const [oldImages, setOldImages] = useState([]);
-  const [imagesPreview, setImagesPreview] = useState([]);
+  const [image, setImage] = useState('');
+  const [imagePreview, setImagePreview] = useState('')
   const [valueOptions, setValueOptions] = useState([]);
   const [recoDetails, setrecoDetails] = useState({});
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [isUpdated, setIsUpdated] = useState(false);
 
+  const navigate = useNavigate();
   const { id } = useParams();
-  console.log(id);
-  let navigate = useNavigate();
   const config = {
     headers: {
-      "Content-Type": "multipart/form-data",
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${getToken()}`,
+    },
+  };
+
+  const factorOptions = {
+    soil_type: {
+      options: ["loamy", "clayey", "sandy"],
+      labels: ["Loamy", "Clayey", "Sandy"],
+    },
+    watering_sched: {
+      options: ["regular", "irregular"],
+      labels: ["Regular", "Irregular"],
+    },
+    sun_exposure: {
+      options: ["full_shade", "partial_shade", "full_sun"],
+      labels: ["Full Shade", "Partial Shade", "Full Sun"],
     },
   };
 
@@ -37,12 +51,10 @@ const UpdateQualityReco = () => {
       );
       console.log("Response:", data);
 
-      setrecoDetails(data);
-      console.log("Response after:", data);
-      setFactor(data.factor);
-      setValue(data.value);
-      setRecommendation(data.recommendation);
-      setOldImages(data.images);
+      setFactor(data.qualityReco.factor);
+      setValue(data.qualityReco.value);
+      setRecommendation(data.qualityReco.recommendation);
+      setImagePreview(data.qualityReco.image.url);
     } catch (error) {
       console.error(error);
       console.log(error.response.data.message); // Add this line
@@ -66,27 +78,13 @@ const UpdateQualityReco = () => {
       setIsUpdated(data.success);
       setLoading(false);
 
-        navigate("/admin/quality/recommendations/all");
-        window.location.reload();
+      navigate("/admin/quality/recommendations/all");
+      window.location.reload();
     } catch (error) {
       setError(error.response.data.message);
     }
   };
 
-  const factorOptions = {
-    soil_type: {
-      options: ["loamy", "clayey", "sandy"],
-      labels: ["Loamy", "Clayey", "Sandy"],
-    },
-    watering_sched: {
-      options: ["regular", "irregular"],
-      labels: ["Regular", "Irregular"],
-    },
-    sun_exposure: {
-      options: ["full_shade", "partial_shade", "full_sun"],
-      labels: ["Full Shade", "Partial Shade", "Full Sun"],
-    },
-  };
 
   useEffect(() => {
     getRecoDetails(id);
@@ -111,46 +109,30 @@ const UpdateQualityReco = () => {
     }
   }, [error, isUpdated, factor]);
 
+  const onChange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    reader.onload = () => {
+      if (reader.readyState === 2) {
+        setImagePreview(reader.result);
+        setImage(file);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
   const submitHandler = (e) => {
     e.preventDefault();
 
-    console.log(recoDetails);
-
-    if (recoDetails._id) {
-      const recoData = {
-        factor: factor,
-        value: value,
-        recommendation: recommendation,
-        images: images.map((image, index) => ({
-          filename: image.name,
-          data: imagesPreview[index],
-        })),
-      };
-
-      console.log(recoDetails._id);
-      updateReco(recoDetails._id, recoData);
-    } else {
-      console.error("Reco ID is undefined.");
+    const formData = new FormData();
+    formData.append('factor', factor);
+    formData.append('value', value);
+    formData.append('recommendation', recommendation);
+    if (image) {
+      formData.append('image', image);
     }
+    updateReco(id, formData);
   };
-
-  const onChange = (e) => {
-    const files = Array.from(e.target.files);
-    setImagesPreview([]);
-    setOldImages([]);
-    files.forEach((file) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        if (reader.readyState === 2) {
-          setImagesPreview((oldArray) => [...oldArray, reader.result]);
-          // Append the file, not the data URL
-          setImages((oldArray) => [...oldArray, file]);
-        }
-      };
-      reader.readAsDataURL(file);
-    });
-  };
-
   return (
     <Fragment>
       <div className="flex">
@@ -243,7 +225,7 @@ const UpdateQualityReco = () => {
                   htmlFor="file-upload"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
-                  Choose Images
+                  Choose an Image
                 </label>
                 <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
@@ -259,11 +241,13 @@ const UpdateQualityReco = () => {
                         <span>Upload a file</span>
                         <input
                           id="file-upload"
-                          name="images"
+                          name="image"
                           type="file"
-                          onChange={onChange}
+                          onChange={(e) => {
+                            setImage(e.target.files[0]);
+                            setImagePreview(URL.createObjectURL(e.target.files[0]));
+                          }}
                           className="sr-only"
-                          multiple
                         />
                       </label>
                       <p className="pl-1">or drag and drop</p>
@@ -272,25 +256,14 @@ const UpdateQualityReco = () => {
                       PNG, JPG, GIF up to 10MB
                     </p>
                   </div>
-                  {oldImages &&
-                    oldImages.map((img) => (
-                      <img
-                        key={img}
-                        src={img.url}
-                        alt={img.url}
-                        className="ml-2 mt-3 mr-2"
-                        width="80px"
-                      />
-                    ))}
-                  {imagesPreview.map((img) => (
+                  {imagePreview && (
                     <img
-                      src={img}
-                      key={img}
-                      alt="Images Preview"
+                      src={imagePreview}
+                      alt="Image Preview"
                       className="ml-2 mt-3 mr-2"
                       width="80px"
                     />
-                  ))}
+                  )}
                 </div>
               </div>
               <Button

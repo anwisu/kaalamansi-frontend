@@ -10,6 +10,7 @@ import {
     PencilSquareIcon,
     TrashIcon
 } from '@heroicons/react/24/solid';
+import { Tooltip, Typography } from "@material-tailwind/react";
 
 const QualityRecoList = () => {
     const [allQualityReco, setAllQualityReco] = useState([]);
@@ -79,8 +80,8 @@ const QualityRecoList = () => {
             },
         },
         {
-            name: "images",
-            label: "Images",
+            name: "image",
+            label: "Image",
             options: {
                 filter: true,
                 sort: true,
@@ -88,9 +89,7 @@ const QualityRecoList = () => {
                     console.log(value); // Log the image URLs
                     return (
                         <div style={{ display: 'flex' }}>
-                            {Array.isArray(value) && value.map((image, index) => (
-                                <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '80px', height: 'auto', marginRight: '10px' }} />
-                            ))}
+                            {value && <img src={value.url} alt={value.name} style={{ width: '80px', height: 'auto'}} />}
                         </div>
                     );
                 },
@@ -107,16 +106,50 @@ const QualityRecoList = () => {
                     return (
                         <Fragment>
                             <Link to={`/admin/quality/recommendations/${allQualityReco[dataIndex]._id}`}>
-                                <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 mr-2">
-                                    <PencilSquareIcon className="h-5 w-5" />
-                                </button>
+                                <Tooltip
+                                    className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
+                                    content={
+                                        <Typography
+                                            color="blue-gray"
+                                            variant="small"
+                                            className="font-normal opacity-80"
+                                        >
+                                            Update Recommendation
+                                        </Typography>
+                                    }
+                                    animate={{
+                                        mount: { scale: 1, y: 0 },
+                                        unmount: { scale: 0, y: 25 },
+                                    }}
+                                >
+                                    <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 mr-2">
+                                        <PencilSquareIcon className="h-5 w-5" />
+                                    </button>
+                                </Tooltip>
                             </Link>
-                            <button
-                                onClick={() => handleDelete(allQualityReco[dataIndex]._id)}
-                                className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                            <Tooltip
+                                className="border border-blue-gray-50 bg-white px-4 py-3 shadow-xl shadow-black/10"
+                                content={
+                                    <Typography
+                                        color="blue-gray"
+                                        variant="small"
+                                        className="font-normal opacity-80"
+                                    >
+                                        Delete Recommendation
+                                    </Typography>
+                                }
+                                animate={{
+                                    mount: { scale: 1, y: 0 },
+                                    unmount: { scale: 0, y: 25 },
+                                }}
                             >
-                                <TrashIcon className="h-5 w-5" />
-                            </button>
+                                <button
+                                    onClick={() => handleDelete(allQualityReco[dataIndex]._id)}
+                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                                >
+                                    <TrashIcon className="h-5 w-5" />
+                                </button>
+                            </Tooltip>
                         </Fragment>
                     );
                 },
