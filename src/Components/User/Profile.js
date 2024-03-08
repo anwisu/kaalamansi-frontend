@@ -2,10 +2,21 @@ import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
 import { getToken } from "../../utils/helpers";
 import { TbUserEdit } from "react-icons/tb";
+import UserQualityPredictions from "./UserQualityPredictions";
+import UserDiseasePredictions from "./UserDiseasePredictions";
+import {
+  Tabs,
+  TabsHeader,
+  TabsBody,
+  Tab,
+  TabPanel,
+} from "@material-tailwind/react";
+import { Square3Stack3DIcon } from "@heroicons/react/24/solid";
 
 const Profile = () => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState({});
+  const [activeTab, setActiveTab] = useState("tab1");
 
   const getProfile = async () => {
     const config = {
@@ -32,6 +43,13 @@ const Profile = () => {
     getProfile();
   }, []);
 
+  const handleTab1 = () => {
+    setActiveTab("tab1");
+  };
+  const handleTab2 = () => {
+    setActiveTab("tab2");
+  };
+
   return (
     <Fragment>
       {loading ? (
@@ -43,7 +61,7 @@ const Profile = () => {
               <div class="bg-white rounded-lg shadow-xl pb-8">
                 <div class="w-full h-[250px]">
                   <img
-                    src="https://vojislavd.com/ta-template-demo/assets/img/profile-background.jpg"
+                    src="./images/cover-photo1.png"
                     class="w-full h-full rounded-tl-lg rounded-tr-lg"
                   />
                 </div>
@@ -56,7 +74,7 @@ const Profile = () => {
                     <p class="text-3xl  text-green-700">{user.name}</p>
                   </div>
                   <p class=" capitalize text-gray-700">{user.role}</p>
-                  
+
                 </div>
                 <div class="flex-1 flex flex-col items-center lg:items-end justify-end px-8 mt-2">
                   <div class="flex items-center space-x-4 mt-2">
@@ -149,6 +167,43 @@ const Profile = () => {
                       eligendi commodi distinctio!
                     </p>
                   </div>
+                </div>
+              </div>
+
+              <div class="bg-white rounded-lg shadow-xl pb-8">
+                <div class="p-10 items-center">
+                  <Tabs value={activeTab}>
+                    <TabsHeader>
+                      <Tab
+                        value="tab1"
+                        onClick={handleTab1}
+                        className={`${activeTab === "tab1" ? "active" : ""} transition-all duration-300 ease-in-out`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Square3Stack3DIcon className="w-5 h-5" />
+                          Quality Predictions
+                        </div>
+                      </Tab>
+                      <Tab
+                        value="tab2"
+                        onClick={handleTab2}
+                        className={`${activeTab === "tab2" ? "active" : ""} transition-all duration-300 ease-in-out`}
+                      >
+                        <div className="flex items-center gap-2">
+                          <Square3Stack3DIcon className="w-5 h-5" />
+                          Disease Predictions
+                        </div>
+                      </Tab>
+                    </TabsHeader>
+                    <TabsBody>
+                      <TabPanel value="tab1">
+                        <UserQualityPredictions />
+                      </TabPanel>
+                      <TabPanel value="tab2">
+                        <UserDiseasePredictions />
+                      </TabPanel>
+                    </TabsBody>
+                  </Tabs>
                 </div>
               </div>
             </div>

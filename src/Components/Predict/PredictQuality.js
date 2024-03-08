@@ -1,6 +1,7 @@
 import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { getToken } from "../../utils/helpers";
 
 const PredictQuality = () => {
   const [error, setError] = useState("");
@@ -22,6 +23,7 @@ const PredictQuality = () => {
         {
           headers: {
             "Content-Type": "application/json",
+            'Authorization': `Bearer ${getToken()}`
           },
         }
       );
@@ -29,7 +31,7 @@ const PredictQuality = () => {
       if (response.data && response.data.reco_data) {
         console.log(response.data.reco_data._id); // Log the id
         const result = navigate(`/predict/quality/${response.data.reco_data._id}`);
-        console.log(result); // Log the result of the navigate function
+        console.log(result);
       } else {
         setError("Prediction failed. Please try again.");
       }

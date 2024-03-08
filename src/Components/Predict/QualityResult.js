@@ -14,18 +14,18 @@ const QualityResult = () => {
         );
         // console.log(result.data); // Log the fetched data
 
-        setCombinedQualityData(result.data);
+        setCombinedQualityData(result.data.reco_data);
         console.log(combinedQualityData);
         // Fetch additional data from the quality collection
-        const qualityResult = await axios(
-          `${process.env.REACT_APP_API}/admin/quality/${result.data.reco_data.quality_id}`
-        );
-        // console.log(qualityResult.data); // Log the fetched quality data
+        // const qualityResult = await axios(
+        //   `${process.env.REACT_APP_API}/admin/quality/${result.data.quality_id}`
+        // );
+        // // console.log(qualityResult.data); // Log the fetched quality data
 
-        setCombinedQualityData((prevData) => ({
-          ...prevData,
-          qualityData: qualityResult.data,
-        }));
+        // setCombinedQualityData((prevData) => ({
+        //   ...prevData,
+        //   qualityData: qualityResult.data,
+        // }));
         console.log(combinedQualityData);
       } catch (error) {
         console.error(error);
@@ -35,7 +35,7 @@ const QualityResult = () => {
     fetchData();
   }, [id]);
 
-  if (!combinedQualityData || !combinedQualityData.qualityData) {
+  if (!combinedQualityData || !combinedQualityData.quality_data) {
     return <div>Loading...</div>;
   }
 
@@ -54,8 +54,7 @@ const QualityResult = () => {
         <div class="p-10 py-10 bg-gray-200 text-center w-90 rounded-2xl">
           <div>
             <div className="flex items-center text-center justify-center">
-              {combinedQualityData &&
-                combinedQualityData.qualityData.quality_data.predicted_quality ===
+              {combinedQualityData && combinedQualityData.quality_data && combinedQualityData.quality_data.predicted_quality ===
                 "low" ? (
                 <div className="flex items-center text-center justify-center">
                   <svg
@@ -81,8 +80,8 @@ const QualityResult = () => {
                       }}
                     >
                       {
-                        combinedQualityData.qualityData.quality_data
-                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.qualityData.quality_data
+                        combinedQualityData.quality_data
+                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.quality_data
                             .predicted_quality.slice(1).toLowerCase()
                       }{" "}
                       Quality
@@ -114,8 +113,8 @@ const QualityResult = () => {
                       }}
                     >
                       {
-                        combinedQualityData.qualityData.quality_data
-                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.qualityData.quality_data
+                        combinedQualityData.quality_data
+                          .predicted_quality.charAt(0).toUpperCase() + combinedQualityData.quality_data
                             .predicted_quality.slice(1).toLowerCase()
                       }{" "}
                       Quality
@@ -126,7 +125,7 @@ const QualityResult = () => {
             </div>
 
             <p class="text-gray-600 text-sm">
-              <b>Quality ID:</b> {combinedQualityData.reco_data.quality_id}
+              <b>Quality ID:</b> {combinedQualityData.quality_data._id}
             </p>
             <hr class="my-4 border-t-2 border-gray-400" />
 
@@ -134,77 +133,77 @@ const QualityResult = () => {
               <div className="col-span-1">
                 <p className="text-gray-600 text-sm">
                   <b>Size:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.size}
+                  {combinedQualityData.quality_data.size}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Shape:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.shape}
+                  {combinedQualityData.quality_data.shape}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Firmness:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.firmness}
+                  {combinedQualityData.quality_data.firmness}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Skin Color:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.skin_color}
+                  {combinedQualityData.quality_data.skin_color}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Blemishes:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.blemishes}
+                  {combinedQualityData.quality_data.blemishes}
                 </p>
               </div>
 
               <div className="col-span-1">
                 <p className="text-gray-600 text-sm">
                   <b>Soil Type:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.soil_type}
+                  {combinedQualityData.quality_data.soil_type}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Sun Exposure:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.sun_exposure}
+                  {combinedQualityData.quality_data.sun_exposure}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Location:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.location}
+                  {combinedQualityData.quality_data.location}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Fertilized:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.fertilized}
+                  {combinedQualityData.quality_data.fertilized}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Watering Schedule:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.watering_sched}
+                  {combinedQualityData.quality_data.watering_sched}
                 </p>
               </div>
 
               <div className="col-span-1">
                 <p className="text-gray-600 text-sm">
                   <b>Pruning:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.pruning}
+                  {combinedQualityData.quality_data.pruning}
                 </p>
                 <p className="text-gray-600 text-sm">
                   <b>Pest Presence:</b>{" "}
-                  {combinedQualityData.qualityData.quality_data.pest_presence}
+                  {combinedQualityData.quality_data.pest_presence}
                 </p>
                 <p className="text-gray-600 text-sm">
-                  {combinedQualityData.reco_data.soil_recommendation && (
+                  {combinedQualityData.soil_recommendation && (
                     <>
                       <b>Soil Recommendations:</b>{" "}
-                      {combinedQualityData.reco_data.soil_recommendation}
+                      {combinedQualityData.soil_recommendation}
                       <br />
                     </>
                   )}
-                  {combinedQualityData.reco_data.sun_recommendation && (
+                  {combinedQualityData.sun_recommendation && (
                     <>
                       <b>Sun Recommendations:</b>{" "}
-                      {combinedQualityData.reco_data.sun_recommendation}
+                      {combinedQualityData.sun_recommendation}
                       <br />
                     </>
                   )}
-                  {combinedQualityData.reco_data.watering_recommendation && (
+                  {combinedQualityData.watering_recommendation && (
                     <>
                       <b>Watering Recommendations:</b>{" "}
-                      {combinedQualityData.reco_data.watering_recommendation}
+                      {combinedQualityData.watering_recommendation}
                       <br />
                     </>
                   )}
