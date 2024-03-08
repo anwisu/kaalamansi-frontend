@@ -4,11 +4,22 @@ import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { getToken } from "../../utils/helpers";
 import {
+    Accordion,
+    AccordionHeader,
+    AccordionBody,
+} from "@material-tailwind/react";
+import { Button, IconButton } from "@material-tailwind/react";
+import { ArrowRightIcon, ArrowLeftIcon } from "@heroicons/react/24/outline";
+import {
     TrashIcon
 } from '@heroicons/react/24/solid';
 
+const ITEMS_PER_PAGE = 5;
+
 const UserQualityPredictions = () => {
     const [mePredictions, setMePredictions] = useState([]);
+    const [open, setOpen] = useState(0);
+    const [active, setActive] = useState(1);
 
     const fetchPredictions = async () => {
         try {
@@ -32,193 +43,38 @@ const UserQualityPredictions = () => {
     useEffect(() => {
         fetchPredictions();
     }, []);
-    
+
     console.log(mePredictions);
 
-    const columns = [
-        {
-            name: "quality_data",
-            label: "Fruit Appearance",
-            options: {
-                filter: true,
-                sort: true,
-                customBodyRender: (value) => {
-                    return (
-                        <Fragment>
-                            <p className={"capitalize"}>Size: {value.size}</p>
-                            <p className={"capitalize"}>Firmness: {value.firmness}</p>
-                            <p className={"capitalize"}>Shape: {value.shape}</p>
-                            <p className={"capitalize"}>Skin Color: {value.skin_color}</p>
-                            <p className={"capitalize"}>Blemishes: {value.blemishes}</p>
-                        </Fragment>
-                    );
-                },
-            },
-        },
-        {
-            name: "quality_data",
-            label: "Environmental Factors",
-            options: {
-                filter: true,
-                sort: true,
-                customBodyRender: (value) => {
-                    return (
-                        <Fragment>
-                            <p className={"capitalize"}>Soil Type: {value.soil_type}</p>
-                            <p className={"capitalize"}>Sun Exposure: {value.sun_exposure}</p>
-                            <p className={"capitalize"}>Location: {value.location}</p>
-                            <p className={"capitalize"}>Pest Presence: {value.pest_presence}</p>
-                        </Fragment>
-                    );
-                },
-            },
-        },
-        {
-            name: "quality_data",
-            label: "Cultivation Practices",
-            options: {
-                filter: true,
-                sort: true,
-                customBodyRender: (value) => {
-                    return (
-                        <Fragment>
-                            <p className={"capitalize"}>Fertilized: {value.fertilized}</p>
-                            <p className={"capitalize"}>Watering Schedule: {value.watering_sched}</p>
-                            <p className={"capitalize"}>Pruning: {value.pruning}</p>
-                        </Fragment>
-                    );
-                },
-            },
-        },
-        {
-            name: "quality_data",
-            label: "Prediction",
-            options: {
-                filter: true,
-                sort: true,
-                customBodyRender: (value) => (
-                    <p
-                        className={`capitalize px-3 py-1 bg-green-500 inline-block rounded-full 
-            ${value.predicted_quality == "low" ? "bg-red-500" : "bg-green-500"}`}
-                    >
-                        {value.predicted_quality}
-                    </p>
-                ),
-            },
-        },
-        // {
-        //     name: "actions",
-        //     label: "Actions",
-        //     options: {
-        //         filter: false,
-        //         sort: false,
-        //         empty: true,
-        //         customBodyRenderLite: (dataIndex) => {
-        //             return (
-        //                 <Fragment>
+    const getItemProps = (index) => ({
+        variant: active === index ? "filled" : "text",
+        color: "gray",
+        onClick: () => setActive(index),
+        className: "rounded-full",
+    });
 
-        //                 </Fragment>
-        //             );
-        //         },
-        //     },
-        // },
-    ];
-
-    if (mePredictions.some(item => item.soil_recommendation)) {
-        columns.push({
-            name: "soil_recommendation",
-            label: "Soil Recommendation",
-            options: {
-                filter: true,
-                sort: true,
-            },
-        });
-    }
-
-    // Check if any data object has a watering recommendation
-    if (mePredictions.some(item => item.watering_recommendation)) {
-        columns.push({
-            name: "watering_recommendation",
-            label: "Watering Recommendation",
-            options: {
-                filter: true,
-                sort: true,
-            },
-        });
-    }
-
-    // Check if any data object has a sun recommendation
-    if (mePredictions.some(item => item.sun_recommendation)) {
-        columns.push({
-            name: "sun_recommendation",
-            label: "Sun Recommendation",
-            options: {
-                filter: true,
-                sort: true,
-            },
-        });
-    }
-
-    const datas = {
-        rows: mePredictions,
+    const next = () => {
+        if (active === Math.ceil(mePredictions.length / ITEMS_PER_PAGE)) return;
+        setActive(active + 1);
     };
 
-    const options = {
-        selectableRows: false,
-        elevation: 0,
-        rowsPerPage: 5,
-        rowsPerPageOptions: [5, 10, 20, 30],
-        resizable: true,
-        print: false,
+    const prev = () => {
+        if (active === 1) return;
+        setActive(active - 1);
     };
 
-    const muiTheme = () =>
-        createTheme({
-            typography: {
-                fontSize: "16px",
-            },
-            components: {
-                MuiTypography: {
-                    styleOverrides: {
-                        h6: {
-                            fontSize: "30px", // Adjust the font size as needed
-                            color: "#4AA032",
-                            fontFamily: "League Spartan",
-                        },
-                    },
-                },
-                MuiTableCell: {
-                    styleOverrides: {
-                        head: {
-                            padding: "7px 0",
-                            fontSize: "12px",
-                            backgroundColor: "#75CD60",
-                        },
-                        body: {
-                            padding: " 7px 8px",
-                            fontSize: "14px",
-                        },
-                    },
-                },
-                MUIDataTable: {
-                    styleOverrides: {
-                        root: {
-                            backgroundColor: "#fff",
-                            borderRadius: "8px",
-                            boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.1)",
-                            padding: "2px",
-                            fontSize: "18px",
-                        },
-                    },
-                },
-            },
-        });
+    // Calculate the items to show based on the current active page
+    const startIndex = (active - 1) * ITEMS_PER_PAGE;
+    const endIndex = startIndex + ITEMS_PER_PAGE;
+    const itemsToShow = mePredictions.slice(startIndex, endIndex);
+
+    const handleOpen = (value) => setOpen(open === value ? 0 : value);
 
     return (
         <div className="flex">
             <div className="flex-1 py-10">
                 <div>
-                    <ThemeProvider theme={muiTheme()}>
+                    {/* <ThemeProvider theme={muiTheme()}>
                         {mePredictions.length > 0 && (
                             <MUIDataTable
                                 title={"Predicted Quality"}
@@ -227,7 +83,88 @@ const UserQualityPredictions = () => {
                                 options={options}
                             />
                         )}
-                    </ThemeProvider>
+                    </ThemeProvider> */}
+                    {itemsToShow.map((prediction, index) => (
+                        <Accordion key={index} open={open === index + 1} className="mb-2 rounded-lg border border-blue-gray-100 px-4">
+                            <AccordionHeader
+                                onClick={() => handleOpen(index + 1)}
+                                className={`border-b-0 transition-colors ${open === index + 1 ? "text-green-500 hover:!text-green-700" : ""}`}
+                            >
+                                <div className="flex justify-between w-full">
+                                    <div>
+                                        {prediction.quality_data.predicted_quality.charAt(0).toUpperCase() + prediction.quality_data.predicted_quality.slice(1).toLowerCase()}{" "} Quality
+                                    </div>
+                                    <div>
+                                        Predicted On: {String(prediction.created_at).substring(0, 16)}
+                                    </div>
+                                </div>
+                                {/* {index + 1} */}
+                            </AccordionHeader>
+                            <AccordionBody className="pt-0 text-base font-normal">
+                                <div className="flex">
+                                    <div className="flex-1">
+                                        <h2>Fruit Appearance</h2>
+                                        Size: {prediction.quality_data.size} <br />
+                                        Firmness: {prediction.quality_data.firmness} <br />
+                                        Shape: {prediction.quality_data.shape}<br />
+                                        Skin Color: {prediction.quality_data.skin_color}<br />
+                                        Blemishes: {prediction.quality_data.blemishes}<br />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h2>Environmental Factors</h2>
+                                        Soil Type: {prediction.quality_data.soil_type} <br />
+                                        Sun Exposure: {prediction.quality_data.sun_exposure} <br />
+                                        Location: {prediction.quality_data.location} <br />
+                                        Pest Presence: {prediction.quality_data.pest_presence} <br />
+                                    </div>
+                                    <div className="flex-1">
+                                        <h2>Cultivation Practices</h2>
+                                        Fertilized: {prediction.quality_data.fertilized} <br />
+                                        Watering Schedule: {prediction.quality_data.watering_sched} <br />
+                                        Pruning: {prediction.quality_data.pruning} <br />
+                                    </div>
+                                </div>
+                                <br />
+                                <hr />
+                                <br />
+                                <h2>Recommendations</h2>
+                                {prediction.soil_recommendation && (
+                                    <div>Soil Recommendation: {prediction.soil_recommendation}</div>
+                                )}
+                                {prediction.watering_recommendation && (
+                                    <div>Watering Recommendation: {prediction.watering_recommendation}</div>
+                                )}
+                                {prediction.sun_recommendation && (
+                                    <div>Sun Recommendation: {prediction.sun_recommendation}</div>
+                                )}
+
+                            </AccordionBody>
+                        </Accordion>
+                    ))}
+                </div>
+                <div className="flex items-center gap-4 justify-center">
+                <Button
+                        variant="text"
+                        className="flex items-center gap-2 rounded-full"
+                        onClick={prev}
+                        disabled={active === 1}
+                    >
+                        <ArrowLeftIcon strokeWidth={2} className="h-4 w-4" /> Previous
+                    </Button>
+                    <div className="flex items-center gap-2">
+                        {Array.from({ length: Math.ceil(mePredictions.length / ITEMS_PER_PAGE) }, (_, i) => (
+                            <IconButton {...getItemProps(i + 1)}>{i + 1}</IconButton>
+                        ))}
+                    </div>
+                    <Button
+                        variant="text"
+                        className="flex items-center gap-2 rounded-full"
+                        onClick={next}
+                        disabled={active === Math.ceil(mePredictions.length / ITEMS_PER_PAGE)}
+                    >
+                        Next
+                        <ArrowRightIcon strokeWidth={2} className="h-4 w-4" />
+                    </Button>
                 </div>
             </div>
         </div>
