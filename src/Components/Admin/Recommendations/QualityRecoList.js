@@ -1,12 +1,13 @@
 import React, { useState, useEffect, Fragment } from "react";
-// import { MDBDataTable } from "mdbreact";
 import axios from "axios";
+import { Link } from "react-router-dom";
 import MUIDataTable from "mui-datatables";
 import Sidebar from "../Sidebar";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Button } from "@material-tailwind/react";
 import { getToken } from "../../../utils/helpers";
 import {
+    PencilSquareIcon,
     TrashIcon
 } from '@heroicons/react/24/solid';
 
@@ -34,21 +35,20 @@ const QualityRecoList = () => {
         qualityRecoList();
     }, []);
 
-    // const deleteQuality = async (id) => {
-    //     try {
-    //         const config = {
-    //             headers: {
-    //                 "Content-Type": "application/json",
-    //                 'Authorization': `Bearer ${getToken()}`
-    //             },
-    //         };
-    //         await axios.delete(`${process.env.REACT_APP_API}/admin/quality/${id}`, config);
-    //         // Refresh the quality list after deletion
-    //         qualityList();
-    //     } catch (error) {
-    //         console.error("Error deleting quality data:", error);
-    //     }
-    // };
+    const deleteQualityReco = async (id) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${getToken()}`
+                },
+            };
+            await axios.delete(`${process.env.REACT_APP_API}/admin/quality/recommendations/${id}`, config);
+            qualityRecoList();
+        } catch (error) {
+            console.error("Error deleting quality data:", error);
+        }
+    };
 
     const columns = [
         {
@@ -87,41 +87,46 @@ const QualityRecoList = () => {
                 customBodyRender: (value) => {
                     console.log(value); // Log the image URLs
                     return (
-                        <div style={{ display: 'flex'}}>
-                        {Array.isArray(value) && value.map((image, index) => (
-                            <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '80px', height: 'auto', marginRight: '10px' }} />
-                        ))}
+                        <div style={{ display: 'flex' }}>
+                            {Array.isArray(value) && value.map((image, index) => (
+                                <img key={index} src={image.url} alt={`Image ${index}`} style={{ width: '80px', height: 'auto', marginRight: '10px' }} />
+                            ))}
                         </div>
                     );
                 },
             },
         },
-        // {
-        //     name: "actions",
-        //     label: "Actions",
-        //     options: {
-        //         filter: false,
-        //         sort: false,
-        //         empty: true,
-        //         customBodyRenderLite: (dataIndex) => {
-        //             return (
-        //                 <Fragment>
-        //                     <button
-        //                         onClick={() => handleDelete(allQualityPredicts[dataIndex]._id)}
-        //                         className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
-        //                     >
-        //                         <TrashIcon className="h-5 w-5" />
-        //                     </button>
-        //                 </Fragment>
-        //             );
-        //         },
-        //     },
-        // },
+        {
+            name: "actions",
+            label: "Actions",
+            options: {
+                filter: false,
+                sort: false,
+                empty: true,
+                customBodyRenderLite: (dataIndex) => {
+                    return (
+                        <Fragment>
+                            <Link to={`/admin/quality/recommendations/${allQualityReco[dataIndex]._id}`}>
+                                <button className="bg-blue-500 text-white p-2 rounded hover:bg-blue-700 mr-2">
+                                    <PencilSquareIcon className="h-5 w-5" />
+                                </button>
+                            </Link>
+                            <button
+                                onClick={() => handleDelete(allQualityReco[dataIndex]._id)}
+                                className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                            >
+                                <TrashIcon className="h-5 w-5" />
+                            </button>
+                        </Fragment>
+                    );
+                },
+            },
+        },
     ];
 
-    // const handleDelete = (id) => {
-    //     deleteQuality(id)
-    // }
+    const handleDelete = (id) => {
+        deleteQualityReco(id)
+    }
 
     const datas = {
         rows: allQualityReco,
