@@ -19,9 +19,6 @@ const QualityResult = () => {
       format: "A4",
       orientation: "landscape",
     },
-    // scale: 1000, // Set to make it wide like the width of the letter in landscape
-    // x: "100%", // Center the content horizontally
-    // y: 5, // Center the content vertically
     canvas: {
       mimeType: "image/png",
       qualityRatio: 1,
@@ -43,20 +40,9 @@ const QualityResult = () => {
         const result = await axios(
           `${process.env.REACT_APP_API}/predict/quality/${id}`
         );
-        // console.log(result.data); // Log the fetched data
 
         setCombinedQualityData(result.data.reco_data);
         console.log(combinedQualityData);
-        // Fetch additional data from the quality collection
-        // const qualityResult = await axios(
-        //   `${process.env.REACT_APP_API}/admin/quality/${result.data.quality_id}`
-        // );
-        // // console.log(qualityResult.data); // Log the fetched quality data
-
-        // setCombinedQualityData((prevData) => ({
-        //   ...prevData,
-        //   qualityData: qualityResult.data,
-        // }));
         console.log(combinedQualityData);
       } catch (error) {
         console.error(error);
@@ -89,8 +75,8 @@ const QualityResult = () => {
           <div>
             <div className="flex items-center text-center justify-center">
               {combinedQualityData &&
-              combinedQualityData.quality_data &&
-              combinedQualityData.quality_data.predicted_quality === "low" ? (
+                combinedQualityData.quality_data &&
+                combinedQualityData.quality_data.predicted_quality === "low" ? (
                 <div className="flex items-center text-center justify-center">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -221,7 +207,73 @@ const QualityResult = () => {
         </div>
       </div>
       <div class="mt-10 items-center mx-auto text-center justify-center ">
-        <div class=" btn btn-success mr-10 rounded-full btns">
+        <div class="mt-10 items-center mx-auto text-center justify-center">
+          <h1
+            class="text-3xl font-semibold mb-3 text-gray-700"
+            style={{
+              color: "#4AA032",
+              fontFamily: "League Spartan",
+            }}
+          >
+            Recommendations
+          </h1>
+          <div>
+            {combinedQualityData ? (
+              < div class="mx-20 my-10 flex items-center text-center justify-center">
+                {combinedQualityData.soil_recommendation && (
+                  <div class="p-10 py-10 bg-gray-100 text-center item-center rounded-2xl w-80 mr-10">
+                    <>
+                      <b>Soil Recommendations:</b>{" "}
+                      <img
+                        src={combinedQualityData.soil_image.url} 
+                        alt=""
+                        class="mx-auto block"
+                      />
+                      {/* {combinedQualityData.soil_image} */}
+                      {combinedQualityData.soil_recommendation}
+                      <br />
+                    </>
+                  </div>
+                )}
+                {combinedQualityData.sun_recommendation && (
+                  <div class="p-10 py-10 bg-gray-100 text-center item-center w-80 rounded-2xl">
+                    <>
+                      <b>Sun Recommendations:</b>{" "}
+                      <img
+                        src={combinedQualityData.sun_image.url} 
+                        alt=""
+                        class="mx-auto block"
+                      />
+                      {/* {combinedQualityData.sun_image} */}
+                      {combinedQualityData.sun_recommendation}
+                      <br />
+                    </>
+                  </div>
+                )}
+                {combinedQualityData.watering_recommendation && (
+                  <div class="p-10 py-10 bg-gray-100 text-center item-center w-80 rounded-2xl ml-10">
+                    <>
+                      <b>Watering Recommendations:</b>{" "}
+                      <img
+                        src={combinedQualityData.watering_image.url} 
+                        alt=""
+                        class="mx-auto block"
+                      />
+                      {/* {combinedQualityData.watering_image} */}
+                      {combinedQualityData.watering_recommendation}
+                      <br />
+                    </>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <div class="p-10 py-10 bg-gray-200 text-center w-90 rounded-2xl">
+                No Recommendations
+              </div>
+            )}
+          </div>
+        </div>
+        <div class=" btn btn-success mr-10 rounded-full btns mt-10 mb-10">
           <span class="icons">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -260,54 +312,6 @@ const QualityResult = () => {
           </span>
           <span className="text">Save</span>
         </button>
-        <div class="mt-20 items-center mx-auto text-center justify-center">
-          <h1
-            class="text-3xl font-semibold mb-3 text-gray-700"
-            style={{
-              color: "#4AA032",
-              fontFamily: "League Spartan",
-            }}
-          >
-            Recommendation
-          </h1>
-          <div>
-            {combinedQualityData ? (
-              < div class="mx-20 my-10 flex items-center text-center justify-center">
-                {combinedQualityData.soil_recommendation && (
-                  <div class="p-10 py-10 bg-gray-100 text-center item-center rounded-2xl w-80 mr-10">
-                    <>
-                      <b>Soil Recommendations:</b>{" "}
-                      {combinedQualityData.soil_recommendation}
-                      <br />
-                    </>
-                  </div>
-                )}
-                {combinedQualityData.sun_recommendation && (
-                  <div class="p-10 py-10 bg-gray-100 text-center item-center w-80 rounded-2xl">
-                    <>
-                      <b>Sun Recommendations:</b>{" "}
-                      {combinedQualityData.sun_recommendation}
-                      <br />
-                    </>
-                  </div>
-                )}
-                {combinedQualityData.watering_recommendation && (
-                  <div class="p-10 py-10 bg-gray-100 text-center item-center w-80 rounded-2xl ml-10">
-                    <>
-                      <b>Watering Recommendations:</b>{" "}
-                      {combinedQualityData.watering_recommendation}
-                      <br />
-                    </>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div class="p-10 py-10 bg-gray-200 text-center w-90 rounded-2xl">
-                No Recommendations
-              </div>
-            )}
-          </div>
-        </div>
       </div>
     </div>
   );

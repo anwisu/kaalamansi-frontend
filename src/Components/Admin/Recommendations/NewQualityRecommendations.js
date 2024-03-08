@@ -48,7 +48,7 @@ const NewQualityRecommendations = () => {
     const factorOptions = {
         'soil_type': { options: ['loamy', 'clayey', 'sandy'], labels: ['Loamy', 'Clayey', 'Sandy'] },
         'watering_sched': { options: ['regular', 'irregular'], labels: ['Regular', 'Irregular'] },
-        'sun_exposure': { options: ['full_shade', 'partial_shade', 'full_sun'], labels: ['Full Shade', 'Partial Shade', 'Full Sun'] }
+        'sun_exposure': { options: ['full shade', 'partial shade', 'full sun'], labels: ['Full Shade', 'Partial Shade', 'Full Sun'] }
     };
 
     useEffect(() => {
