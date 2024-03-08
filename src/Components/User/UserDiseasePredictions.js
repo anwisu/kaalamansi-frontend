@@ -44,6 +44,26 @@ const UserDiseasePredictions = () => {
         fetchPredictions();
     }, []);
 
+    const deleteDiseasePredicts = async (id) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${getToken()}`
+                },
+            };
+            await axios.delete(`${process.env.REACT_APP_API}/me/disease/predictions/${id}`, config);
+            // Refresh the disease list after deletion
+            fetchPredictions();
+        } catch (error) {
+            console.error("Error deleting disease data:", error);
+        }
+    };
+
+    const handleDelete = (id) => {
+        deleteDiseasePredicts(id)
+    }
+
     console.log(mePredictions);
 
     const getItemProps = (index) => ({
@@ -93,10 +113,18 @@ const UserDiseasePredictions = () => {
                                     >
                                         <div className="flex justify-between w-full">
                                             <div>
-                                                {prediction.disease_data.predicted_disease.charAt(0).toUpperCase() + prediction.disease_data.predicted_disease.slice(1).toLowerCase()}{" "} disease
+                                                {prediction.disease_data.predicted_disease.charAt(0).toUpperCase() + prediction.disease_data.predicted_disease.slice(1).toLowerCase()}{" "}
                                             </div>
                                             <div>
                                                 Predicted On: {String(prediction.created_at).substring(0, 16)}
+                                            </div>
+                                            <div>
+                                                <button
+                                                    onClick={() => handleDelete(prediction._id)}
+                                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                                                >
+                                                    <TrashIcon className="h-5 w-5" />
+                                                </button>
                                             </div>
                                         </div>
                                         {/* {index + 1} */}

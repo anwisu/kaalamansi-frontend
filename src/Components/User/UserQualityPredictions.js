@@ -16,6 +16,7 @@ import {
 
 const ITEMS_PER_PAGE = 5;
 
+
 const UserQualityPredictions = () => {
     const [mePredictions, setMePredictions] = useState([]);
     const [open, setOpen] = useState(0);
@@ -43,6 +44,26 @@ const UserQualityPredictions = () => {
     useEffect(() => {
         fetchPredictions();
     }, []);
+
+    const deleteQualityPredicts = async (id) => {
+        try {
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    'Authorization': `Bearer ${getToken()}`
+                },
+            };
+            await axios.delete(`${process.env.REACT_APP_API}/me/quality/predictions/${id}`, config);
+            // Refresh the disease list after deletion
+            fetchPredictions();
+        } catch (error) {
+            console.error("Error deleting disease data:", error);
+        }
+    };
+
+    const handleDelete = (id) => {
+        deleteQualityPredicts(id)
+    }
 
     console.log(mePredictions);
 
@@ -98,6 +119,14 @@ const UserQualityPredictions = () => {
                                             </div>
                                             <div>
                                                 Predicted On: {String(prediction.created_at).substring(0, 16)}
+                                            </div>
+                                            <div>
+                                                <button
+                                                    onClick={() => handleDelete(prediction._id)}
+                                                    className="bg-red-500 text-white p-2 rounded hover:bg-red-700"
+                                                >
+                                                    <TrashIcon className="h-5 w-5" />
+                                                </button>
                                             </div>
                                         </div>
                                         {/* {index + 1} */}
