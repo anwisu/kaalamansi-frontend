@@ -26,9 +26,10 @@ const DiseaseResult = () => {
 
   console.log(combinedDiseaseData);
 
-  if (isLoading || !combinedDiseaseData || !combinedDiseaseData.disease_data) {
+  if (!combinedDiseaseData || !combinedDiseaseData.disease_data) {
     return <div>Loading...</div>;
   }
+
   return (
     // <div>
     //     <h1>Disease Result</h1>
