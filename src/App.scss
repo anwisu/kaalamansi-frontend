@@ -228,10 +228,13 @@ li {
             text-align: center;
             padding: 1.5rem 0;
 
-            .registerImg, .loginImg {
+            img {
                 width: 60px;
                 padding-bottom: .5rem;
+                display: block;
+                margin: auto;
             }
+        
 
             .title {
                 font-size: 25px;
@@ -319,9 +322,11 @@ li {
     height: 75vh;
     width: 80%;
     margin: auto;
+    margin-top: 40px;
     justify-content: space-between;
     border-radius: 10px;
     background:hsl(0, 0%, 91%);
+    // padding-top: 1rem;
 
     .videoDiv {
         position: relative;
@@ -402,17 +407,20 @@ li {
         flex-basis: 50%;
         margin: auto;
         flex-direction: column;
-        gap: 1.5rem;
-        transform: translateY(-1rem);
+        // gap: 1.5rem;
+        // transform: translateY(-1rem);
 
         .headerDiv {
             text-align: center;
             padding: 1.5rem 0;
 
-            .registerImg, .loginImg {
+            img {
                 width: 60px;
                 padding-bottom: .5rem;
+                display: block;
+                margin: auto;
             }
+        
 
             .title {
                 font-size: 25px;
@@ -492,6 +500,8 @@ li {
                     opacity: .7;
                 }
             }
+
+            
         }
     }
 }

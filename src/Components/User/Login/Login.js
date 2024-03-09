@@ -47,9 +47,9 @@ const Login = () => {
         <video src='./videos/watering-plants.mp4' className='loginVideo' autoPlay muted loop></video>
 
         <div className='textDiv'>
-          <h2 className='title'>Adopt the peace of nature!</h2>
-          <p></p>
-        </div>
+            <h2 className='title'>Elevate Your Kalamansi Garden</h2>
+            <p>Unlock Predictive Growth!</p>
+          </div>
 
         <div className='footerDiv loginFlex'>
           <span className='text'>Don't have an account?</span>
@@ -60,7 +60,7 @@ const Login = () => {
       </div>
       <div className='formDiv loginFlex'>
         <div className='headerDiv'>
-          <img src='./images/citrus.png' alt='Logo Image' className='loginImg' />
+          <img src='./images/citrus.png' alt='Logo Image' />
           <h3 className='title'>Welcome Back!</h3>
         </div>
         <form onSubmit={handleSubmit} className='inputForm loginGrid'>

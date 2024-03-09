@@ -52,7 +52,7 @@ const DiseaseCM = () => {
       },
     },
     title: {
-      text: "Kalamansi Disease Confusion Matrix Heatmap",
+      text: "Kalamansi Disease Confusion Matrix",
     },
     xaxis: {
       type: "category",

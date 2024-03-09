@@ -13,7 +13,7 @@ import DiseaseResult from './Components/Predict/DiseaseResult';
 import Login from './Components/User/Login/Login';
 import Register from './Components/User/Register/Register';
 import Profile from './Components/User/Profile';
-import About from './Components/About';
+import About from './Components/About/About';
 import ProtectedRoute from './Route/ProtectedRoute';
 import Dashboard from './Components/Admin/Dashboard';
 import DiseaseList from './Components/Admin/Disease/DiseaseList';

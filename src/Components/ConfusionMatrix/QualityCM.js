@@ -52,7 +52,7 @@ const QualityCM = () => {
       },
     },
     title: {
-      text: "Kalamansi Quality Confusion Matrix Heatmap",
+      text: "Kalamansi Quality Confusion Matrix",
     },
     xaxis: {
       type: "category",
