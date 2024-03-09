@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import "./App.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 // import './App.scss';
 import Header from './Components/Layout/Header';
 import Home from './Components/Home';
@@ -28,7 +30,12 @@ import NewDiseaseRecommendations from './Components/Admin/Recommendations/NewDis
 import UpdateQualityReco from './Components/Admin/Recommendations/UpdateQualityReco';
 import UpdateDiseaseReco from './Components/Admin/Recommendations/UpdateDiseaseReco';
 
+
 function App() {
+  useEffect(() => {
+    AOS.init();
+  }, []);
+
   return (
     <div>
       <Router>

@@ -1,61 +1,87 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import "../App.css";
+import AOS from "aos";
+import "aos/dist/aos.css";
 
 const Home = () => {
+  AOS.init();
+  AOS.refresh();
+
   return (
     <Fragment>
       <div className="container">
         <div className="row">
-          <div className="hero flex justify-between items-center w-screen p-3">
-            <div className="column" style={{ paddingLeft: "1cm" }}>
-              <img src="./images/hero.png" className="max-w-sm rounded-lg" />
-            </div>
-            <div className="column" style={{ paddingLeft: "1cm" }}>
-              <h1
-                className="text-8xl font-bold"
-                style={{
-                  paddingRight: "1em",
-                  color: "#58B741",
-                  textAlign: "right",
-                  fontFamily: "League Spartan",
-                  textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
-                }}
+          <div className="hero flex justify-between items-center w-screen px-40 pt-20">
+            <div className=" flex justify-between items-center py-20">
+              <div
+                className="column"
+                style={{ paddingLeft: "1%" }}
+                data-aos="fade-right"
+                data-aos-duration="3000"
               >
-                Kaalaman.si
-              </h1>
-              <p
-                className="text-left"
-                style={{ color: "#58B741", paddingRight: "5em" }}
+                <img
+                  src="./images/calamansi_header.png"
+                  className="animate-shake animate-thrice animate-delay-[3000ms] max-w-sm rounded-lg"
+                  
+                />
+              </div>
+              <div
+                className="column"
+                style={{ paddingLeft: "10%" }}
+                data-aos="fade-left"
+                data-aos-duration="3000"
               >
-                Kaalaman.si is a web-based system for home gardeners who grow
-                kalamansi. It uses predictive analysis, quality assessment,
-                disease assessment, and user-friendly interfaces to help users
-                optimize their urban farming. It is accessible from any device
-                and aims to make kalamansi cultivation easy and enjoyable. The
-                system uses a logistic regression model to predict the quality
-                and disease status of kalamansi fruits based on various factors
-                such as size, color, shape, and blemish.
-              </p>
-              {/* <button className="btn btn-primary btn-green"></button> */}
-              <Link
-                to="/about"
-                style={{ textDecoration: "none" }}
-                className="btn btn-green flex items-center"
-              >
-                Learn More
-              </Link>
+                <h1
+                  className="text-8xl font-bold"
+                  style={{
+                    color: "#58B741",
+                    textAlign: "right",
+                    fontFamily: "League Spartan",
+                    textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
+                  }}
+                >
+                  Kaalaman.si
+                </h1>
+                <p
+                  className="text-left text-xl pl-10 "
+                  style={{ color: "#58B741" }}
+                >
+                  Kaalaman.si is a web-based system for home gardeners who grow
+                  kalamansi. It uses predictive analysis, quality assessment,
+                  disease assessment, and user-friendly interfaces to help users
+                  optimize their urban farming. It is accessible from any device
+                  and aims to make kalamansi cultivation easy and enjoyable. The
+                  system uses a logistic regression model to predict the quality
+                  and disease status of kalamansi fruits based on various
+                  factors such as size, color, shape, and blemish.
+                </p>
+                {/* <button className="btn btn-primary btn-green"></button> */}
+                <Link
+                  to="/about"
+                  style={{ textDecoration: "none" }}
+                  className="btn btn-green flex items-center "
+                  data-aos="flip-left"
+                >
+                  Learn More
+                </Link>
+              </div>
             </div>
           </div>
-          <div className="hero w-screen px-20 pb-6">
-            <div className="hero-content flex-col lg:flex-row-reverse items-left">
-              <img
-                src="./images/predict2.png"
-                className="max-w-xs rounded-lg"
-              />
-              <div className="text-left pt-6">
+          <div className="hero w-screen px-20">
+            <div className="hero-content flex-col lg:flex-row-reverse items-left p-20 aos-init aos-animate">
+              <div
+              >
+                <img
+                  src="./images/predict2.png"
+                  className="max-w-xs rounded-lg "
+                />
+              </div>
+              <div
+                className="text-left pt-6"
+              >
                 <h1
-                  className="text-5xl font-bold pr-12"
+                  className="text-6xl font-bold"
                   style={{
                     color: "#58B741",
                     fontFamily: "League Spartan",
@@ -65,7 +91,7 @@ const Home = () => {
                   Predict its quality and diseases
                 </h1>
                 <p
-                  className="pt-6 pr-20 "
+                  className="pt-6 text-xl pr-32"
                   style={{
                     color: "#58B741",
                   }}
@@ -83,15 +109,16 @@ const Home = () => {
                 </p>
                 {/* <button className="btn btn-primary btn-green">Predict Now</button> */}
                 <Link
-                to="/predict/quality"
-                style={{ textDecoration: "none" }}
-                className="btn btn-green flex items-center"
-              >
-                Predict Now
-              </Link>
+                  to="/predict/quality"
+                  style={{ textDecoration: "none" }}
+                  className="btn btn-green flex items-center"
+                >
+                  Predict Now
+                </Link>
               </div>
             </div>
           </div>
+
           <h1
             className="text-3xl font-bold text-center mt-5 mb-5 w-screen p-3"
             style={{
