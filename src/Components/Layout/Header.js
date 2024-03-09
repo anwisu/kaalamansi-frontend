@@ -28,7 +28,7 @@ const Header = () => {
 
   return (
     <Fragment>
-      <div className="navbar bg-white-900">
+      <div className="navbar bg-white-500 text-green-700">
         <div className="flex-1">
           <Link to="/" className="inline-block text-teal-600">
             <div className="flex items-center">
@@ -41,11 +41,11 @@ const Header = () => {
           </Link>
         </div>
         <div className="flex-none">
-          <ul className="menu menu-horizontal px-1">
+          <ul className="menu menu-horizontal px-1 text-base">
             <li>
               <Link
                 to="/"
-                style={{ textDecoration: "none", color: "#58B741" }}
+                style={{ textDecoration: "none" }}
                 className="flex items-center"
               >
                 Home
@@ -54,7 +54,7 @@ const Header = () => {
             <li>
               <Link
                 to="/plant"
-                style={{ textDecoration: "none", color: "#58B741" }}
+                style={{ textDecoration: "none" }}
                 className="flex items-center"
               >
                 Plant
@@ -65,7 +65,7 @@ const Header = () => {
                 <Link
                   to="#"
                   tabIndex={0}
-                  style={{ textDecoration: "none", color: "#58B741" }}
+                  style={{ textDecoration: "none" }}
                   className="flex items-center"
                 >
                   Predict
@@ -82,7 +82,7 @@ const Header = () => {
                   <li>
                     <Link
                       to="/predict/quality"
-                      style={{ textDecoration: "none", color: "#58B741" }}
+                      style={{ textDecoration: "none" }}
                       className="flex items-center"
                     >
                       Predict Quality
@@ -91,7 +91,7 @@ const Header = () => {
                   <li>
                     <Link
                       to="/predict/disease"
-                      style={{ textDecoration: "none", color: "#58B741" }}
+                      style={{ textDecoration: "none" }}
                       className="flex items-center"
                     >
                       Predict Disease
@@ -103,7 +103,7 @@ const Header = () => {
             <li>
               <Link
                 to="/guide"
-                style={{ textDecoration: "none", color: "#58B741" }}
+                style={{ textDecoration: "none" }}
                 className="flex items-center"
               >
                 Guide
@@ -112,7 +112,7 @@ const Header = () => {
             <li>
               <Link
                 to="/about"
-                style={{ textDecoration: "none", color: "#58B741" }}
+                style={{ textDecoration: "none" }}
                 className="flex items-center"
               >
                 About
@@ -123,33 +123,40 @@ const Header = () => {
             <div
               tabIndex={0}
               role="button"
-            // className="btn btn-ghost btn-circle avatar bg-100"
+              // className="btn btn-ghost btn-circle avatar bg-100"
             >
               {user ? (
+                // If user is logged in, display avatar
                 <Avatar
                   size="sm"
-                  src={user.avatar ? user.avatar.url : 'defaultAvatarUrl'}
+                  src={user.avatar ? user.avatar.url : "defaultAvatarUrl"}
                   alt="avatar"
                   className="border border-green-700 shadow-xl shadow-green-900/20 ring-4 ring-green-500/30"
                 />
               ) : (
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  strokeWidth={1.5}
-                  stroke="#58B741"
-                  className="w-6 h-6"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M17.982 18.725A7.488 7.488 0 0 0 12 15.75a7.488 7.488 0 0 0-5.982 2.975m11.963 0a9 9 0 1 0-11.963 0m11.963 0A8.966 8.966 0 0 1 12 21a8.966 8.966 0 0 1-5.982-2.275M15 9.75a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                  />
-                </svg>
+                // If no user is logged in, display login and signup buttons
+                <>
+                  <Link
+                    to="/register"
+                    style={{ textDecoration: "none" }}
+                    className="flex-none items-center  px-5"
+                  >
+                    Sign Up
+                  </Link>
+                  <Link to="/login" className="flex-none items-center  px-1">
+                    <button
+                      type="button"
+                      data-twe-ripple-init
+                      data-twe-ripple-color="light"
+                      class="me-3 inline-block rounded bg-success px-6 pb-2 pt-2.5 text-s font-medium leading-normal text-black shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                    >
+                      Login
+                    </button>
+                  </Link>
+                </>
               )}
             </div>
-            {user ? (
+            {user && (
               <ul
                 tabIndex={0}
                 className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-100 rounded-box w-52"
@@ -186,21 +193,6 @@ const Header = () => {
                     onClick={handleLogout}
                   >
                     Logout
-                  </Link>
-                </li>
-              </ul>
-            ) : (
-              <ul
-                tabIndex={0}
-                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-100 rounded-box w-52"
-              >
-                <li>
-                  <Link
-                    to="/login"
-                    style={{ textDecoration: "none", color: "#58B741" }}
-                    className="flex items-center"
-                  >
-                    Login
                   </Link>
                 </li>
               </ul>
