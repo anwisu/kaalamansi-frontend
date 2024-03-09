@@ -71,7 +71,7 @@ export function Team() {
     return (
         <section className="min-h-screen py-8 px-8 lg:py-28">
             <div className="container mx-auto">
-                <div className="mb-16 text-center lg:mb-28">
+                <div className="mb-10 text-center lg:mb-10">
                     <Typography
                         variant="h6"
                         color="blue-gray"

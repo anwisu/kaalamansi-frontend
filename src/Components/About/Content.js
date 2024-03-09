@@ -6,7 +6,7 @@ import { FaDisease } from "react-icons/fa6";
 
 const Content = () => {
     return (
-        <div className="relative isolate overflow-hidden bg-white px-6 py-24 sm:py-32 lg:overflow-visible lg:px-0">
+        <div className="relative isolate overflow-hidden bg-white px-6 py-24 mt-2 sm:py-32 lg:overflow-visible lg:px-0">
             <div className="absolute inset-0 -z-10 overflow-hidden">
                 <svg
                     className="absolute left-[max(50%,25rem)] top-0 h-[64rem] w-[128rem] -translate-x-1/2 stroke-green-200 [mask-image:radial-gradient(64rem_64rem_at_top,white,transparent)]"
@@ -38,7 +38,7 @@ const Content = () => {
                     <div className="lg:pr-4">
                         <div className="lg:max-w-lg">
                             <p className="text-base font-semibold leading-7 text-green-600">About</p>
-                            <h1 className="mt-2 text-8xl font-bold tracking-tight text-gray-900 sm:text-8xl" 
+                            <h1 className="mt-2 text-7xl font-bold tracking-tight text-gray-900 sm:text-7xl" 
                             style={{
                                 color: "#58B741",
                                 fontFamily: "League Spartan",
@@ -62,34 +62,29 @@ const Content = () => {
                     <div className="lg:pr-4">
                         <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
                             <p>
-                                Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris semper sed amet
-                                vitae sed turpis id. Id dolor praesent donec est. Odio penatibus risus viverra tellus varius sit neque
-                                erat velit. Faucibus commodo massa rhoncus, volutpat. Dignissim sed eget risus enim. Mattis mauris
-                                semper sed amet vitae sed turpis id.
+                            Kaalaman-si is a platform dedicated to predictive analysis in urban farming, specifically focusing on the growth of Kalamansi. 
+                            Established from the study titled "Predictive Analysis of Kalamansi Growth: Assessing Quality and Disease Markers in Urban 
+                            Farming for Home Gardeners," our website addresses the challenges faced by cultivators in ensuring optimal quality and 
+                            identifying disease risks.
                             </p>
                             <ul role="list" className="mt-8 space-y-8 text-gray-600">
                                 <li className="flex gap-x-3">
                                     <GiKiwiFruit className="mt-1 h-5 w-5 flex-none text-green-600" aria-hidden="true"/>
                                     {/* <CloudArrowUpIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" /> */}
                                     <span>
-                                        <strong className="font-semibold text-gray-900">Predict Quality.</strong> Lorem ipsum, dolor sit amet
-                                        consectetur adipisicing elit. Maiores impedit perferendis suscipit eaque, iste dolor cupiditate
-                                        blanditiis ratione.
+                                        <strong className="font-semibold text-gray-900">Predict Quality.</strong> Environmental factors, fruit appearance, and cultivation practices were collected from home gardeners to train a logistic regression model with an accuracy of 95%.
                                     </span>
                                 </li>
                                 <li className="flex gap-x-3">
                                     <FaDisease className="mt-1 h-5 w-5 flex-none text-green-600" aria-hidden="true"/>
                                     {/* <LockClosedIcon className="mt-1 h-5 w-5 flex-none text-indigo-600" aria-hidden="true" /> */}
                                     <span>
-                                        <strong className="font-semibold text-gray-900">Predict Disease.</strong> Anim aute id magna aliqua
-                                        ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo.
+                                        <strong className="font-semibold text-gray-900">Predict Disease.</strong> Visual symptoms and cultivation practices were collected from home gardeners to train a logistic regression model with an accuracy of 92%.
                                     </span>
                                 </li>
                             </ul>
-                            <p className="mt-8">
-                                Et vitae blandit facilisi magna lacus commodo. Vitae sapien duis odio id et. Id blandit molestie auctor
-                                fermentum dignissim. Lacus diam tincidunt ac cursus in vel. Mauris varius vulputate et ultrices hac
-                                adipiscing egestas. Iaculis convallis ac tempor et ut. Ac lorem vel integer orci.
+                            <p className="mt-8 al">
+                            Our research aims to provide a comprehensive predictive analysis framework using logistic regression models. With our web application as a tool, we offer prediction results and personalized recommendations to aid cultivators in making informed decisions, thus enhancing the efficiency and productivity of urban farming methods.
                             </p>
                         </div>
                     </div>
