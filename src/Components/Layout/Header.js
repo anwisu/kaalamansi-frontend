@@ -28,13 +28,14 @@ const Header = () => {
 
   return (
     <Fragment>
-      <div className="navbar bg-white-500 text-green-700 shadow-md">
-        <div className="flex-1">
+      <div className="flex items-center justify-center">
+      <div className="navbar bg-white text-green-700 flex items-center justify-center shadow-lg rounded-full py-2 my-3 px-10 w-11/12">
+        <div className="flex-1 bg-white">
           <Link to="/" className="inline-block text-teal-600">
             <div className="flex items-center">
               <img
                 src={process.env.PUBLIC_URL + "/images/citrus.png"}
-                className="h-10 w-10"
+                className="h-10 w-10 animate-bounce animate-infinite animate-ease-in"
                 alt="Kaalamansi Logo"
               />
             </div>
@@ -148,7 +149,7 @@ const Header = () => {
                       type="button"
                       data-twe-ripple-init
                       data-twe-ripple-color="light"
-                      class="me-3 inline-block rounded bg-success px-6 pb-2 pt-2.5 text-s font-medium leading-normal text-black shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
+                      class="me-3 inline-block rounded bg-green-400 px-6 pb-2 pt-2.5 text-s font-medium leading-normal text-white shadow-primary-3 transition duration-150 ease-in-out hover:bg-primary-accent-300 hover:shadow-primary-2 focus:bg-primary-accent-300 focus:shadow-primary-2 focus:outline-none focus:ring-0 active:bg-primary-600 active:shadow-primary-2 motion-reduce:transition-none dark:shadow-black/30 dark:hover:shadow-dark-strong dark:focus:shadow-dark-strong dark:active:shadow-dark-strong"
                     >
                       Login
                     </button>
@@ -199,7 +200,7 @@ const Header = () => {
             )}
           </div>
         </div>
-      </div>
+      </div></div>
     </Fragment>
   );
 };
