@@ -136,8 +136,9 @@ li {
 
 .loginContainer {
     height: 75vh;
-    width: 60%;
+    width: 50%;
     margin: auto;
+    margin-top: 2%;
     justify-content: space-between;
     border-radius: 10px;
     background:hsl(0, 0%, 91%);
@@ -319,10 +320,10 @@ li {
 }
 
 .registerContainer {
-    height: 75vh;
-    width: 80%;
+    height: 90vh;
+    width: 50%;
     margin: auto;
-    margin-top: 40px;
+    margin-top: 2%;
     justify-content: space-between;
     border-radius: 10px;
     background:hsl(0, 0%, 91%);
@@ -332,7 +333,7 @@ li {
         position: relative;
         display: flex;
         flex-basis: 50%;
-        width: 70%;
+        width: 50%;
         height: 100%;
         padding: 0 1.5rem;
         text-align: center;
