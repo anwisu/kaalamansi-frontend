@@ -22,32 +22,31 @@ const Home = () => {
               >
                 <img
                   src="./images/calamansi_header.png"
-                  className="animate-shake animate-thrice animate-delay-[3000ms] animate-ease-in max-w-sm rounded-lg"
+                  className="animate-shake animate-thrice animate-delay-[2000ms] animate-ease-in max-w-sm rounded-lg"
                 />
               </div>
               <div
                 className="column"
                 style={{ paddingLeft: "10%" }}
                 data-aos="fade-up"
-                data-aos-duration="3000"
+                data-aos-duration="2000"
               >
-<h1
-  className="text-8xl font-bold flex items-center justify-end"
-  style={{
-    color: "#58B741",
-    fontFamily: "League Spartan",
-    textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
-  }}
->
-  <span>Kaalaman</span>
-  <img
-    src={process.env.PUBLIC_URL + "/images/citrus.png"}
-    className="h-5 w-5 mt-6 mx-2"
-    alt="Kaalamansi Logo"
-  />
-  <span>si</span>
-</h1>
-
+                <h1
+                  className="text-8xl font-bold flex items-center justify-end"
+                  style={{
+                    color: "#58B741",
+                    fontFamily: "League Spartan",
+                    textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
+                  }}
+                >
+                  <span>Kaalaman</span>
+                  <img
+                    src={process.env.PUBLIC_URL + "/images/citrus.png"}
+                    className="h-5 w-5 mt-6 mx-2"
+                    alt="Kaalamansi Logo"
+                  />
+                  <span>si</span>
+                </h1>
 
                 <p
                   className="text-justify text-xl pl-10 "
@@ -79,13 +78,13 @@ const Home = () => {
           </div>
           <div className="hero w-screen px-20">
             <div className="hero-content flex-col lg:flex-row-reverse items-left p-20 aos-init aos-animate">
-              <div>
+              <div className="animate-fade-up animate-delay-[2500ms] animate-ease-in-out animate-fill-both">
                 <img
                   src="./images/predict2.png"
                   className="column max-w-xs rounded-lg "
                 />
               </div>
-              <div className="text-left pt-6 animate-fade-up animate-ease-in">
+              <div className="text-left pt-6 animate-fade-down animate-delay-[2500ms] animate-ease-in-out animate-fill-both">
                 <h1
                   className="text-6xl font-bold"
                   style={{
