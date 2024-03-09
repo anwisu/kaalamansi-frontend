@@ -55,7 +55,7 @@ const DiseaseResult = () => {
           <div className="flex items-center text-center justify-center">
             {combinedDiseaseData &&
               combinedDiseaseData.disease_data &&
-              combinedDiseaseData.disease_data.predicted_quality ===
+              combinedDiseaseData.disease_data.predicted_disease ===
               "infected" ? (
               <div>
                 <div className="flex items-center text-center justify-center">
