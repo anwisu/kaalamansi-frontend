@@ -28,7 +28,7 @@ const Header = () => {
 
   return (
     <Fragment>
-      <div className="navbar bg-white-500 text-green-700">
+      <div className="navbar bg-white-500 text-green-700 shadow-md">
         <div className="flex-1">
           <Link to="/" className="inline-block text-teal-600">
             <div className="flex items-center">
