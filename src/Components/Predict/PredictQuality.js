@@ -28,9 +28,9 @@ const PredictQuality = () => {
         }
       );
 
-      if (response.data && response.data.reco_data) {
-        console.log(response.data.reco_data._id); // Log the id
-        const result = navigate(`/predict/quality/${response.data.reco_data._id}`);
+      if (response.data && response.data.quality_data) {
+        console.log(response.data.quality_data._id); // Log the id
+        const result = navigate(`/predict/quality/${response.data.quality_data._id}`);
         console.log(result);
       } else {
         setError("Prediction failed. Please try again.");
