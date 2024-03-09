@@ -10,24 +10,6 @@ module.exports = withMT({
   theme: {
       extend: {
         keyframes: {
-          typing: {
-            "0%": {
-              width: "0%",
-              visibility: "hidden",
-              
-            },
-            "100%": {
-              width: "100%"
-            }  
-          },
-          blink: {
-            "50%": {
-              borderColor: "transparent"
-            },
-            "100%": {
-              borderColor: "green"
-            }  
-          },
           slidein: {
             from: {
               opacity: "0",
@@ -41,7 +23,6 @@ module.exports = withMT({
         },
         animation: {
           slidein: "slidein 1s ease 300ms",
-          typing: "typing 2s steps(20) infinite alternate, blink .7s infinite"
         },
 
       }, // Add your theme customizations here

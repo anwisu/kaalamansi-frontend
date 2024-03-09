@@ -22,14 +22,14 @@ const Home = () => {
               >
                 <img
                   src="./images/calamansi_header.png"
-                  className="animate-shake animate-thrice animate-delay-[3000ms] max-w-sm rounded-lg"
+                  className="animate-shake animate-thrice animate-delay-[3000ms] animate-ease-in max-w-sm rounded-lg"
                   
                 />
               </div>
               <div
                 className="column"
                 style={{ paddingLeft: "10%" }}
-                data-aos="fade-left"
+                data-aos="fade-up"
                 data-aos-duration="3000"
               >
                 <h1
@@ -44,13 +44,13 @@ const Home = () => {
                   Kaalaman.si
                 </h1>
                 <p
-                  className="text-left text-xl pl-10 "
+                  className="text-justify text-xl pl-10 "
                   style={{ color: "#58B741" }}
                 >
-                  Kaalaman.si is a web-based system for home gardeners who grow
+                  <span className="ml-16">Kaalaman.si is a web-based system for home gardeners who grow
                   kalamansi. It uses predictive analysis, quality assessment,
                   disease assessment, and user-friendly interfaces to help users
-                  optimize their urban farming. It is accessible from any device
+                  optimize their urban farming.</span> It is accessible from any device
                   and aims to make kalamansi cultivation easy and enjoyable. The
                   system uses a logistic regression model to predict the quality
                   and disease status of kalamansi fruits based on various
@@ -74,11 +74,11 @@ const Home = () => {
               >
                 <img
                   src="./images/predict2.png"
-                  className="max-w-xs rounded-lg "
+                  className="column max-w-xs rounded-lg "
                 />
               </div>
               <div
-                className="text-left pt-6"
+                className="text-left pt-6 animate-fade-up animate-ease-in"
               >
                 <h1
                   className="text-6xl font-bold"
