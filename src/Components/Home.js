@@ -23,7 +23,6 @@ const Home = () => {
                 <img
                   src="./images/calamansi_header.png"
                   className="animate-shake animate-thrice animate-delay-[3000ms] animate-ease-in max-w-sm rounded-lg"
-                  
                 />
               </div>
               <div
@@ -32,29 +31,39 @@ const Home = () => {
                 data-aos="fade-up"
                 data-aos-duration="3000"
               >
-                <h1
-                  className="text-8xl font-bold"
-                  style={{
-                    color: "#58B741",
-                    textAlign: "right",
-                    fontFamily: "League Spartan",
-                    textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
-                  }}
-                >
-                  Kaalaman.si
-                </h1>
+<h1
+  className="text-8xl font-bold flex items-center justify-end"
+  style={{
+    color: "#58B741",
+    fontFamily: "League Spartan",
+    textShadow: "2px 2px 2px rgba(0, 0, 0, 0.5)",
+  }}
+>
+  <span>Kaalaman</span>
+  <img
+    src={process.env.PUBLIC_URL + "/images/citrus.png"}
+    className="h-5 w-5 mt-6 mx-2"
+    alt="Kaalamansi Logo"
+  />
+  <span>si</span>
+</h1>
+
+
                 <p
                   className="text-justify text-xl pl-10 "
                   style={{ color: "#58B741" }}
                 >
-                  <span className="ml-16">Kaalaman.si is a web-based system for home gardeners who grow
-                  kalamansi. It uses predictive analysis, quality assessment,
-                  disease assessment, and user-friendly interfaces to help users
-                  optimize their urban farming.</span> It is accessible from any device
-                  and aims to make kalamansi cultivation easy and enjoyable. The
-                  system uses a logistic regression model to predict the quality
-                  and disease status of kalamansi fruits based on various
-                  factors such as size, color, shape, and blemish.
+                  <span className="ml-16">
+                    Kaalaman.si is a web-based system for home gardeners who
+                    grow kalamansi. It uses predictive analysis, quality
+                    assessment, disease assessment, and user-friendly interfaces
+                    to help users optimize their urban farming.
+                  </span>{" "}
+                  It is accessible from any device and aims to make kalamansi
+                  cultivation easy and enjoyable. The system uses a logistic
+                  regression model to predict the quality and disease status of
+                  kalamansi fruits based on various factors such as size, color,
+                  shape, and blemish.
                 </p>
                 {/* <button className="btn btn-primary btn-green"></button> */}
                 <Link
@@ -70,16 +79,13 @@ const Home = () => {
           </div>
           <div className="hero w-screen px-20">
             <div className="hero-content flex-col lg:flex-row-reverse items-left p-20 aos-init aos-animate">
-              <div
-              >
+              <div>
                 <img
                   src="./images/predict2.png"
                   className="column max-w-xs rounded-lg "
                 />
               </div>
-              <div
-                className="text-left pt-6 animate-fade-up animate-ease-in"
-              >
+              <div className="text-left pt-6 animate-fade-up animate-ease-in">
                 <h1
                   className="text-6xl font-bold"
                   style={{
