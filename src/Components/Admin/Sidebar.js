@@ -25,7 +25,9 @@ import {
     InboxIcon,
     PowerIcon,
     TableCellsIcon,
-    DocumentMagnifyingGlassIcon
+    DocumentMagnifyingGlassIcon,
+    UserGroupIcon,
+    PresentationChartLineIcon
 } from "@heroicons/react/24/solid";
 import {
     ChevronRightIcon,
@@ -65,7 +67,14 @@ const Sidebar = () => {
 
     return (
         <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 fixed top-0">
-            <div className="mb-2 flex items-center gap-2 p-4">
+            <div className="mb-2 flex items-center justify-center gap-2 p-4">
+                <Link to="/">
+                    <img
+                        src={process.env.PUBLIC_URL + "/images/citrus.png"}
+                        className=" h-20 w-20 animate-bounce animate-infinite animate-ease-in"
+                        alt="Kaalamansi Logo"
+                    />
+                </Link>
                 {/* <Avatar 
                     src={user && user.avatar ? user.avatar.url : 'defaultAvatarUrl'} 
                     alt="avatar"
@@ -82,16 +91,39 @@ const Sidebar = () => {
             </div>
             <List>
                 <Accordion
-                    open={open === 1}
                     icon={
-                        <ChevronDownIcon
-                            strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${open === 1 ? "rotate-180" : ""}`}
-                        />
+                        <Link style={{ textDecoration: 'none' }} to="/admin/dashboard">
+                            <ChevronDownIcon
+                                strokeWidth={2.5}
+                                className={`mx-auto h-4 w-4`}
+                            />
+                        </Link>
                     }
                 >
                     <ListItem className="p-0" selected={open === 1}>
-                        <AccordionHeader onClick={() => handleOpen(1)} className="border-b-0 p-3">
+                        <AccordionHeader className="border-b-0 p-3">
+                            <ListItemPrefix>
+                                <PresentationChartLineIcon className="h-5 w-5" style={{ color: "#008302" }} />
+                            </ListItemPrefix>
+                            <Typography color="blue-gray" className="mr-auto font-normal">
+                                <Link style={{ textDecoration: 'none' }} to="/admin/dashboard">
+                                    {menu === "Users" ? <span>Dashboard</span> : <span>Dashboard</span>}
+                                </Link>
+                            </Typography>
+                        </AccordionHeader>
+                    </ListItem>
+                </Accordion>
+                <Accordion
+                    open={open === 2}
+                    icon={
+                        <ChevronDownIcon
+                            strokeWidth={2.5}
+                            className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
+                        />
+                    }
+                >
+                    <ListItem className="p-0" selected={open === 2}>
+                        <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
                             <ListItemPrefix>
                                 <PresentationChartBarIcon className="h-5 w-5" style={{ color: "#008302" }} />
                             </ListItemPrefix>
@@ -123,17 +155,17 @@ const Sidebar = () => {
                     </AccordionBody>
                 </Accordion>
                 <Accordion
-                    open={open === 2}
+                    open={open === 3}
                     icon={
                         <ChevronDownIcon
                             strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${open === 2 ? "rotate-180" : ""}`}
+                            className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`}
                             style={{ color: "#008302" }}
                         />
                     }
                 >
-                    <ListItem className="p-0" selected={open === 2}>
-                        <AccordionHeader onClick={() => handleOpen(2)} className="border-b-0 p-3">
+                    <ListItem className="p-0" selected={open === 3}>
+                        <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
                             <ListItemPrefix>
                                 <DocumentMagnifyingGlassIcon className="h-5 w-5" style={{ color: "#008302" }} />
                             </ListItemPrefix>
@@ -164,18 +196,18 @@ const Sidebar = () => {
                     </AccordionBody>
                 </Accordion>
                 <Accordion
-                    open={open === 3}
+                    open={open === 4}
                     icon={
                         <ChevronDownIcon
                             strokeWidth={2.5}
-                            className={`mx-auto h-4 w-4 transition-transform ${open === 3 ? "rotate-180" : ""}`}
+                            className={`mx-auto h-4 w-4 transition-transform ${open === 4 ? "rotate-180" : ""}`}
                         />
                     }
                 >
-                    <ListItem className="p-0" selected={open === 3}>
-                        <AccordionHeader onClick={() => handleOpen(3)} className="border-b-0 p-3">
+                    <ListItem className="p-0" selected={open === 4}>
+                        <AccordionHeader onClick={() => handleOpen(4)} className="border-b-0 p-3">
                             <ListItemPrefix>
-                                <PresentationChartBarIcon className="h-5 w-5" style={{ color: "#008302" }} />
+                                <TableCellsIcon className="h-5 w-5" style={{ color: "#008302" }} />
                             </ListItemPrefix>
                             <Typography color="blue-gray" className="mr-auto font-normal">
                                 Recommendations
@@ -214,10 +246,10 @@ const Sidebar = () => {
                         </Link>
                     }
                 >
-                    <ListItem className="p-0" selected={open === 3}>
+                    <ListItem className="p-0" selected={open === 5}>
                         <AccordionHeader className="border-b-0 p-3">
                             <ListItemPrefix>
-                                <PresentationChartBarIcon className="h-5 w-5" style={{ color: "#008302" }} />
+                                <UserGroupIcon className="h-5 w-5" style={{ color: "#008302" }} />
                             </ListItemPrefix>
                             <Typography color="blue-gray" className="mr-auto font-normal">
                                 <Link style={{ textDecoration: 'none' }} to="/admin/users">

@@ -108,7 +108,7 @@ const Dashboard = () => {
 
   return (
     <div>
-      <div className="bg-white p-4 ml-80 w-72">
+      <div className="bg-white p-4">
         <div>
           <ApexCharts
             options={options}

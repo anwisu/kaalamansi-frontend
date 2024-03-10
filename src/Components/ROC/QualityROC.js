@@ -57,12 +57,14 @@ const QualityROC = () => {
   ];
 
   return (
-    <Chart
-      options={options}
-      series={series}
-      type="line"
-      style={{ width: "50%", height: "50%" }}
-    />
+    <div>
+      <Chart
+        options={options}
+        series={series}
+        type="line"
+        style={{ width: "50%", height: "50%" }}
+      />
+    </div>
   );
 };
 

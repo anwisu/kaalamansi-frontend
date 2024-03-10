@@ -44,10 +44,6 @@ const Content = () => {
                                 fontFamily: "League Spartan",
                                 textShadow: "1px 1px 1px rgba(0, 0, 0, 0.5)",
                             }}>Kaalaman-si</h1>
-                            {/* <p className="mt-6 text-xl leading-8 text-gray-700">
-                                Aliquet nec orci mattis amet quisque ullamcorper neque, nibh sem. At arcu, sit dui mi, nibh dui, diam
-                                eget aliquam. Quisque id at vitae feugiat egestas.
-                            </p> */}
                         </div>
                     </div>
                 </div>
@@ -63,8 +59,8 @@ const Content = () => {
                         <div className="max-w-xl text-base leading-7 text-gray-700 lg:max-w-lg">
                             <p>
                             Kaalaman-si is a platform dedicated to predictive analysis in urban farming, specifically focusing on the growth of Kalamansi. 
-                            Established from the study titled "Predictive Analysis of Kalamansi Growth: Assessing Quality and Disease Markers in Urban 
-                            Farming for Home Gardeners," our website addresses the challenges faced by cultivators in ensuring optimal quality and 
+                            Established from the study titled <i>"Predictive Analysis of Kalamansi Growth: Assessing Quality and Disease Markers in Urban 
+                            Farming for Home Gardeners," </i>  our website addresses the challenges faced by cultivators in ensuring optimal quality and 
                             identifying disease risks.
                             </p>
                             <ul role="list" className="mt-8 space-y-8 text-gray-600">
