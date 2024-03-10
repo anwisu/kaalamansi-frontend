@@ -206,18 +206,14 @@ const Register = () => {
                   )}
                 </div>
               </div>
-              {formik.touched.avatar && formik.errors.avatar && (
+              {/* {formik.touched.avatar && formik.errors.avatar && (
                 <div className="error text-red-500">{formik.errors.avatar}</div>
-              )}
+              )} */}
             </div>
             <button type="submit" className="btnRegister registerFlex">
               <span>Register</span>
               <AiOutlineSwapRight className="icon" />
             </button>
-
-            <span className="forgotPassword">
-              Forgot your password? <a href="">Click Here</a>
-            </span>
           </form>
         </div>
       </div>
