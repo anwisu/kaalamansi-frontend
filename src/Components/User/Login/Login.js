@@ -16,6 +16,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  
 
   // Define the login schema using Yup
   const loginSchema = Yup.object().shape({
@@ -46,9 +47,7 @@ const Login = () => {
         const { data } = response;
 
         if (data.success && data.token) {
-          // Store token in sessionStorage
           if (authenticate(data)) {
-            // Navigate to '/' upon successful authentication
             navigate("/");
             window.location.reload();
           } else {

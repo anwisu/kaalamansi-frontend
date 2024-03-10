@@ -3,6 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { logout, getUser } from "../../utils/helpers";
 import { Avatar } from "@material-tailwind/react";
+import {
+  Navbar,
+} from "@material-tailwind/react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,9 +32,8 @@ const Header = () => {
   return (
     <Fragment>
       {/* <div className="flex items-center justify-center bg-transparent fixed w-full z-10">     */}
-      <div className="flex items-center justify-center">
-      <div className="navbar bg-white text-green-700 flex items-center justify-center shadow-lg  py-2 my-3 px-10 ">
-        <div className="flex-1 bg-white">
+      <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none text-green-700 flex items-center justify-center shadow-xl px-4 py-2 lg:px-8 lg:py-4">
+        <div className="flex-1">
           <Link to="/" className="inline-block text-teal-600">
             <div className="flex items-center">
               <img
@@ -125,7 +127,7 @@ const Header = () => {
             <div
               tabIndex={0}
               role="button"
-              // className="btn btn-ghost btn-circle avatar bg-100"
+            // className="btn btn-ghost btn-circle avatar bg-100"
             >
               {user ? (
                 // If user is logged in, display avatar
@@ -201,7 +203,7 @@ const Header = () => {
             )}
           </div>
         </div>
-      </div></div>
+      </Navbar>
     </Fragment>
   );
 };
