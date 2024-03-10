@@ -30,7 +30,7 @@ const Header = () => {
     <Fragment>
       {/* <div className="flex items-center justify-center bg-transparent fixed w-full z-10">     */}
       <div className="flex items-center justify-center">
-      <div className="navbar bg-white text-green-700 flex items-center justify-center shadow-lg rounded-full py-2 my-3 px-10 w-11/12">
+      <div className="navbar bg-white text-green-700 flex items-center justify-center shadow-lg  py-2 my-3 px-10 ">
         <div className="flex-1 bg-white">
           <Link to="/" className="inline-block text-teal-600">
             <div className="flex items-center">
