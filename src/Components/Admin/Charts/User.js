@@ -1,6 +1,27 @@
 // QualityDiseaseGraph.js
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+} from "@material-tailwind/react";
+import {
+  PresentationChartBarIcon,
+  ShoppingBagIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+  InboxIcon,
+  PowerIcon,
+  TableCellsIcon,
+  DocumentMagnifyingGlassIcon,
+  UserGroupIcon,
+  PresentationChartLineIcon,
+  CheckCircleIcon,
+  ClockIcon
+} from "@heroicons/react/24/solid";
 import ApexCharts from "react-apexcharts";
 
 const Dashboard = () => {
@@ -107,18 +128,33 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <div className="bg-white p-4">
-        <div>
-          <ApexCharts
+      <Card className="w-96 border border-blue-gray-100 shadow-sm">
+        <CardHeader variant="gradient" floated={false} shadow={false}>
+        <ApexCharts
             options={options}
             series={[{ name: "Count", data: [data.quality, data.disease] }]}
             type="bar"
             height={320}
           />
-        </div>
-      </div>
-    </div>
+        </CardHeader>
+        <CardBody className="px-6 pt-0">
+          <Typography variant="h6" color="blue-gray">
+            Title
+          </Typography>
+          <Typography variant="small" className="font-normal text-blue-gray-600">
+            Description
+          </Typography>
+        </CardBody>
+        <CardFooter className="border-t border-blue-gray-50 px-6 py-5">
+          <Typography
+            variant="small"
+            className="flex items-center font-normal text-blue-gray-600"
+          >
+            <ClockIcon strokeWidth={2} className="h-4 w-4 mr-2 text-blue-gray-400" />
+            Footer
+          </Typography>
+        </CardFooter>
+      </Card>
   );
 };
 
