@@ -66,7 +66,7 @@ const Sidebar = () => {
     };
 
     return (
-        <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 fixed top-0">
+        <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/0 top-0 fixed z-10">
             <div className="mb-2 flex items-center justify-center gap-2 p-4">
                 <Link to="/">
                     <img
