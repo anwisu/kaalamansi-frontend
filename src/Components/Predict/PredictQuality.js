@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../../utils/helpers";
+import MetaData from "../Layout/MetaData";
 
 const PredictQuality = () => {
   const [error, setError] = useState("");
@@ -43,6 +44,7 @@ const PredictQuality = () => {
 
   return (
     <Fragment>
+      <MetaData title={'Predict Quality'} />
       <div className="container">
         <div className="row">
           <div className="col-md-12">

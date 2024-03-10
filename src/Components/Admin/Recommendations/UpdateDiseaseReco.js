@@ -6,6 +6,7 @@ import { toast } from "react-toastify";
 import { Input, Select, Button, Textarea } from "@material-tailwind/react";
 import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
 import { getToken } from "../../../utils/helpers";
+import MetaData from "../../Layout/MetaData";
 
 const UpdateDiseaseReco = () => {
     const [factor, setFactor] = useState("");
@@ -132,6 +133,7 @@ const UpdateDiseaseReco = () => {
     return (
         <Fragment>
             <div className="flex">
+            <MetaData title={'Update Disease Recommendation'} />
                 <div className="w-100">
                     <Sidebar />
                 </div>

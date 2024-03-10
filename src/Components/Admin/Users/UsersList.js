@@ -5,7 +5,8 @@ import { getToken } from "../../../utils/helpers";
 import Sidebar from "../Sidebar";
 import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid"; 
+import MetaData from "../../Layout/MetaData";
 
 const UsersList = () => {
   const [allUsers, setAllUsers] = useState([]);
@@ -184,6 +185,7 @@ const UsersList = () => {
 
   return (
     <div className="flex">
+            <MetaData title={'All Users'} />
       <div className="w-100">
         <Sidebar />
       </div>

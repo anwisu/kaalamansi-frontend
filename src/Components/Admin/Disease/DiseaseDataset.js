@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from "react-router-dom";
 import Sidebar from '../Sidebar';
+import MetaData from '../../Layout/MetaData';
 import axios from 'axios';
 import ReactApexChart from 'react-apexcharts';
 import MUIDataTable from "mui-datatables";
@@ -256,11 +257,12 @@ function DiseaseDataset() {
 
     return (
         <div className="flex">
+            <MetaData title={'Disease Model Analytics'} />
             <div className="w-100">
                 <Sidebar />
             </div>
             <div className="ml-[21rem] mr-2">
-            <h1 className="text-2xl font-bold my-4 text-gray-900" style={{ fontSize: "30px", color: "#4AA032", fontFamily: "League Spartan", }}>Disease Model Analytics</h1>
+                <h1 className="text-2xl font-bold my-4 text-gray-900" style={{ fontSize: "30px", color: "#4AA032", fontFamily: "League Spartan", }}>Disease Model Analytics</h1>
                 {dataset ? (
                     <div className="bg-white p-4 rounded shadow text-gray-900">
                         <p className="mb-2">Shape of dataset: ({dataset.shape[0]} rows, {dataset.shape[1]} columns)</p>
@@ -283,82 +285,82 @@ function DiseaseDataset() {
                     </div>
                 ) : <p className="text-gray-600">Loading...</p>}
                 <div className="my-8 container grid lg:gap-x-4 gap-y-4 grid-cols-1 lg:grid-cols-3">
-                <Card
-                    className="col-span-1 bg-white p-4 rounded shadow text-gray-900"
-                    shadow={false}
-                >
-                    <CardBody className="text-center">
-                        <Typography
-                            variant="h4"
-                            color="blue-gray"
-                            className="mb-2 font-medium"
-                        >
-                            Classification Report
-                        </Typography>
-                        <div className="w-full mt-8">
-                            <div className="mb-2 flex items-center justify-between gap-4">
-                                <Typography color="blue-gray" variant="h6">
-                                    Precision
-                                </Typography>
-                                <Typography color="blue-gray" variant="h6">
-                                    {disease_metrics.report["weighted avg"]["precision"].toFixed(2) * 100}%
-                                </Typography>
+                    <Card
+                        className="col-span-1 bg-white p-4 rounded shadow text-gray-900"
+                        shadow={false}
+                    >
+                        <CardBody className="text-center">
+                            <Typography
+                                variant="h4"
+                                color="blue-gray"
+                                className="mb-2 font-medium"
+                            >
+                                Classification Report
+                            </Typography>
+                            <div className="w-full mt-8">
+                                <div className="mb-2 flex items-center justify-between gap-4">
+                                    <Typography color="blue-gray" variant="h6">
+                                        Precision
+                                    </Typography>
+                                    <Typography color="blue-gray" variant="h6">
+                                        {disease_metrics.report["weighted avg"]["precision"].toFixed(2) * 100}%
+                                    </Typography>
+                                </div>
+                                <Progress value={disease_metrics.report["weighted avg"]["precision"].toFixed(2) * 100} size="lg" color="teal" />
                             </div>
-                            <Progress value={disease_metrics.report["weighted avg"]["precision"].toFixed(2) * 100} size="lg" color="teal" />
-                        </div>
-                        <div className="w-full mt-2">
-                            <div className="mb-2 flex items-center justify-between gap-4">
-                                <Typography color="blue-gray" variant="h6">
-                                    Recall
-                                </Typography>
-                                <Typography color="blue-gray" variant="h6">
-                                    {disease_metrics.report["weighted avg"]["recall"].toFixed(2) * 100}%
-                                </Typography>
+                            <div className="w-full mt-2">
+                                <div className="mb-2 flex items-center justify-between gap-4">
+                                    <Typography color="blue-gray" variant="h6">
+                                        Recall
+                                    </Typography>
+                                    <Typography color="blue-gray" variant="h6">
+                                        {disease_metrics.report["weighted avg"]["recall"].toFixed(2) * 100}%
+                                    </Typography>
+                                </div>
+                                <Progress value={disease_metrics.report["weighted avg"]["recall"].toFixed(2) * 100} size="lg" color="teal" />
                             </div>
-                            <Progress value={disease_metrics.report["weighted avg"]["recall"].toFixed(2) * 100} size="lg" color="teal" />
-                        </div>
-                        <div className="w-full mt-2">
-                            <div className="mb-2 flex items-center justify-between gap-4">
-                                <Typography color="blue-gray" variant="h6">
-                                    F1-Score
-                                </Typography>
-                                <Typography color="blue-gray" variant="h6">
-                                    {disease_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100}%
-                                </Typography>
+                            <div className="w-full mt-2">
+                                <div className="mb-2 flex items-center justify-between gap-4">
+                                    <Typography color="blue-gray" variant="h6">
+                                        F1-Score
+                                    </Typography>
+                                    <Typography color="blue-gray" variant="h6">
+                                        {disease_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100}%
+                                    </Typography>
+                                </div>
+                                <Progress value={disease_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100} size="lg" color="teal" />
                             </div>
-                            <Progress value={disease_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100} size="lg" color="teal" />
-                        </div>
-                        <Typography
-                            variant="h4"
-                            color="blue-gray"
-                            className="mt-10 font-medium"
-                        >
-                            Model Accuracy
-                        </Typography>
-                        <ReactApexChart
-                                    options={{ ...accuracyOptions, labels: ["Disease Accuracy"] }}
-                                    series={diseaseAccuracySeries}
-                                    type="radialBar"
-                                // style={{ width: "80%" }}
-                                // className="mx-auto"  
-                                />
-                    </CardBody>
-                </Card>
-                <Card
-                    className="col-span-2 bg-white p-4 rounded shadow text-gray-900"
-                >
-                    <CardBody className="text-center p-2">
-                        <Typography
-                            variant="h4"
-                            color="blue-gray"
-                            className="mb-2 font-medium"
-                        >
-                            Confusion Matrix Heatmap
-                        </Typography>
-                        <DiseaseCM />
-                    </CardBody>
-                </Card>
-            </div>
+                            <Typography
+                                variant="h4"
+                                color="blue-gray"
+                                className="mt-10 font-medium"
+                            >
+                                Model Accuracy
+                            </Typography>
+                            <ReactApexChart
+                                options={{ ...accuracyOptions, labels: ["Disease Accuracy"] }}
+                                series={diseaseAccuracySeries}
+                                type="radialBar"
+                            // style={{ width: "80%" }}
+                            // className="mx-auto"  
+                            />
+                        </CardBody>
+                    </Card>
+                    <Card
+                        className="col-span-2 bg-white p-4 rounded shadow text-gray-900"
+                    >
+                        <CardBody className="text-center p-2">
+                            <Typography
+                                variant="h4"
+                                color="blue-gray"
+                                className="mb-2 font-medium"
+                            >
+                                Confusion Matrix Heatmap
+                            </Typography>
+                            <DiseaseCM />
+                        </CardBody>
+                    </Card>
+                </div>
             </div>
         </div>
     );

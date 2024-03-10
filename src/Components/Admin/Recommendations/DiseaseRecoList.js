@@ -11,6 +11,7 @@ import {
     TrashIcon
 } from '@heroicons/react/24/solid';
 import { Tooltip, Typography } from "@material-tailwind/react";
+import MetaData from "../../Layout/MetaData";
 
 const DiseaseRecoList = () => {
     const [allDiseaseReco, setAllDiseaseReco] = useState([]);
@@ -219,6 +220,7 @@ const DiseaseRecoList = () => {
 
     return (
         <div className="flex" >
+        <MetaData title={'All Disease Recommendation'} />
             <div className="w-100">
                 <Sidebar />
             </div>

@@ -15,6 +15,7 @@ import {
 import ReactApexChart from "react-apexcharts";
 import Team from "./Team.js";
 import Content from "./Content.js";
+import MetaData from "../Layout/MetaData.js";
 
 const About = () => {
   const [quality_metrics, setQualityMetrics] = useState(null);
@@ -68,6 +69,7 @@ const About = () => {
 
   return (
     <div className="container mx-auto">
+      <MetaData title={'About Us'} />
       <Content />
       <section className="lg:py-28 py-8 px-8">
         <div className="container mx-auto mb-10 text-center lg:mb-20">

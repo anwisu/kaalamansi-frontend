@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import axios from "axios";
+import MetaData from '../Layout/MetaData'
 import { getToken } from "../../utils/helpers";
 import { TbUserEdit } from "react-icons/tb";
 import UserQualityPredictions from "./UserQualityPredictions";
@@ -58,6 +59,7 @@ const Profile = () => {
         <p>Loading user profile...</p>
       ) : (
         <Fragment>
+          <MetaData title={'Your Profile'} />
           <div class="h-full bg-gray-200 p-8">
             <div className="container mx-auto">
               <div class="bg-white rounded-lg shadow-xl pb-8">

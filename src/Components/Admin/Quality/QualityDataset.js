@@ -7,6 +7,7 @@ import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import QualityCM from '../../ConfusionMatrix/QualityCM';
 import QualityROC from '../../ROC/QualityROC';
+import MetaData from '../../Layout/MetaData';
 import {
     Card,
     CardBody,
@@ -284,6 +285,8 @@ function QualityDataset() {
 
     return (
         <div className="flex">
+            <MetaData title={'Quality Model Analytics'} />
+
             <div className="w-100">
                 <Sidebar />
             </div>
@@ -311,82 +314,82 @@ function QualityDataset() {
                     </div>
                 ) : <p className="text-gray-600">Loading...</p>}
                 <div className="my-8 container grid lg:gap-x-4 gap-y-4 grid-cols-1 lg:grid-cols-3">
-                <Card
-                    className="col-span-1 bg-white p-4 rounded shadow text-gray-900"
-                    shadow={false}
-                >
-                    <CardBody className="text-center">
-                        <Typography
-                            variant="h4"
-                            color="blue-gray"
-                            className="mb-2 font-medium"
-                        >
-                            Classification Report
-                        </Typography>
-                        <div className="w-full mt-8">
-                            <div className="mb-2 flex items-center justify-between gap-4">
-                                <Typography color="blue-gray" variant="h6">
-                                    Precision
-                                </Typography>
-                                <Typography color="blue-gray" variant="h6">
-                                    {quality_metrics.report["weighted avg"]["precision"].toFixed(2) * 100}%
-                                </Typography>
+                    <Card
+                        className="col-span-1 bg-white p-4 rounded shadow text-gray-900"
+                        shadow={false}
+                    >
+                        <CardBody className="text-center">
+                            <Typography
+                                variant="h4"
+                                color="blue-gray"
+                                className="mb-2 font-medium"
+                            >
+                                Classification Report
+                            </Typography>
+                            <div className="w-full mt-8">
+                                <div className="mb-2 flex items-center justify-between gap-4">
+                                    <Typography color="blue-gray" variant="h6">
+                                        Precision
+                                    </Typography>
+                                    <Typography color="blue-gray" variant="h6">
+                                        {quality_metrics.report["weighted avg"]["precision"].toFixed(2) * 100}%
+                                    </Typography>
+                                </div>
+                                <Progress value={quality_metrics.report["weighted avg"]["precision"].toFixed(2) * 100} size="lg" color="teal" />
                             </div>
-                            <Progress value={quality_metrics.report["weighted avg"]["precision"].toFixed(2) * 100} size="lg" color="teal" />
-                        </div>
-                        <div className="w-full mt-2">
-                            <div className="mb-2 flex items-center justify-between gap-4">
-                                <Typography color="blue-gray" variant="h6">
-                                    Recall
-                                </Typography>
-                                <Typography color="blue-gray" variant="h6">
-                                    {quality_metrics.report["weighted avg"]["recall"].toFixed(2) * 100}%
-                                </Typography>
+                            <div className="w-full mt-2">
+                                <div className="mb-2 flex items-center justify-between gap-4">
+                                    <Typography color="blue-gray" variant="h6">
+                                        Recall
+                                    </Typography>
+                                    <Typography color="blue-gray" variant="h6">
+                                        {quality_metrics.report["weighted avg"]["recall"].toFixed(2) * 100}%
+                                    </Typography>
+                                </div>
+                                <Progress value={quality_metrics.report["weighted avg"]["recall"].toFixed(2) * 100} size="lg" color="teal" />
                             </div>
-                            <Progress value={quality_metrics.report["weighted avg"]["recall"].toFixed(2) * 100} size="lg" color="teal" />
-                        </div>
-                        <div className="w-full mt-2">
-                            <div className="mb-2 flex items-center justify-between gap-4">
-                                <Typography color="blue-gray" variant="h6">
-                                    F1-Score
-                                </Typography>
-                                <Typography color="blue-gray" variant="h6">
-                                    {quality_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100}%
-                                </Typography>
+                            <div className="w-full mt-2">
+                                <div className="mb-2 flex items-center justify-between gap-4">
+                                    <Typography color="blue-gray" variant="h6">
+                                        F1-Score
+                                    </Typography>
+                                    <Typography color="blue-gray" variant="h6">
+                                        {quality_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100}%
+                                    </Typography>
+                                </div>
+                                <Progress value={quality_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100} size="lg" color="teal" />
                             </div>
-                            <Progress value={quality_metrics.report["weighted avg"]["f1-score"].toFixed(2) * 100} size="lg" color="teal" />
-                        </div>
-                        <Typography
-                            variant="h4"
-                            color="blue-gray"
-                            className="mt-10 font-medium"
-                        >
-                            Model Accuracy
-                        </Typography>
-                        <ReactApexChart
-                                    options={{ ...accuracyOptions, labels: ["Quality Accuracy"] }}
-                                    series={qualityAccuracySeries}
-                                    type="radialBar"
-                                // style={{ width: "80%" }}
-                                // className="mx-auto"  
-                                />
-                    </CardBody>
-                </Card>
-                <Card
-                    className="col-span-2 bg-white p-4 rounded shadow text-gray-900"
-                >
-                    <CardBody className="text-center p-2">
-                        <Typography
-                            variant="h4"
-                            color="blue-gray"
-                            className="mb-2 font-medium"
-                        >
-                            Confusion Matrix Heatmap
-                        </Typography>
-                        <QualityCM />
-                    </CardBody>
-                </Card>
-            </div>
+                            <Typography
+                                variant="h4"
+                                color="blue-gray"
+                                className="mt-10 font-medium"
+                            >
+                                Model Accuracy
+                            </Typography>
+                            <ReactApexChart
+                                options={{ ...accuracyOptions, labels: ["Quality Accuracy"] }}
+                                series={qualityAccuracySeries}
+                                type="radialBar"
+                            // style={{ width: "80%" }}
+                            // className="mx-auto"  
+                            />
+                        </CardBody>
+                    </Card>
+                    <Card
+                        className="col-span-2 bg-white p-4 rounded shadow text-gray-900"
+                    >
+                        <CardBody className="text-center p-2">
+                            <Typography
+                                variant="h4"
+                                color="blue-gray"
+                                className="mb-2 font-medium"
+                            >
+                                Confusion Matrix Heatmap
+                            </Typography>
+                            <QualityCM />
+                        </CardBody>
+                    </Card>
+                </div>
             </div>
         </div>
     );

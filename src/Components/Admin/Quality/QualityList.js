@@ -3,10 +3,11 @@ import React, { useState, useEffect, Fragment } from "react";
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import Sidebar from "../Sidebar";
+import MetaData from "../../Layout/MetaData";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { getToken } from "../../../utils/helpers";
-import { 
-  TrashIcon 
+import {
+  TrashIcon
 } from '@heroicons/react/24/solid';
 
 const QualityList = () => {
@@ -17,7 +18,7 @@ const QualityList = () => {
       const config = {
         headers: {
           "Content-Type": "application/json",
-          
+
         },
       };
       const response = await axios.get(
@@ -261,6 +262,8 @@ const QualityList = () => {
 
   return (
     <div className="flex">
+      <MetaData title={'All Quality Predictions'} />
+
       <div className="w-100">
         <Sidebar />
       </div>

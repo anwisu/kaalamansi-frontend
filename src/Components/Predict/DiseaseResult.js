@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import generatePDF, { Resolution, Margin, usePDF } from "react-to-pdf";
+import MetaData from "../Layout/MetaData";
 
 const DiseaseResult = () => {
   const [combinedDiseaseData, setCombinedDiseaseData] = useState(null);
@@ -69,6 +70,7 @@ const DiseaseResult = () => {
     //     )}
     // </div>
     <div>
+      <MetaData title={'Prediction Results'} />
       <div
         ref={targetRef}
         class="mt-8 items-center text-center justify-between mx-auto w-1/3"

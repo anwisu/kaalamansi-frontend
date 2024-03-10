@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import generatePDF, { Resolution, Margin, usePDF } from "react-to-pdf";
+import MetaData from "../Layout/MetaData";
 
 const QualityResult = () => {
   const [combinedQualityData, setCombinedQualityData] = useState(null);
@@ -60,6 +61,7 @@ const QualityResult = () => {
 
   return (
     <div>
+      <MetaData title={'Prediction Results'} />
       <div
         ref={targetRef}
         class="mt-8 mx-30 items-center text-center justify-between mx-auto w-1/2"

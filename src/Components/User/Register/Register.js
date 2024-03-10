@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./Register.css";
 import "../../../App.scss";
+import MetaData from "../../Layout/MetaData";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { FaUserShield } from "react-icons/fa";
@@ -75,7 +76,7 @@ const Register = () => {
       )
       .required("Image is required"), // Change the message here
   });
-  
+
 
   // Initialize Formik for registration
   const formik = useFormik({
@@ -101,6 +102,7 @@ const Register = () => {
   });
   return (
     <div className="registerPage registerFlex">
+      <MetaData title={'Register User'} />
       <div className="registerContainer registerFlex">
         <div className="videoDiv">
           <video

@@ -1,13 +1,14 @@
-import React, { useState, useEffect, Fragment  } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 // import { MDBDataTable, MDBBtn } from "mdbreact";
 // import { Link } from "react-router-dom"; // Import Link for navigation
 import axios from "axios";
 import MUIDataTable from "mui-datatables";
 import Sidebar from "../Sidebar";
+import MetaData from "../../Layout/MetaData";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { getToken } from "../../../utils/helpers";
-import { 
-  TrashIcon 
+import {
+  TrashIcon
 } from '@heroicons/react/24/solid';
 
 const DiseaseList = () => {
@@ -268,6 +269,8 @@ const DiseaseList = () => {
 
   return (
     <div className="flex">
+      <MetaData title={'All Disease Predictions'} />
+
       <div className="w-100">
         <Sidebar />
       </div>

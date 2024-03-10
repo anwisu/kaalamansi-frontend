@@ -1,5 +1,6 @@
 import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import MetaData from "./Layout/MetaData";
 import "../App.css";
 import AOS from "aos";
 import "aos/dist/aos.css";
@@ -10,6 +11,7 @@ const Home = () => {
 
   return (
     <Fragment>
+      <MetaData title={'Home'} />
       <div className="container">
         <div className="row">
           <div className="hero flex justify-between items-center w-screen px-40 pt-20">

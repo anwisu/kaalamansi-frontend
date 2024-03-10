@@ -1,6 +1,7 @@
 import React, { Fragment, useState, useEffect } from "react";
 import "./Login.css";
 import "../../../App.scss";
+import MetaData from "../../Layout/MetaData";
 import axios from "axios";
 import { authenticate } from "../../../utils/helpers";
 import { Link, useNavigate, useLocation } from "react-router-dom";
@@ -64,6 +65,7 @@ const Login = () => {
 
   return (
     <div className="loginPage loginFlex">
+      <MetaData title={'Login'} />
       <div className="loginContainer loginFlex">
         <div className="videoDiv">
           <video

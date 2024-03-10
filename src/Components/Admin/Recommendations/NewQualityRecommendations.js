@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { Input, Select, Button, Textarea } from '@material-tailwind/react';
 import { PhotoIcon, UserCircleIcon } from '@heroicons/react/24/solid'
+import MetaData from '../../Layout/MetaData';
 
 const NewQualityRecommendations = () => {
     const [recommendation, setRecommendation] = useState({
@@ -61,6 +62,7 @@ const NewQualityRecommendations = () => {
 
     return (
         <Fragment>
+            <MetaData title={'Create Quality Recommendation'} />
             <div className="flex">
                 <div className="w-100">
                     <Sidebar />

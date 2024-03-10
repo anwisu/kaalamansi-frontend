@@ -2,6 +2,7 @@ import React, { Fragment, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../../utils/helpers";
+import MetaData from "../Layout/MetaData";
 
 const PredictDisease = () => {
   const [error, setError] = useState("");
@@ -31,7 +32,7 @@ const PredictDisease = () => {
       if (response.data && response.data.disease_data) {
         console.log(response.data.disease_data._id); // Log the id
         const result = navigate(`/predict/disease/${response.data.disease_data._id}`);
-        console.log(result);  
+        console.log(result);
       } else {
         setError("Prediction failed. Please try again.");
       }
@@ -44,6 +45,7 @@ const PredictDisease = () => {
 
   return (
     <Fragment>
+      <MetaData title={'Predict Disease'} />
       <div className="container">
         <div className="row">
           <div className="col-md-12">
