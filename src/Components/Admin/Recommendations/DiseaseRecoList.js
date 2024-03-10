@@ -218,7 +218,7 @@ const DiseaseRecoList = () => {
         });
 
     return (
-        <div className="flex">
+        <div className="flex" >
             <div className="w-100">
                 <Sidebar />
             </div>

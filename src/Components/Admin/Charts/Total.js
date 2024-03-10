@@ -83,7 +83,7 @@ const Total = () => {
 
     return (
         <div className="mb-12 grid gap-y-10 gap-x-42  md:grid-cols-2 xl:grid-cols-3 place-items-center">
-            <Card className="w-96 border border-blue-gray-100 shadow-sm ">
+            <Card className="w-[23rem] border border-blue-gray-100 shadow-sm ">
                 <CardHeader
                     variant="gradient"
                     color='green'
@@ -112,7 +112,7 @@ const Total = () => {
                 </CardFooter>
 
             </Card>
-            <Card className="w-80 border border-blue-gray-100 shadow-sm ">
+            <Card className="w-[23rem] border border-blue-gray-100 shadow-sm ">
                 <CardHeader
                     variant="gradient"
                     color='green'
@@ -141,7 +141,7 @@ const Total = () => {
                 </CardFooter>
 
             </Card>
-            <Card className="w-96 border border-blue-gray-100 shadow-sm ">
+            <Card className="w-[23rem] border border-blue-gray-100 shadow-sm ">
                 <CardHeader
                     variant="gradient"
                     color='green'
