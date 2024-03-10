@@ -8,6 +8,8 @@ import { MdMarkEmailRead } from "react-icons/md";
 import { BsFillShieldLockFill } from "react-icons/bs";
 import { AiOutlineSwapRight } from "react-icons/ai";
 import { Avatar } from "@material-tailwind/react";
+import { useFormik } from "formik";
+import * as Yup from "yup";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -38,20 +40,65 @@ const Register = () => {
     }
   };
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API}/register`,
-        formData
-      );
-      console.log(response.data);
-      navigate("/login"); // Redirect to login page after successful registration
-    } catch (error) {
-      console.error("Registration Error:", error.message);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_API}/register`,
+  //       formData
+  //     );
+  //     console.log(response.data);
+  //     navigate("/login"); // Redirect to login page after successful registration
+  //   } catch (error) {
+  //     console.error("Registration Error:", error.message);
+  //   }
+  // };
 
+  // Define the registration schema using Yup
+  const registerSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string()
+      .email("Invalid email address")
+      .required("Email is required"),
+    password: Yup.string()
+      .min(6, "Password must be at least 6 characters")
+      .required("Password is required"),
+    avatar: Yup.mixed()
+      .test(
+        "fileType",
+        "Invalid file format",
+        (value) =>
+          value &&
+          ["image/png", "image/jpg", "image/jpeg", "image/gif"].includes(
+            value.type
+          )
+      )
+      .required("Image is required"), // Change the message here
+  });
+  
+
+  // Initialize Formik for registration
+  const formik = useFormik({
+    initialValues: {
+      name: "",
+      email: "",
+      password: "",
+      avatar: "",
+    },
+    validationSchema: registerSchema,
+    onSubmit: async (formData) => {
+      try {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API}/register`,
+          formData
+        );
+        console.log(response.data);
+        navigate("/login"); // Redirect to login page after successful registration
+      } catch (error) {
+        console.error("Registration Error:", error.message);
+      }
+    },
+  });
   return (
     <div className="registerPage registerFlex">
       <div className="registerContainer registerFlex">
@@ -81,7 +128,10 @@ const Register = () => {
             <img src="./images/citrus.png" alt="Logo Image" />
             <h3 className="title">Let Us Know You!</h3>
           </div>
-          <form onSubmit={handleSubmit} className="inputForm registerGrid">
+          <form
+            onSubmit={formik.handleSubmit}
+            className="inputForm registerGrid"
+          >
             <div className="inputDiv">
               <label htmlFor="username">Username</label>
               <div className="input registerFlex">
@@ -91,10 +141,13 @@ const Register = () => {
                   id="username"
                   name="name"
                   placeholder="Enter Username"
-                  value={formData.name}
-                  onChange={handleChange}
+                  value={formik.values.name}
+                  onChange={formik.handleChange}
                 />
               </div>
+              {formik.touched.name && formik.errors.name && (
+                <div className="error text-red-500">{formik.errors.name}</div>
+              )}
             </div>
 
             <div className="inputDiv">
@@ -106,10 +159,13 @@ const Register = () => {
                   id="email"
                   name="email"
                   placeholder="Enter Email"
-                  value={formData.email}
-                  onChange={handleChange}
+                  value={formik.values.email}
+                  onChange={formik.handleChange}
                 />
               </div>
+              {formik.touched.email && formik.errors.email && (
+                <div className="error text-red-500">{formik.errors.email}</div>
+              )}
             </div>
 
             <div className="inputDiv">
@@ -121,10 +177,15 @@ const Register = () => {
                   id="password"
                   name="password"
                   placeholder="Enter Password"
-                  value={formData.password}
-                  onChange={handleChange}
+                  value={formik.values.password}
+                  onChange={formik.handleChange}
                 />
               </div>
+              {formik.touched.password && formik.errors.password && (
+                <div className="error text-red-500">
+                  {formik.errors.password}
+                </div>
+              )}
             </div>
             <div className="inputDiv">
               <div class="grid items-center gap-1.5">
@@ -137,7 +198,7 @@ const Register = () => {
                     name="avatar"
                     id="customFile"
                     accept="image/*"
-                    onChange={handleChange}
+                    onChange={formik.handleChange}
                     className="flex h-10 rounded-md border border-input bg-white-900 px-3 py-2 text-sm text-gray-700 file:border-0 file:bg-transparent file:text-gray-600 file:text-sm file:font-medium"
                   />
                   {avatarPreview && (
@@ -145,6 +206,9 @@ const Register = () => {
                   )}
                 </div>
               </div>
+              {formik.touched.avatar && formik.errors.avatar && (
+                <div className="error text-red-500">{formik.errors.avatar}</div>
+              )}
             </div>
             <button type="submit" className="btnRegister registerFlex">
               <span>Register</span>
