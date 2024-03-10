@@ -1,17 +1,60 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import {
+  Card,
+  CardHeader,
+  CardBody,
+  CardFooter,
+  Typography,
+} from "@material-tailwind/react";
+import {
+  PresentationChartBarIcon,
+  ShoppingBagIcon,
+  UserCircleIcon,
+  Cog6ToothIcon,
+  InboxIcon,
+  PowerIcon,
+  TableCellsIcon,
+  DocumentMagnifyingGlassIcon,
+  UserGroupIcon,
+  PresentationChartLineIcon,
+  CheckCircleIcon,
+  ClockIcon
+} from "@heroicons/react/24/solid";
 import ApexCharts from "react-apexcharts";
 
 const QualityCount = () => {
-  const [qualityData, setQualityData] = useState([]);
+  const [qualityData, setQualityData] = useState({ low: Array(12).fill(0), high: Array(12).fill(0) });
+  const [lastUpdate, setLastUpdate] = useState(null);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `${process.env.REACT_APP_API}/admin/quality/all`
+          `${process.env.REACT_APP_API}/admin/quality-predicts-per-month`
         );
-        setQualityData(response.data.quality_data);
+        const predicts_per_month = response.data.predicts_per_month;
+
+        const counts = {
+          low: Array(12).fill(0),
+          high: Array(12).fill(0),
+        };
+
+        let lastCreatedAt = null;
+
+        predicts_per_month.forEach((record) => {
+          const month = record._id.month - 1; // Subtract 1 because getMonth() returns a zero-based month
+
+          counts.low[month] = record.low;
+          counts.high[month] = record.high;
+
+          if (!lastCreatedAt || new Date(record.lastCreatedAt) > new Date(lastCreatedAt)) {
+            lastCreatedAt = record.lastCreatedAt;
+          }
+        });
+
+        setQualityData(counts);
+        setLastUpdate(lastCreatedAt);
       } catch (error) {
         console.error("Error fetching quality data:", error);
       }
@@ -20,71 +63,66 @@ const QualityCount = () => {
     fetchData();
   }, []);
 
-  const generateChartData = () => {
-    const qualityCounts = {};
-
-    // Count occurrences of each predicted_quality
-    qualityData.forEach((record) => {
-      const predictedquality =
-        record.predicted_quality.charAt(0).toUpperCase() +
-        record.predicted_quality.slice(1);
-
-      if (predictedquality in qualityCounts) {
-        qualityCounts[predictedquality]++;
-      } else {
-        qualityCounts[predictedquality] = 1;
-      }
-    });
-
-    // Convert qualityCounts to an array for ApexCharts
-    const chartData = Object.keys(qualityCounts).map((quality) => {
-      return {
-        x: quality,
-        y: qualityCounts[quality],
-        color: quality === "Low" ? "#ff0040" : "#00b300",
-      };
-    });
-
-    return chartData;
-  };
+  const series = [
+    {
+      name: 'Low Quality',
+      data: qualityData.low,
+    },
+    {
+      name: 'High Quality',
+      data: qualityData.high,
+    },
+  ];
 
   const options = {
     chart: {
-      type: "pie",
-      colors: generateChartData().map((data) => data.color),
+      type: 'line',
     },
-    labels: generateChartData().map((data) => data.x),
-    colors: generateChartData().map((data) => data.color),
-    legend: {
-      position: "top",
-      horizontalAlign: "center",
+    height: 350,
+    stroke: {
+      width: [4, 4],
+      curve: 'smooth',
     },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            width: 50,
-          },
-          legend: {
-            position: "bottom", // Adjust the legend position for smaller screens
-          },
-        },
-      },
-    ],
+    colors: ["#FF1654", "#00F04B"],
+    xaxis: {
+      categories: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+    },
   };
 
   return (
-    <div className="bg-white p-2 ml-10 inline-block items-center w-64">
-      <ApexCharts
-        options={options}
-        series={generateChartData().map((data) => data.y)}
-        type="pie"
-        height={320}
-        className="mt-10"
-      />
-      <div className="text-center text-sm text-blue-gray-900 font-bold">Predicted quality</div>
-    </div>
+    <Card className="w-full border border-blue-gray-100 shadow-sm">
+      <CardHeader variant="gradient" floated={false} shadow={false}>
+        {/* <ApexCharts
+            options={options}
+            series={generateChartData().map((data) => data.y)}
+            type="donut"
+          /> */}
+        <ApexCharts 
+        options={options} 
+        series={series} 
+        type="line" 
+        />
+      </CardHeader>
+      <CardBody className="px-6 pt-0">
+        <Typography variant="h6" color="blue-gray">
+          Predicted Quality Per Month
+        </Typography>
+        <Typography variant="small" className="font-normal text-blue-gray-600">
+        This chart predicts monthly quality occurrence using red for low quality and green for high quality kalamansi.
+        </Typography>
+      </CardBody>
+      <CardFooter className="border-t border-blue-gray-50 px-6 py-5">
+        <Typography
+          variant="small"
+          className="flex items-center font-normal text-blue-gray-600"
+        >
+          <ClockIcon strokeWidth={2} className="h-4 w-4 mr-2 text-blue-gray-400" />
+          {lastUpdate && (
+            <p>Last updated at: {new Date(lastUpdate).toLocaleString()}</p>
+          )}
+        </Typography>
+      </CardFooter>
+    </Card>
   );
 };
 
