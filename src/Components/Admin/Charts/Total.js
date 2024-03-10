@@ -17,13 +17,15 @@ import {
     TableCellsIcon,
     DocumentMagnifyingGlassIcon,
     UserGroupIcon,
-    PresentationChartLineIcon
+    PresentationChartLineIcon,
+    CheckCircleIcon,
+    ClockIcon
 } from "@heroicons/react/24/solid";
 import { FaDisease } from "react-icons/fa6";
 import { getToken } from "../../../utils/helpers";
 
 const Total = () => {
-    const [data, setData] = useState({ quality: 0, disease: 0, user: 0, lastUpdated: null });
+    const [data, setData] = useState({ quality: 0, disease: 0, user: 0 });
     const countIds = (data) => {
         return data ? data.length : 0;
     };
@@ -100,7 +102,13 @@ const Total = () => {
                     </Typography>
                 </CardBody>
                 <CardFooter className="block border-t border-blue-gray-50 p-4">
-                    Last updated: {data.qualityLastUpdated?.toLocaleString()}
+                    <Typography
+                        variant="small"
+                        className="flex items-center font-normal text-blue-gray-600"
+                    >
+                        <ClockIcon strokeWidth={2} className="h-4 w-4 mr-2 text-blue-gray-400" />
+                        Last updated: {data.qualityLastUpdated?.toLocaleString()}
+                    </Typography>
                 </CardFooter>
 
             </Card>
@@ -123,7 +131,13 @@ const Total = () => {
                     </Typography>
                 </CardBody>
                 <CardFooter className="block border-t border-blue-gray-50 p-4">
-                    Last updated: {data.userLastUpdated?.toLocaleString()}
+                    <Typography
+                        variant="small"
+                        className="flex items-center font-normal text-blue-gray-600"
+                    >
+                        <ClockIcon strokeWidth={2} className="h-4 w-4 mr-2 text-blue-gray-400" />
+                        Last updated: {data.userLastUpdated?.toLocaleString()}
+                    </Typography>
                 </CardFooter>
 
             </Card>
@@ -146,7 +160,13 @@ const Total = () => {
                     </Typography>
                 </CardBody>
                 <CardFooter className="block border-t border-blue-gray-50 p-4">
-                    Last updated: {data.diseaseLastUpdated?.toLocaleString()}
+                    <Typography
+                        variant="small"
+                        className="flex items-center font-normal text-blue-gray-600"
+                    >
+                        <ClockIcon strokeWidth={2} className="h-4 w-4 mr-2 text-blue-gray-400" />
+                        Last updated: {data.diseaseLastUpdated?.toLocaleString()}
+                    </Typography>
                 </CardFooter>
             </Card>
         </div>
