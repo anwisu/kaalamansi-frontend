@@ -1,7 +1,7 @@
 import React, { Fragment, useState, useEffect } from 'react';
 import axios from 'axios';
 import { Link, useNavigate } from "react-router-dom";
-import { getToken } from '../../utils/helpers';
+import { getToken, logout } from '../../utils/helpers';
 import {
     Avatar,
     Card,
@@ -41,6 +41,7 @@ const Sidebar = () => {
     const [open, setOpen] = React.useState(0);
     const [openAlert, setOpenAlert] = React.useState(true);
     const [user, setUser] = useState({});
+    const navigate = useNavigate();
 
     const getProfile = async () => {
         const config = {
@@ -57,6 +58,17 @@ const Sidebar = () => {
         }
     };
 
+    const handleLogout = async () => {
+        try {
+            await axios.get(`${process.env.REACT_APP_API}/logout`);
+            logout(); // Remove token and user data from session storage
+            navigate("/");
+            window.location.reload();
+        } catch (error) {
+            console.error("Logout failed:", error);
+        }
+    };
+
     useEffect(() => {
         getProfile();
     }, []);
@@ -66,17 +78,18 @@ const Sidebar = () => {
     };
 
     return (
-        <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/0 top-0 fixed z-10">
-            <div className="mb-2 flex items-center justify-center gap-2 p-4">
-                <Link to="/">
+        // <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/0 top-0 fixed z-10" style={{backgroundColor: '#F2FFF5'}}>
+        <Card className="h-full h-max-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-lg top-0 fixed z-10">
+            <div className="mt-20 mb-2 flex items-center justify-center gap-2 p-4">
+                {/* <Link to="/">
                     <img
                         src={process.env.PUBLIC_URL + "/images/citrus.png"}
                         className=" h-20 w-20 animate-bounce animate-infinite animate-ease-in"
                         alt="Kaalamansi Logo"
                     />
-                </Link>
-                {/* <Avatar 
-                    src={user && user.avatar ? user.avatar.url : 'defaultAvatarUrl'} 
+                </Link> */}
+                <Avatar
+                    src={user && user.avatar ? user.avatar.url : 'defaultAvatarUrl'}
                     alt="avatar"
                     // withBorder={true}
                     // color="green"
@@ -84,7 +97,7 @@ const Sidebar = () => {
                 />
                 <Typography variant="h5" color="blue-gray">
                     Admin <span style={{ color: "#008302" }}>{user.name}</span>
-                </Typography> */}
+                </Typography>
             </div>
             <div className="p-2">
                 <Input icon={<MagnifyingGlassIcon className="h-5 w-5" />} label="Search" />
@@ -260,33 +273,28 @@ const Sidebar = () => {
                     </ListItem>
                 </Accordion>
                 <hr className="my-2 border-blue-gray-50" />
-                <ListItem>
-                    <ListItemPrefix>
-                        <InboxIcon className="h-5 w-5" style={{ color: "#008302" }} />
-                    </ListItemPrefix>
-                    Inbox
-                    <ListItemSuffix>
-                        <Chip value="14" size="sm" variant="ghost" color="blue-gray" className="rounded-full" style={{ color: "#008302" }} />
-                    </ListItemSuffix>
-                </ListItem>
+                <Link to='/me'>
                 <ListItem>
                     <ListItemPrefix>
                         <UserCircleIcon className="h-5 w-5" style={{ color: "#008302" }} />
                     </ListItemPrefix>
                     Profile
                 </ListItem>
-                <ListItem>
+                </Link>
+                {/* <ListItem>
                     <ListItemPrefix>
                         <Cog6ToothIcon className="h-5 w-5" style={{ color: "#008302" }} />
                     </ListItemPrefix>
                     Settings
-                </ListItem>
+                </ListItem> */}
+                <Link onClick={handleLogout}>
                 <ListItem>
                     <ListItemPrefix>
                         <PowerIcon className="h-5 w-5" style={{ color: "#008302" }} />
                     </ListItemPrefix>
                     Log Out
                 </ListItem>
+                </Link>
             </List>
 
         </Card>

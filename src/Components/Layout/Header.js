@@ -32,8 +32,8 @@ const Header = () => {
   return (
     <Fragment>
       {/* <div className="flex items-center justify-center bg-transparent fixed w-full z-10">     */}
-      <Navbar className="sticky top-0 z-10 h-max max-w-full rounded-none text-green-700 flex items-center justify-center shadow-xl px-4 py-2 lg:px-8 lg:py-4">
-        <div className="flex-1">
+      <Navbar className="sticky top-0 z-20 h-max max-w-full rounded-none text-green-700 flex items-center justify-center shadow-xl px-4 py-2 lg:px-8 lg:py-4">        
+      <div className="flex-1">
           <Link to="/" className="inline-block text-teal-600">
             <div className="flex items-center">
               <img

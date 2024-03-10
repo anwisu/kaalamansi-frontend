@@ -219,7 +219,11 @@ const DiseaseRecoList = () => {
         });
 
     return (
-        <div className="flex" >
+        <div className="flex" style={{
+            minHeight: '100vh',
+            background: 'rgb(12,109,77)',
+            background: 'linear-gradient(356deg, rgba(12,109,77,1) 0%, rgba(51,207,96,1) 35%, rgba(142,234,147,0.8991246156665791) 100%)'
+        }}>
         <MetaData title={'All Disease Recommendation'} />
             <div className="w-100">
                 <Sidebar />
@@ -227,7 +231,7 @@ const DiseaseRecoList = () => {
             <div className="flex-1 py-10">
                 <div className="ml-[21rem] mr-6">
                     <a href="/admin/disease/recommendation/new">
-                        <Button variant='outlined' color='teal'>Add Recommendation</Button>
+                        <Button variant='filled' color='teal' className="mb-6">Add Recommendation</Button>
                     </a>
                     <ThemeProvider theme={muiTheme()}>
                         {allDiseaseReco.length > 0 && (

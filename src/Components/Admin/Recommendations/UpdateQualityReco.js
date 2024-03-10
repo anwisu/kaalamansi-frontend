@@ -136,9 +136,11 @@ const UpdateQualityReco = () => {
   };
   return (
     <Fragment>
-      <MetaData title={'Update Disease Recommendation'} />
-
-      <div className="flex">
+      <MetaData title={'Update Quality Recommendation'} />
+      <div className="flex" style={{
+                minHeight: '100vh',
+                background: '#B6EBBA'
+            }}>
         <div className="w-100">
           <Sidebar />
         </div>
@@ -230,7 +232,7 @@ const UpdateQualityReco = () => {
                 >
                   Choose an Image
                 </label>
-                <div className="mt-2 flex justify-center rounded-lg border border-dashed border-gray-900/25 px-6 py-10">
+                <div className="mt-2 flex justify-center rounded-lg bg-white border border-dashed border-gray-900/25 px-6 py-10">
                   <div className="text-center">
                     <PhotoIcon
                       className="mx-auto h-12 w-12 text-gray-300"

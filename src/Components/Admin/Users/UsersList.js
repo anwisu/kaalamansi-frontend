@@ -5,7 +5,7 @@ import { getToken } from "../../../utils/helpers";
 import Sidebar from "../Sidebar";
 import MUIDataTable from "mui-datatables";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
-import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid"; 
+import { PencilSquareIcon, TrashIcon } from "@heroicons/react/24/solid";
 import MetaData from "../../Layout/MetaData";
 
 const UsersList = () => {
@@ -90,7 +90,7 @@ const UsersList = () => {
           console.log(value); // Log the image URLs
           return (
             <div style={{ display: 'flex' }}>
-              {value && <img src={value.url} alt={value.name} style={{ width: '80px', height: 'auto'}} />}            
+              {value && <img src={value.url} alt={value.name} style={{ width: '80px', height: 'auto' }} />}
             </div>
           );
         },
@@ -184,8 +184,12 @@ const UsersList = () => {
     });
 
   return (
-    <div className="flex">
-            <MetaData title={'All Users'} />
+    <div className="flex" style={{
+      minHeight: '100vh',
+      background: 'rgb(12,109,77)',
+      background: 'linear-gradient(356deg, rgba(12,109,77,1) 0%, rgba(51,207,96,1) 35%, rgba(142,234,147,0.8991246156665791) 100%)'
+    }}>
+      <MetaData title={'All Users'} />
       <div className="w-100">
         <Sidebar />
       </div>
