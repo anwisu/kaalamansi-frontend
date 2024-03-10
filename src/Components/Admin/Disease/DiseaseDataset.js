@@ -256,13 +256,17 @@ function DiseaseDataset() {
         });
 
     return (
-        <div className="flex">
+        <div className="flex" style={{
+            minHeight: '100vh',
+            background: 'rgb(12,109,77)',
+            background: 'linear-gradient(356deg, rgba(12,109,77,1) 0%, rgba(51,207,96,1) 35%, rgba(142,234,147,0.8991246156665791) 100%)'
+        }}>
             <MetaData title={'Disease Model Analytics'} />
             <div className="w-100">
                 <Sidebar />
             </div>
             <div className="ml-[21rem] mr-2">
-                <h1 className="text-2xl font-bold my-4 text-gray-900" style={{ fontSize: "30px", color: "#4AA032", fontFamily: "League Spartan", }}>Disease Model Analytics</h1>
+                <h1 className="text-2xl font-bold my-4 text-gray-900" style={{ fontSize: "30px", fontFamily: "League Spartan", }}>Disease Model Analytics</h1>
                 {dataset ? (
                     <div className="bg-white p-4 rounded shadow text-gray-900">
                         <p className="mb-2">Shape of dataset: ({dataset.shape[0]} rows, {dataset.shape[1]} columns)</p>

@@ -79,7 +79,7 @@ const NewDiseaseRecommendations = () => {
                 <div className="flex-1 py-10">
                     <div className="ml-[21rem] mr-20">
                         <h1 className="text-2xl font-bold mb-4 text-gray-900" style={{ fontSize: "30px", color: "#4AA032", fontFamily: "League Spartan", }}>New Recommendation</h1>
-                        <form onSubmit={handleSubmit} className="space-y-4">
+                        <form onSubmit={handleSubmit} className="space-y-2">
                             <label htmlFor="factor" className="block text-sm font-medium leading-6 text-gray-900">
                                 Factor
                             </label>

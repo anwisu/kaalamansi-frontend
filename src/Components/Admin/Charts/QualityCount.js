@@ -105,7 +105,7 @@ const QualityCount = () => {
       </CardHeader>
       <CardBody className="px-6 pt-0">
         <Typography variant="h6" color="blue-gray">
-          Predicted Quality Per Month
+          Monthly Quality Predictions
         </Typography>
         <Typography variant="small" className="font-normal text-blue-gray-600">
         This chart predicts monthly quality occurrence using red for low quality and green for high quality kalamansi.

@@ -20,7 +20,7 @@ const Dashboard = () => {
         
         <div className="mt-10 ml-[21rem] mr-4">
             <Total />
-            <div className="flex mx-auto gap-8 mb-10">
+            <div className="flex mx-auto gap-6 mb-10">
             {/* <UserChart /> */}
             <DiseaseCount />
             <QualityCount />

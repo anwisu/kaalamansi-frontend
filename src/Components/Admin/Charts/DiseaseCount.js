@@ -180,7 +180,7 @@ const DiseaseCount = () => {
       </CardHeader>
       <CardBody className="px-6 pt-0">
         <Typography variant="h6" color="blue-gray">
-          Predicted Disease Per Month
+          Monthly Disease Predictions
         </Typography>
         <Typography variant="small" className="font-normal text-blue-gray-600">
           This chart predicts monthly disease occurrence using red for infected and green for not infected kalamansi.
