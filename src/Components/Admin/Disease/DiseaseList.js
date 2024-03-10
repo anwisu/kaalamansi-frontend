@@ -171,7 +171,7 @@ const DiseaseList = () => {
         sort: true,
         customBodyRender: (value) => (
           <p
-            className={`capitalize px-3 py-1 bg-green-500 inline-block rounded-full ${value == "infected" ? "bg-red-500" : "bg-green-500"
+            className={`capitalize px-3 py-1 bg-green-500 inline-block rounded-full text-center ${value == "infected" ? "bg-red-500" : "bg-green-500"
               }`}
           >
             {value}
