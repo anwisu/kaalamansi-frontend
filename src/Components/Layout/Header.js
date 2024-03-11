@@ -2,10 +2,7 @@ import React, { Fragment, useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { logout, getUser } from "../../utils/helpers";
-import { Avatar } from "@material-tailwind/react";
-import {
-  Navbar,
-} from "@material-tailwind/react";
+import { Avatar, Navbar } from "@material-tailwind/react";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -32,8 +29,8 @@ const Header = () => {
   return (
     <Fragment>
       {/* <div className="flex items-center justify-center bg-transparent fixed w-full z-10">     */}
-      <Navbar className="sticky top-0 z-20 h-max max-w-full rounded-none text-green-700 flex items-center justify-center shadow-xl px-4 py-2 lg:px-8 lg:py-4">        
-      <div className="flex-1">
+      <Navbar className="sticky top-0 z-20 h-max max-w-full rounded-none text-green-700 flex items-center justify-center shadow-xl px-4 py-2 lg:px-8 lg:py-4">
+        <div className="flex-1">
           <Link to="/" className="inline-block text-teal-600">
             <div className="flex items-center">
               <img
@@ -127,7 +124,7 @@ const Header = () => {
             <div
               tabIndex={0}
               role="button"
-            // className="btn btn-ghost btn-circle avatar bg-100"
+              // className="btn btn-ghost btn-circle avatar bg-100"
             >
               {user ? (
                 // If user is logged in, display avatar
@@ -163,37 +160,46 @@ const Header = () => {
             {user && (
               <ul
                 tabIndex={0}
-                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-100 rounded-box w-52"
+                className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-100 rounded-box w-52 bg-white divide-y divide-gray-300 dark:bg-gray-700 dark:divide-gray-600"
                 style={{
                   textDecoration: "none",
                   color: "#58B741",
                   backgroundColor: "white",
                 }}
               >
-                {user.role === "admin" && (
+                <div
+                  class="px-4 py-3 text-sm font-bold dark:text-white"
+                  style={{ textDecoration: "none", color: "#58B741" }}
+                >
+                  <div>{user.name}</div>
+                  <div class="font-medium truncate">{user.email}</div>
+                </div>
+                <ul className="px-2 py-2">
+                  {user.role === "admin" && (
+                    <li>
+                      <Link
+                        className="flex items-center"
+                        style={{ textDecoration: "none", color: "#58B741" }}
+                        to="/admin/dashboard"
+                      >
+                        Dashboard
+                      </Link>
+                    </li>
+                  )}
                   <li>
                     <Link
-                      className="flex items-center"
+                      to="/me"
                       style={{ textDecoration: "none", color: "#58B741" }}
-                      to="/admin/dashboard"
+                      className="flex items-center"
                     >
-                      Dashboard
+                      Profile
                     </Link>
                   </li>
-                )}
-                <li>
-                  <Link
-                    to="/me"
-                    style={{ textDecoration: "none", color: "#58B741" }}
-                    className="flex items-center"
-                  >
-                    Profile
-                  </Link>
-                </li>
+                </ul>
                 <li>
                   <Link
                     style={{ textDecoration: "none", color: "#58B741" }}
-                    className="flex items-center"
+                    className="items-center px-5 py-3"
                     onClick={handleLogout}
                   >
                     Logout
