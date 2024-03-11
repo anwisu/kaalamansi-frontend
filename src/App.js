@@ -43,18 +43,18 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/about" element={<About />} />
-          <Route path="/predict/quality" element={<PredictQuality />} />
-          <Route path="/predict/disease" element={<PredictDisease />} />
-          <Route path="/predict/quality/:id"  element={<QualityResult />} />
-          <Route path="/predict/disease/:id" element={<DiseaseResult />} />
+          <Route path="/predict/quality" element={<ProtectedRoute><PredictQuality /></ProtectedRoute>} />
+          <Route path="/predict/disease" element={<ProtectedRoute><PredictDisease /></ProtectedRoute>} />
+          <Route path="/predict/quality/:id"  element={<ProtectedRoute><QualityResult /></ProtectedRoute>} />
+          <Route path="/predict/disease/:id" element={<ProtectedRoute><DiseaseResult /></ProtectedRoute>} />
 
           {/* USER ROUTES */}
+          
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/me" element={<Profile />} />
-          <Route path="/me/update" element={<UpdateProfile />} />
-
-
+          <Route path="/me" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
+          <Route path="/me/update" element={<ProtectedRoute><UpdateProfile /></ProtectedRoute>} />
+    
         {/* ADMIN ROUTES */}
           <Route path="/admin/dashboard" element={ <ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>}/>
           <Route path="/admin/quality/all" element={<ProtectedRoute isAdmin={true}><QualityList /></ProtectedRoute>} />
