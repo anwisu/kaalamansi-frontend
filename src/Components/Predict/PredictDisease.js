@@ -3,49 +3,72 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../../utils/helpers";
 import MetaData from "../Layout/MetaData";
+import { useFormik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const PredictDisease = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  const validationSchema = Yup.object().shape({
+    discoloration: Yup.string().required("Discoloration is required"),
+    lesions: Yup.string().required("Lesions is required"),
+    wilting: Yup.string().required("Wilting is required"),
+    leaf_spots: Yup.string().required("Leaf Spots is required"),
+    fertilized: Yup.string().required("Fertilized is required"),
+    watering_sched: Yup.string().required("Watering Schedule is required"),
+    pruning: Yup.string().required("Pruning is required"),
+    pesticide_use: Yup.string().required("Pesticide is required"),
+    pest_presence: Yup.string().required("Pest Presence is required"),
+  });
 
-    const formData = new FormData(event.target);
-    const jsonData = {};
-    formData.forEach((value, key) => {
-      jsonData[key] = value;
-    });
-
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API}/predict/disease`,
-        jsonData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${getToken()}`
-          },
+  const formik = useFormik({
+    initialValues: {
+      discoloration: "",
+      lesions: "",
+      wilting: "",
+      leaf_spots: "",
+      fertilized: "",
+      watering_sched: "",
+      pruning: "",
+      pesticide_use: "",
+      pest_presence: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const formData = new FormData();
+        for (const key in values) {
+          formData.append(key, values[key]);
         }
-      );
 
-      if (response.data && response.data.disease_data) {
-        console.log(response.data.disease_data._id); // Log the id
-        const result = navigate(`/predict/disease/${response.data.disease_data._id}`);
-        console.log(result);
-      } else {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API}/predict/disease`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${getToken()}`,
+            },
+          }
+        );
+
+        if (response.data && response.data.disease_data) {
+          console.log(response.data.disease_data._id); // Log the id
+          navigate(`/predict/disease/${response.data.disease_data._id}`);
+        } else {
+          setError("Prediction failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error during form submission:", error.message);
         setError("Prediction failed. Please try again.");
       }
-    } catch (error) {
-      console.error("Prediction request failed:", error);
-      console.error("Error Response:", error.response);
-      setError("Prediction failed. Please try again.");
-    }
-  };
+    },
+  });
 
   return (
     <Fragment>
-      <MetaData title={'Predict Disease'} />
+      <MetaData title={"Predict Disease"} />
       <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -62,7 +85,7 @@ const PredictDisease = () => {
             <div className="pl-56 pb-10">
               <form
                 class="grid justify-center items-center"
-                onSubmit={handleSubmit}
+                onSubmit={formik.handleSubmit}
               >
                 {/* Input fields for features */}
                 <div class="flex space-x-4 ">
@@ -78,10 +101,11 @@ const PredictDisease = () => {
                       Visual Symptoms
                     </h4>
                     <div class="w-full pl-10 flex">
-                      <div class="relative h-10 w-100 ">
+                      <div class="relative h-10 w-100 mt-1">
                         <select
                           id="discoloration"
                           name="discoloration"
+                          onChange={formik.handleChange}
                           class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         >
                           <option disabled selected>
@@ -96,10 +120,17 @@ const PredictDisease = () => {
                         >
                           Discoloration:
                         </label>
-                        <div class="relative h-10 w-100  mt-6">
+                        {formik.touched.discoloration &&
+                          formik.errors.discoloration && (
+                            <div className="error text-red-500">
+                              {formik.errors.discoloration}
+                            </div>
+                          )}
+                        <div class="relative h-10 w-100  mt-3">
                           <select
                             id="lesions"
                             name="lesions"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -114,9 +145,15 @@ const PredictDisease = () => {
                           >
                             Lesions:
                           </label>
+                          {formik.touched.lesions &&
+                          formik.errors.lesions && (
+                            <div className="error text-red-500">
+                              {formik.errors.lesions}
+                            </div>
+                          )}
                         </div>
 
-                        <div class="relative h-10 w-100 mt-6">
+                        <div class="relative h-10 w-100 mt-7">
                           <div class="grid grid-cols-2 gap-4  ml-4">
                             <div class="flex items-center mt-3">
                               <input
@@ -180,16 +217,24 @@ const PredictDisease = () => {
                                 Severe
                               </label>
                             </div>
+                  
                           </div>
 
                           <label
                             for="wilting"
-                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:h-1.5 before:w-2.5 after:mt-[6.5px] after:ml-1 after:h-1.5 after:w-2.5">
+                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:h-1.5 before:w-2.5 after:mt-[6.5px] after:ml-1 after:h-1.5 after:w-2.5"
+                          >
                             Wilting:
                           </label>
+                          {formik.touched.wilting &&
+                          formik.errors.wilting && (
+                            <div className="error text-red-500 pl-3">
+                              {formik.errors.wilting}
+                            </div>
+                          )}
                         </div>
 
-                        <div class="relative h-10 w-100 mt-10">
+                        <div class="relative h-10 w-100 mt-12">
                           <div class="grid grid-cols-2 gap-4  ml-4">
                             <div class="flex items-center mt-3">
                               <input
@@ -261,7 +306,14 @@ const PredictDisease = () => {
                           >
                             Leaf Spots:
                           </label>
+                           {formik.touched.leaf_spots &&
+                          formik.errors.leaf_spots && (
+                            <div className="error text-red-500 pl-3">
+                              {formik.errors.leaf_spots}
+                            </div>
+                          )}
                         </div>
+                     
                       </div>
                     </div>
                   </div>
@@ -276,11 +328,12 @@ const PredictDisease = () => {
                     >
                       Cultivation Practices
                     </h4>
-                    <div class="w-full flex pl-12">
-                      <div class="relative h-10 w-100">
+                    <div class="w-full flex pl-10">
+                        <div class="relative h-10 w-100 mt-2">
                         <select
                           id="fertilized"
                           name="fertilized"
+                          onChange={formik.handleChange}
                           class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         >
                           <option disabled selected>
@@ -295,10 +348,17 @@ const PredictDisease = () => {
                         >
                           Fertilizer:
                         </label>
-                        <div class="relative h-10 w-100 mt-3">
+                        {formik.touched.fertilized &&
+                          formik.errors.fertilized && (
+                            <div className="error text-red-500">
+                              {formik.errors.fertilized}
+                            </div>
+                          )}
+                        <div class="relative h-10 w-100 mt-5">
                           <select
                             id="watering_sched"
                             name="watering_sched"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -313,11 +373,18 @@ const PredictDisease = () => {
                           >
                             Watering Schedule:
                           </label>
+                          {formik.touched.watering_sched &&
+                            formik.errors.watering_sched && (
+                              <div className="error text-red-500">
+                                {formik.errors.watering_sched}
+                              </div>
+                            )}
                         </div>
-                        <div class="relative h-10 w-100 mt-3">
+                        <div class="relative h-10 w-100 mt-6">
                           <select
                             id="pruning"
                             name="pruning"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -334,11 +401,17 @@ const PredictDisease = () => {
                           >
                             Pruning:
                           </label>
+                          {formik.touched.pruning && formik.errors.pruning && (
+                            <div className="error text-red-500">
+                              {formik.errors.pruning}
+                            </div>
+                          )}
                         </div>
-                        <div class="relative h-10 w-100 mt-3">
+                        <div class="relative h-10 w-100 mt-6">
                           <select
                             id="pesticide_use"
                             name="pesticide_use"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -354,11 +427,18 @@ const PredictDisease = () => {
                           >
                             Pesticide:
                           </label>
+                          {formik.touched.pesticide_use &&
+                            formik.errors.pesticide_use && (
+                              <div className="error text-red-500">
+                                {formik.errors.pesticide_use}
+                              </div>
+                            )}
                         </div>
-                        <div class="relative h-10 w-100 mt-3">
+                        <div class="relative h-10 w-100 mt-6">
                           <select
                             id="pest_presence"
                             name="pest_presence"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -373,8 +453,14 @@ const PredictDisease = () => {
                           >
                             Pest Presence:
                           </label>
+                          {formik.touched.pest_presence &&
+                            formik.errors.pest_presence && (
+                              <div className="error text-red-500">
+                                {formik.errors.pest_presence}
+                              </div>
+                            )}
                         </div>
-                      </div>
+                        </div>
                     </div>
                   </div>
                 </div>
