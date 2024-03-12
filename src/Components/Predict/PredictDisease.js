@@ -161,6 +161,7 @@ const PredictDisease = () => {
                                 type="radio"
                                 value="Absent"
                                 name="wilting"
+                                onChange={formik.handleChange}
                                 class="radio radio-success h-4 w-4"
                               />
                               <label
@@ -176,6 +177,7 @@ const PredictDisease = () => {
                                 type="radio"
                                 value="Mild"
                                 name="wilting"
+                                onChange={formik.handleChange}
                                 class="radio radio-success  h-4 w-4"
                               />
                               <label
@@ -193,6 +195,7 @@ const PredictDisease = () => {
                                 type="radio"
                                 value="Moderate"
                                 name="wilting"
+                                onChange={formik.handleChange}
                                 class="radio radio-success  h-4 w-4"
                               />
                               <label
@@ -208,6 +211,7 @@ const PredictDisease = () => {
                                 type="radio"
                                 value="Severe"
                                 name="wilting"
+                                onChange={formik.handleChange}
                                 class="radio radio-success h-4 w-4"
                               />
                               <label
@@ -242,6 +246,7 @@ const PredictDisease = () => {
                                 name="leaf_spots"
                                 type="radio"
                                 value="Absent"
+                                onChange={formik.handleChange}
                                 class="radio radio-success h-4 w-4"
                               />
                               <label
@@ -257,6 +262,7 @@ const PredictDisease = () => {
                                 name="leaf_spots"
                                 type="radio"
                                 value="Mild"
+                                onChange={formik.handleChange}
                                 class="radio radio-success  h-4 w-4"
                               />
                               <label
@@ -274,6 +280,7 @@ const PredictDisease = () => {
                                 name="leaf_spots"
                                 type="radio"
                                 value="Moderate"
+                                onChange={formik.handleChange}
                                 class="radio radio-success  h-4 w-4"
                               />
                               <label
@@ -289,6 +296,7 @@ const PredictDisease = () => {
                                 name="leaf_spots"
                                 type="radio"
                                 value="Severe"
+                                onChange={formik.handleChange}
                                 class="radio radio-success h-4 w-4"
                               />
                               <label
