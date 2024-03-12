@@ -59,7 +59,7 @@ const Header = () => {
                 Home
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link
                 to="/plant"
                 style={{ textDecoration: "none" }}
@@ -67,7 +67,7 @@ const Header = () => {
               >
                 Plant
               </Link>
-            </li>
+            </li> */}
             <div className="dropdown dropdown-end">
               <li>
                 <Link

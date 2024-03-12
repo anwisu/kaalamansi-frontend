@@ -83,8 +83,9 @@ body {
 
 
 .card {
-  width: 150px;
-  height: 154px;
+  width: 200px;
+  height: 204px;
+  margin: 10%;
   border-radius: 30px;
   background-color: white;
   -webkit-box-shadow: inset 0px 5px 10px 0px rgba(0, 0, 0, 0.5);;

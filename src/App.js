@@ -31,7 +31,7 @@ import UpdateQualityReco from './Components/Admin/Recommendations/UpdateQualityR
 import UpdateDiseaseReco from './Components/Admin/Recommendations/UpdateDiseaseReco';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import Planting from './Components/Guide'
 
 function App() {
   useEffect(() => {
@@ -50,6 +50,7 @@ function App() {
           <Route path="/predict/disease" element={<ProtectedRoute><PredictDisease /></ProtectedRoute>} />
           <Route path="/predict/quality/:id"  element={<ProtectedRoute><QualityResult /></ProtectedRoute>} />
           <Route path="/predict/disease/:id" element={<ProtectedRoute><DiseaseResult /></ProtectedRoute>} />
+          <Route path="/guide" element={<Planting exact="true" />} />
 
           {/* USER ROUTES */}
           
