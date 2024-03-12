@@ -3,48 +3,112 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { getToken } from "../../utils/helpers";
 import MetaData from "../Layout/MetaData";
+import { useFormik, Field, Form, ErrorMessage } from "formik";
+import * as Yup from "yup";
 
 const PredictQuality = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
+  // const handleSubmit = async (event) => {
+  //   event.preventDefault();
 
-    const formData = new FormData(event.target);
-    const jsonData = {};
-    formData.forEach((value, key) => {
-      jsonData[key] = value;
-    });
+  //   const formData = new FormData(event.target);
+  //   const jsonData = {};
+  //   formData.forEach((value, key) => {
+  //     jsonData[key] = value;
+  //   });
 
-    try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API}/predict/quality`,
-        jsonData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-            'Authorization': `Bearer ${getToken()}`
-          },
+  //   try {
+  //     const response = await axios.post(
+  //       `${process.env.REACT_APP_API}/predict/quality`,
+  //       jsonData,
+  //       {
+  //         headers: {
+  //           "Content-Type": "application/json",
+  //           'Authorization': `Bearer ${getToken()}`
+  //         },
+  //       }
+  //     );
+
+  //     if (response.data && response.data.quality_data) {
+  //       console.log(response.data.quality_data._id); // Log the id
+  //       const result = navigate(`/predict/quality/${response.data.quality_data._id}`);
+  //       console.log(result);
+  //     } else {
+  //       setError("Prediction failed. Please try again.");
+  //     }
+  //   } catch (error) {
+  //     console.error("Prediction request failed:", error);
+  //     setError("Prediction failed. Please try again.");
+  //   }
+  // };
+
+  const validationSchema = Yup.object().shape({
+    size: Yup.string().required("Size is required"),
+    firmness: Yup.string().required("Firmness is required"),
+    shape: Yup.string().required("Shape is required"),
+    skin_color: Yup.string().required("Fruit color is required"),
+    blemishes: Yup.string().required("Blemishes is required"),
+    soil_type: Yup.string().required("Soil type is required"),
+    sun_exposure: Yup.string().required("Sun exposure is required"),
+    location: Yup.string().required("Location is required"),
+    pest_presence: Yup.string().required("Pest presence is required"),
+    fertilized: Yup.string().required("Fertilizer is required"),
+    watering_sched: Yup.string().required("Watering schedule is required"),
+    pruning: Yup.string().required("Pruning is required"),
+  });
+
+  const formik = useFormik({
+    initialValues: {
+      size: "",
+      firmness: "",
+      shape: "",
+      skin_color: "",
+      blemishes: "",
+      soil_type: "",
+      sun_exposure: "",
+      location: "",
+      pest_presence: "",
+      fertilized: "",
+      watering_sched: "",
+      pruning: "",
+    },
+    validationSchema,
+    onSubmit: async (values) => {
+      try {
+        const formData = new FormData();
+        for (const key in values) {
+          formData.append(key, values[key]);
         }
-      );
 
-      if (response.data && response.data.quality_data) {
-        console.log(response.data.quality_data._id); // Log the id
-        const result = navigate(`/predict/quality/${response.data.quality_data._id}`);
-        console.log(result);
-      } else {
+        const response = await axios.post(
+          `${process.env.REACT_APP_API}/predict/quality`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${getToken()}`,
+            },
+          }
+        );
+
+        if (response.data && response.data.quality_data) {
+          console.log(response.data.quality_data._id); // Log the id
+          navigate(`/predict/quality/${response.data.quality_data._id}`);
+        } else {
+          setError("Prediction failed. Please try again.");
+        }
+      } catch (error) {
+        console.error("Error during form submission:", error.message);
         setError("Prediction failed. Please try again.");
       }
-    } catch (error) {
-      console.error("Prediction request failed:", error);
-      setError("Prediction failed. Please try again.");
-    }
-  };
+    },
+  });
 
   return (
     <Fragment>
-      <MetaData title={'Predict Quality'} />
+      <MetaData title={"Predict Quality"} />
       <div className="container">
         <div className="row">
           <div className="col-md-12">
@@ -71,7 +135,7 @@ const PredictQuality = () => {
             <div className="pl-10 pb-10">
               <form
                 class="grid justify-center items-center"
-                onSubmit={handleSubmit}
+                onSubmit={formik.handleSubmit}
                 style={{ paddingLeft: "20%" }}
               >
                 <div class="flex space-x-4 ">
@@ -88,48 +152,37 @@ const PredictQuality = () => {
                     </h4>
                     <div class="w-full pl-16 flex">
                       <div class="relative h-10 w-100 ">
-                        <select
-                          id="size"
-                          name="size"
-                          class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                        >
-                          <option disabled selected>
-                            Select size
-                          </option>
-                          <option value="small">Small</option>
-                          <option value="medium">Medium</option>
-                          <option value="big">Big</option>
-                        </select>
-                        <label
-                          for="size"
-                          class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
-                        >
-                          Size:
-                        </label>
-                        {/* <label
-                      className="form-control w-full max-w-m"
-                      for="firmness"
-                    >
-                      <div className="label">
-                        <span className="label-text">Firmness: </span>
-                      </div>
-                      <select
-                        className="select select-bordered"
-                        id="firmness"
-                        name="firmness"
-                      >
-                        <option disabled selected>
-                          Select size
-                        </option>
-                        <option value="flabby">Flabby</option>
-                        <option value="firm">Firm</option>
-                      </select>
-                    </label> */}
-
-                        <div class="relative h-10 w-100 mt-4">
+                        <div class="relative h-10 w-100">
+                          <select
+                            id="size"
+                            name="size"
+                            onChange={formik.handleChange}
+                            class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                          >
+                            <option disabled selected>
+                              Select size
+                            </option>
+                            <option value="small">Small</option>
+                            <option value="medium">Medium</option>
+                            <option value="big">Big</option>
+                          </select>
+                          <label
+                            for="size"
+                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
+                          >
+                            Size:
+                          </label>
+                          {formik.touched.size && formik.errors.size && (
+                            <div className="error text-red-500">
+                              {formik.errors.size}
+                            </div>
+                          )}
+                        </div>
+                        <div class="relative h-10 w-100 mt-10">
                           <select
                             id="firmness"
                             name="firmness"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -144,27 +197,19 @@ const PredictQuality = () => {
                           >
                             Firmness:
                           </label>
+                          {formik.touched.firmness &&
+                            formik.errors.firmness && (
+                              <div className="error text-red-500">
+                                {formik.errors.firmness}
+                              </div>
+                            )}
                         </div>
-                        {/* <label className="form-control w-full max-w-m" for="shape">
-                      <div className="label">
-                        <span className="label-text">Shape: </span>
-                      </div>
-                      <select
-                        className="select select-bordered"
-                        id="shape"
-                        name="shape"
-                      >
-                        <option disabled selected>
-                          Select size
-                        </option>
-                        <option value="oblong">Oblong</option>
-                        <option value="spherical">Spherical</option>
-                      </select>
-                    </label> */}
-                        <div class="relative h-10 w-100 mt-4">
+
+                        <div class="relative h-10 w-100 mt-10">
                           <select
                             id="shape"
                             name="shape"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -179,11 +224,17 @@ const PredictQuality = () => {
                           >
                             Shape:
                           </label>
+                          {formik.touched.shape && formik.errors.shape && (
+                            <div className="error text-red-500">
+                              {formik.errors.shape}
+                            </div>
+                          )}
                         </div>
-                        <div class="relative h-10 w-100  mt-4">
+                        <div class="relative h-10 w-100  mt-10">
                           <select
                             id="skin_color"
                             name="skin_color"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -199,11 +250,18 @@ const PredictQuality = () => {
                           >
                             Fruit Color:
                           </label>
+                          {formik.touched.skin_color &&
+                            formik.errors.skin_color && (
+                              <div className="error text-red-500">
+                                {formik.errors.skin_color}
+                              </div>
+                            )}
                         </div>
-                        <div class="relative h-10 w-100  mt-4">
+                        <div class="relative h-10 w-100  mt-10">
                           <select
                             id="blemishes"
                             name="blemishes"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -218,6 +276,12 @@ const PredictQuality = () => {
                           >
                             Blemishes:
                           </label>
+                          {formik.touched.blemishes &&
+                            formik.errors.blemishes && (
+                              <div className="error text-red-500">
+                                {formik.errors.blemishes}
+                              </div>
+                            )}
                         </div>
                       </div>
                     </div>
@@ -233,30 +297,40 @@ const PredictQuality = () => {
                     >
                       Environmental Factors
                     </h4>
-                    <div class="w-full flex pl-16">
-                      <div class="relative h-10 w-100">
-                        <select
-                          id="soil_type"
-                          name="soil_type"
-                          class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                        >
-                          <option disabled selected>
-                            Select soil type
-                          </option>
-                          <option value="loamy">Loamy</option>
-                          <option value="clayey">Clayey</option>
-                          <option value="sandy">Sandy</option>
-                        </select>
-                        <label
-                          for="soil_type"
-                          class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
-                        >
-                          Soil Type:
-                        </label>
+                    <div class="w-full flex pl-14">
+                      <div class="relative h-10 w-100 mt-10">
+                        <div class="relative h-10 w-100">
+                          <select
+                            id="soil_type"
+                            name="soil_type"
+                            onChange={formik.handleChange}
+                            class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                          >
+                            <option disabled selected>
+                              Select soil type
+                            </option>
+                            <option value="loamy">Loamy</option>
+                            <option value="clayey">Clayey</option>
+                            <option value="sandy">Sandy</option>
+                          </select>{" "}
+                          {formik.touched.soil_type &&
+                            formik.errors.soil_type && (
+                              <div className="error text-red-500">
+                                {formik.errors.soil_type}
+                              </div>
+                            )}
+                          <label
+                            for="soil_type"
+                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
+                          >
+                            Soil Type:
+                          </label>
+                        </div>
                         <div class="relative h-10 w-100 mt-8">
                           <select
                             id="sun_exposure"
                             name="sun_exposure"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -272,11 +346,18 @@ const PredictQuality = () => {
                           >
                             Sun Exposure:
                           </label>
+                          {formik.touched.sun_exposure &&
+                            formik.errors.sun_exposure && (
+                              <div className="error text-red-500">
+                                {formik.errors.sun_exposure}
+                              </div>
+                            )}
                         </div>
                         <div class="relative h-10 w-100 mt-8">
                           <select
                             id="location"
                             name="location"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -292,12 +373,18 @@ const PredictQuality = () => {
                           >
                             Location:
                           </label>
+                          {formik.touched.location &&
+                            formik.errors.location && (
+                              <div className="error text-red-500">
+                                {formik.errors.location}
+                              </div>
+                            )}
                         </div>
-
                         <div class="relative h-10 w-100 mt-8">
                           <select
                             id="pest_presence"
                             name="pest_presence"
+                            onChange={formik.handleChange}
                             class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                           >
                             <option disabled selected>
@@ -312,6 +399,12 @@ const PredictQuality = () => {
                           >
                             Pest Presence:
                           </label>
+                          {formik.touched.pest_presence &&
+                            formik.errors.pest_presence && (
+                              <div className="error text-red-500">
+                                {formik.errors.pest_presence}
+                              </div>
+                            )}
                         </div>
                       </div>
                     </div>
@@ -327,11 +420,12 @@ const PredictQuality = () => {
                     >
                       Cultivation Practices
                     </h4>
-                    <div class="w-full flex pl-12">
-                      <div class="relative h-10 w-100 mt-8">
+                    <div class="w-full flex pl-9">
+                      <div class=" relative h-10 w-100 mt-20">
                         <select
                           id="fertilized"
                           name="fertilized"
+                          onChange={formik.handleChange}
                           class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
                         >
                           <option disabled selected>
@@ -346,45 +440,65 @@ const PredictQuality = () => {
                         >
                           Fertilizer:
                         </label>
-                        <div class="relative h-10 w-100 mt-8">
-                          <select
-                            id="watering_sched"
-                            name="watering_sched"
-                            class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                          >
-                            <option disabled selected>
-                              Select watering schedule
-                            </option>
-                            <option value="regular">Regular</option>
-                            <option value="irregular">Irregular</option>
-                          </select>
-                          <label
-                            for="watering_sched"
-                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
-                          >
-                            Watering Schedule:
-                          </label>
-                        </div>
-                        <div class="relative h-10 w-100 mt-8">
-                          <select
-                            id="pruning"
-                            name="pruning"
-                            class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
-                          >
-                            <option disabled selected>
-                              Select pruning
-                            </option>
-                            <option value="regular">Regular</option>
-                            <option value="not regular">Irregular</option>
-                          </select>
-                          <label
-                            for="pruning"
-                            class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
-                          >
-                            Pruning:
-                          </label>
-                        </div>
+                        {formik.touched.fertilized &&
+                          formik.errors.fertilized && (
+                            <div className="error text-red-500">
+                              {formik.errors.fertilized}
+                            </div>
+                          )}
+                      
+                      <div class="relative h-10 w-100 mt-5">
+                        <select
+                          id="watering_sched"
+                          name="watering_sched"
+                          onChange={formik.handleChange}
+                          class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                        >
+                          <option disabled selected>
+                            Select watering schedule
+                          </option>
+                          <option value="regular">Regular</option>
+                          <option value="irregular">Irregular</option>
+                        </select>
+                        <label
+                          for="watering_sched"
+                          class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
+                        >
+                          Watering Schedule:
+                        </label>
+                        {formik.touched.watering_sched &&
+                          formik.errors.watering_sched && (
+                            <div className="error text-red-500">
+                              {formik.errors.watering_sched}
+                            </div>
+                          )}
                       </div>
+                      <div class="relative h-10 w-100 mt-10">
+                        <select
+                          id="pruning"
+                          name="pruning"
+                          onChange={formik.handleChange}
+                          class="peer h-full w-full rounded-[7px] border border-gray-400 bg-transparent px-3 py-2 font-sans text-sm font-normal text-gray-700 outline outline-0 transition-all placeholder-shown:border placeholder-shown:border-blue-gray-200 placeholder-shown:border-t-blue-gray-200 empty:!bg-gray-900 focus:border-2 focus:border-gray-900 focus:border-t-transparent focus:outline-0 disabled:border-0 disabled:bg-blue-gray-50"
+                        >
+                          <option disabled selected>
+                            Select pruning
+                          </option>
+                          <option value="regular">Regular</option>
+                          <option value="not regular">Irregular</option>
+                        </select>
+                        <label
+                          for="pruning"
+                          class="before:content[' '] after:content[' '] pointer-events-none absolute left-0 -top-1.5 flex h-full w-full select-none text-[14px] font-normal leading-tight text-gray-700 transition-all before:pointer-events-none before:mt-[6.5px] before:mr-1 before:box-border before:block before:h-1.5 before:w-2.5 before:rounded-tl-md before:border-t before:border-l before:border-blue-gray-200 before:transition-all after:pointer-events-none after:mt-[6.5px] after:ml-1 after:box-border after:block after:h-1.5 after:w-2.5 after:flex-grow after:rounded-tr-md after:border-t after:border-r after:border-blue-gray-200 after:transition-all peer-placeholder-shown:text-sm peer-placeholder-shown:leading-[3.75] peer-placeholder-shown:text-blue-gray-500 peer-placeholder-shown:before:border-transparent peer-placeholder-shown:after:border-transparent peer-focus:text-[14px] peer-focus:leading-tight peer-focus:text-gray-900 peer-focus:before:border-t-2 peer-focus:before:border-l-2 peer-focus:before:border-gray-900 peer-focus:after:border-t-2 peer-focus:after:border-r-2 peer-focus:after:border-gray-900 peer-disabled:text-transparent peer-disabled:before:border-transparent peer-disabled:after:border-transparent peer-disabled:peer-placeholder-shown:text-blue-gray-500"
+                        >
+                          Pruning:
+                        </label>
+                        {formik.touched.pruning && formik.errors.pruning && (
+                          <div className="error text-red-500">
+                            {formik.errors.pruning}
+                          </div>
+                        )}
+                      </div>
+                      <div></div></div>
                     </div>
                   </div>
                 </div>
@@ -413,11 +527,7 @@ const PredictQuality = () => {
                       </svg>
                     </div>
                   </div>
-                  <span
-
-                  >
-                    Predict
-                  </span>
+                  <span>Predict</span>
                 </button>
               </form>
               {error && <p>{error}</p>}
