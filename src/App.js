@@ -29,6 +29,8 @@ import DiseaseRecoList from './Components/Admin/Recommendations/DiseaseRecoList'
 import NewDiseaseRecommendations from './Components/Admin/Recommendations/NewDiseaseRecommendations';
 import UpdateQualityReco from './Components/Admin/Recommendations/UpdateQualityReco';
 import UpdateDiseaseReco from './Components/Admin/Recommendations/UpdateDiseaseReco';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
   return (
     <div>
       <Router>
+      <ToastContainer />
       <Header />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -54,7 +57,7 @@ function App() {
           <Route path="/register" element={<Register />} />
           <Route path="/me" element={<ProtectedRoute><Profile /></ProtectedRoute>} />
           <Route path="/me/update" element={<ProtectedRoute><UpdateProfile /></ProtectedRoute>} />
-    
+
         {/* ADMIN ROUTES */}
           <Route path="/admin/dashboard" element={ <ProtectedRoute isAdmin={true}><Dashboard /></ProtectedRoute>}/>
           <Route path="/admin/quality/all" element={<ProtectedRoute isAdmin={true}><QualityList /></ProtectedRoute>} />

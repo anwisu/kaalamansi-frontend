@@ -12,6 +12,11 @@ import { AiOutlineSwapRight } from "react-icons/ai";
 import { useFormik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -50,6 +55,9 @@ const Login = () => {
           if (authenticate(data)) {
             navigate("/");
             window.location.reload();
+            toast.success("Logged in Successfully!", {
+              position: toast.POSITION.TOP_RIGHT,
+            });
           } else {
             console.error("Failed to authenticate");
           }

@@ -12,6 +12,11 @@ import { Avatar } from "@material-tailwind/react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 
+
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const Register = () => {
   const [formData, setFormData] = useState({
     name: "",
@@ -95,6 +100,9 @@ const Register = () => {
         );
         console.log(response.data);
         navigate("/login"); // Redirect to login page after successful registration
+        toast.success("You have Registered Successfully!", {
+          position: toast.POSITION.TOP_RIGHT,
+        });
       } catch (error) {
         console.error("Registration Error:", error.message);
       }

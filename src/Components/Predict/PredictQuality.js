@@ -6,6 +6,9 @@ import MetaData from "../Layout/MetaData";
 import { useFormik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+
 const PredictQuality = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -92,12 +95,17 @@ const PredictQuality = () => {
             },
           }
         );
-
+  
         if (response.data && response.data.quality_data) {
           console.log(response.data.quality_data._id); // Log the id
           navigate(`/predict/quality/${response.data.quality_data._id}`);
+          toast.success("Predicted Quality Successfully!", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         } else {
-          setError("Prediction failed. Please try again.");
+           toast.error("Prediction failed. Please try again!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
         }
       } catch (error) {
         console.error("Error during form submission:", error.message);

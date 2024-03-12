@@ -6,6 +6,10 @@ import MetaData from "../Layout/MetaData";
 import { useFormik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const PredictDisease = () => {
   const [error, setError] = useState("");
   const navigate = useNavigate();
@@ -56,8 +60,13 @@ const PredictDisease = () => {
         if (response.data && response.data.disease_data) {
           console.log(response.data.disease_data._id); // Log the id
           navigate(`/predict/disease/${response.data.disease_data._id}`);
+          toast.success("Predicted Disease Successfully!", {
+            position: toast.POSITION.TOP_RIGHT,
+          });
         } else {
-          setError("Prediction failed. Please try again.");
+          toast.error("Prediction Failed. Try Again!", {
+            position: toast.POSITION.TOP_CENTER,
+          });
         }
       } catch (error) {
         console.error("Error during form submission:", error.message);

@@ -4,6 +4,10 @@ import axios from "axios";
 import { logout, getUser } from "../../utils/helpers";
 import { Avatar, Navbar } from "@material-tailwind/react";
 
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
+
 const Header = () => {
   const navigate = useNavigate();
   const [user, setUser] = useState(null);
@@ -14,6 +18,9 @@ const Header = () => {
       logout(); // Remove token and user data from session storage
       navigate("/");
       window.location.reload();
+      toast.success("Logged Out Successfully!", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
     } catch (error) {
       console.error("Logout failed:", error);
     }
