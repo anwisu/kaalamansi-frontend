@@ -61,11 +61,11 @@ const PredictDisease = () => {
           console.log(response.data.disease_data._id); // Log the id
           navigate(`/predict/disease/${response.data.disease_data._id}`);
           toast.success("Predicted Disease Successfully!", {
-            position: toast.POSITION.TOP_RIGHT,
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
         } else {
           toast.error("Prediction Failed. Try Again!", {
-            position: toast.POSITION.TOP_CENTER,
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
         }
       } catch (error) {

@@ -19,7 +19,7 @@ const Header = () => {
       navigate("/");
       window.location.reload();
       toast.success("Logged Out Successfully!", {
-        position: toast.POSITION.TOP_RIGHT,
+        position: toast.POSITION.BOTTOM_RIGHT,
       });
     } catch (error) {
       console.error("Logout failed:", error);

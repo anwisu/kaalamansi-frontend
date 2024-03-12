@@ -100,11 +100,11 @@ const PredictQuality = () => {
           console.log(response.data.quality_data._id); // Log the id
           navigate(`/predict/quality/${response.data.quality_data._id}`);
           toast.success("Predicted Quality Successfully!", {
-            position: toast.POSITION.TOP_RIGHT,
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
         } else {
-           toast.error("Prediction failed. Please try again!", {
-            position: toast.POSITION.TOP_CENTER,
+          toast.error("Prediction failed. Please try again!", {
+            position: toast.POSITION.BOTTOM_RIGHT,
           });
         }
       } catch (error) {

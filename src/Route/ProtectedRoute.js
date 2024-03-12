@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { getUser } from '../utils/helpers';
 
+
 const ProtectedRoute = ({ children, isAdmin = false }) => {
     const [user, setUser] = useState(getUser());
 
