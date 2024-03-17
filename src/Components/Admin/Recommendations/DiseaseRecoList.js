@@ -78,7 +78,7 @@ const DiseaseRecoList = () => {
             options: {
                 filter: true,
                 sort: true,
-                customBodyRender: (value) => <p className={"capitalize"}>{value}</p>,
+                customBodyRender: (value) => <p>{value}</p>,
             },
         },
         {
